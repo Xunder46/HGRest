@@ -14,5 +14,8 @@ namespace ngHealthyGarden.Models
         public Nullable<int> SizeId { get; set; }
         public Nullable<int> SideId { get; set; }
         public Nullable<int> TortillaId { get; set; }
+
+        //size info
+
     }
 }

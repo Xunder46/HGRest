@@ -24,6 +24,8 @@ namespace ngHealthyGarden
         {
             throw new UnintentionalCodeFirstException();
         }
+    
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Dish> Dishes { get; set; }
         public virtual DbSet<Item> Items { get; set; }

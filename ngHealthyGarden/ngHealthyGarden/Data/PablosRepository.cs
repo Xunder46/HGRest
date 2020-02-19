@@ -35,9 +35,13 @@ namespace ngHealthyGarden.Data
             return await query.ToArrayAsync();
         }
 
-        public Task<Dish> GetDishAsync(string moniker)
+        public async Task<Dish> GetDishAsync(string dishName)
         {
-            throw new NotImplementedException();
+            IQueryable<Dish> query = _context.Dishes;
+
+            query = query.Where(c => c.DishName == dishName);
+
+            return await query.FirstOrDefaultAsync();
         }
 
         void IPablosRepository.AddDish(Dish camp)

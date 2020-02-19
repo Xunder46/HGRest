@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace ngHealthyGarden
 {
+    [RoutePrefix("api/menu")]
     public class MenuController : ApiController
     {
         private readonly IPablosRepository _pablos;
@@ -27,6 +28,7 @@ namespace ngHealthyGarden
         }
 
         // GET api/<controller>
+        [Route()]
         public async Task<IHttpActionResult> Get()
         {
             try
@@ -41,13 +43,27 @@ namespace ngHealthyGarden
             {
                 return BadRequest();
             }
-            
+
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        [Route("{DishName}")]
+        public async Task<IHttpActionResult> Get(string dishName)
         {
-            return "value";
+            try
+            {
+                var result = await _pablos.GetDishAsync(dishName);
+                if (result==null)
+                {
+                    return NotFound();
+                }
+                return Ok(_mapper.Map<DishModel>(result));
+            }
+            catch (Exception ex)
+            {
+
+                return InternalServerError(ex);
+            }
         }
 
         // POST api/<controller>
