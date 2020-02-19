@@ -1,4 +1,5 @@
-﻿using ngHealthyGarden.App_Start;
+﻿using Newtonsoft.Json.Serialization;
+using ngHealthyGarden.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace ngHealthyGarden
         {
             // Web API configuration and services
             AutofacConfig.Register();
+
+            //Json serrialize to camelcase
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
 
             // Web API routes
             config.MapHttpAttributeRoutes();

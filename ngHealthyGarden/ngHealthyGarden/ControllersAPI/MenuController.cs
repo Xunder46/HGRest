@@ -1,4 +1,6 @@
-﻿using ngHealthyGarden.Data;
+﻿using AutoMapper;
+using ngHealthyGarden.Data;
+using ngHealthyGarden.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +14,15 @@ namespace ngHealthyGarden
     public class MenuController : ApiController
     {
         private readonly IPablosRepository _pablos;
+        private readonly IMapper _mapper;
 
         public MenuController()
         {
 
         }
-        public MenuController(IPablosRepository pablos)
+        public MenuController(IPablosRepository pablos, IMapper mapper)
         {
+            _mapper = mapper;
             _pablos = pablos;
         }
 
@@ -28,7 +32,10 @@ namespace ngHealthyGarden
             try
             {
                 var result = await _pablos.GetAllDishesAsync();
-                return Ok(result);
+
+                var mapped = _mapper.Map<IEnumerable<DishModel>>(result);
+
+                return Ok(mapped);
             }
             catch (Exception)
             {

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Http;
 using Autofac.Integration.WebApi;
 using ngHealthyGarden.Data;
+using AutoMapper;
 
 namespace ngHealthyGarden.App_Start
 {
@@ -26,6 +27,13 @@ namespace ngHealthyGarden.App_Start
 
         private static void RegisterServices(ContainerBuilder builder)
         {
+            //Automapper configuration to be able to map models from entities
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new PablosMapping());
+            });
+            builder.RegisterInstance(config.CreateMapper()).As<IMapper>().SingleInstance();
+
             builder.RegisterType<PablosDbContext>().InstancePerRequest();
             builder.RegisterType<PablosRepository>().As<IPablosRepository>().InstancePerRequest();
         }
