@@ -198,7 +198,6 @@
     <Compile Include="Data\PablosDbContext.cs" />
     <Compile Include="Models\DishModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
-    <Compile Include="Models\SizeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestaurantModel.Context.cs">
       <AutoGen>True</AutoGen>

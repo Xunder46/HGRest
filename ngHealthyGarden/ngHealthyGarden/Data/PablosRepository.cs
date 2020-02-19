@@ -28,7 +28,10 @@ namespace ngHealthyGarden.Data
         public async Task<Dish[]> GetAllDishesAsync()
         
         {
-            IQueryable<Dish> query = _context.Dishes;
+            IQueryable<Dish> query = _context.Dishes
+                .Include(d => d.Size)
+                .Include(d => d.Side)
+                .Include(d => d.TortillaType);
 
             query = query.OrderBy(c => c.DishName);
 

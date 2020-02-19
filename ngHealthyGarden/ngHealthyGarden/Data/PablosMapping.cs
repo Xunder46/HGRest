@@ -11,7 +11,10 @@ namespace ngHealthyGarden.Data
     {
         public PablosMapping()
         {
-            CreateMap<Dish, DishModel>();
+            CreateMap<Dish, DishModel>()
+                .ForMember(c => c.SizeDescription, opt => opt.MapFrom(m => m.Size.Description))
+                .ForMember(c => c.SideDescription, opt => opt.MapFrom(m => m.Side.Description))
+                .ForMember(c => c.TortillaTypeDescription, opt => opt.MapFrom(m => m.TortillaType.Description));
         }
     }
 }

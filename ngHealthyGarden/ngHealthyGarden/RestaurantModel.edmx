@@ -20,7 +20,7 @@
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CategoryName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Description" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Dishes">
           <Key>
@@ -59,7 +59,7 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <PropertyRef Name="SideId" />
           </Key>
           <Property Name="SideId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SideName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Sizes">
           <Key>
@@ -73,7 +73,7 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <PropertyRef Name="TortillaId" />
           </Key>
           <Property Name="TortillaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TortillaType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -185,8 +185,8 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Categories" FromRole="Categories" ToRole="Dishes" />
+          <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Dish">
           <Key>
@@ -219,8 +219,8 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <PropertyRef Name="SideId" />
           </Key>
           <Property Name="SideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SideName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Sides" FromRole="Sides" ToRole="Dishes" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -235,8 +235,8 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <PropertyRef Name="TortillaId" />
           </Key>
           <Property Name="TortillaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TortillaType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_TortillaTypes" FromRole="TortillaTypes" ToRole="Dishes" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -351,8 +351,8 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Model.Category">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -383,8 +383,8 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
           <EntitySetMapping Name="Sides">
             <EntityTypeMapping TypeName="Model.Side">
               <MappingFragment StoreEntitySet="Sides">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="SideId" ColumnName="SideId" />
-                <ScalarProperty Name="SideName" ColumnName="SideName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -399,8 +399,8 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
           <EntitySetMapping Name="TortillaTypes">
             <EntityTypeMapping TypeName="Model.TortillaType">
               <MappingFragment StoreEntitySet="TortillaTypes">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="TortillaId" ColumnName="TortillaId" />
-                <ScalarProperty Name="TortillaType1" ColumnName="TortillaType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

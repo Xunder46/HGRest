@@ -10,12 +10,11 @@ namespace ngHealthyGarden.Models
         public string DishName { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Picture { get; set; }
-        public Nullable<int> CategoryId { get; set; }
-        public Nullable<int> SizeId { get; set; }
-        public Nullable<int> SideId { get; set; }
-        public Nullable<int> TortillaId { get; set; }
 
-        //size info
+        //related info
+        public string SizeDescription { get; set; }
+        public string SideDescription { get; set; }
+        public string  TortillaTypeDescription { get; set; }
 
     }
 }
