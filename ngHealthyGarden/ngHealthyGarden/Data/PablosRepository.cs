@@ -25,10 +25,22 @@ namespace ngHealthyGarden.Data
             throw new NotImplementedException();
         }
 
-        public async Task<Dish[]> GetAllDishesAsync()
+        public async Task<Category[]> GetAllCategoriesAsync()
+        {
+            //getting categories with their dishes with their sizes, sides, etc...
+            IQueryable<Category> query = _context.Categories
+                .Include(c=>c.Dishes)
+                .Include("Dishes.Size")
+                .Include(c=>c.Dishes.Select(d=>d.Side))
+                .Include(c => c.Dishes.Select(d => d.TortillaType));
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Dish[]> GetAllDishesByCategoryIdAsync(int categoryId)
         
         {
-            IQueryable<Dish> query = _context.Dishes
+            IQueryable<Dish> query = _context.Dishes.Where(d=>d.CategoryId== categoryId)
                 .Include(d => d.Size)
                 .Include(d => d.Side)
                 .Include(d => d.TortillaType);
@@ -51,5 +63,6 @@ namespace ngHealthyGarden.Data
         {
             throw new NotImplementedException();
         }
+
     }
 }

@@ -15,6 +15,8 @@ namespace ngHealthyGarden.Data
                 .ForMember(c => c.SizeDescription, opt => opt.MapFrom(m => m.Size.Description))
                 .ForMember(c => c.SideDescription, opt => opt.MapFrom(m => m.Side.Description))
                 .ForMember(c => c.TortillaTypeDescription, opt => opt.MapFrom(m => m.TortillaType.Description));
+
+            CreateMap<Category, CategoryModel>();
         }
     }
 }

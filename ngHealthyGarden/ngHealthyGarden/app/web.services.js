@@ -9,26 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var http_1 = require("@angular/common/http");
 var core_1 = require("@angular/core");
-var web_services_1 = require("./web.services");
-var AppComponent = /** @class */ (function () {
-    function AppComponent(services) {
-        this.services = services;
+require("rxjs/add/operator/toPromise");
+var WebServices = /** @class */ (function () {
+    function WebServices(http) {
+        this.http = http;
+        this.baseUrl = "https://localhost:44384/api";
     }
-    AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.services.getCategories().subscribe(function (data) {
-            _this.categories = data;
-        });
+    WebServices.prototype.getCategories = function () {
+        return this.http.get(this.baseUrl + '/menu');
     };
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            templateUrl: './app.component.html',
-        }),
-        __metadata("design:paramtypes", [web_services_1.WebServices])
-    ], AppComponent);
-    return AppComponent;
+    WebServices = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient])
+    ], WebServices);
+    return WebServices;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.WebServices = WebServices;
+//# sourceMappingURL=web.services.js.map

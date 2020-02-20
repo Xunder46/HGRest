@@ -8,15 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
+var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
+var web_services_1 = require("./web.services");
+var menu_component_1 = require("./menu/menu.component");
+var http_2 = require("@angular/common/http");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
-            declarations: [app_component_1.AppComponent],
-            bootstrap: [app_component_1.AppComponent]
+            imports: [
+                platform_browser_1.BrowserModule,
+                http_1.HttpModule,
+                http_2.HttpClientModule
+            ],
+            providers: [
+                web_services_1.WebServices
+            ],
+            declarations: [
+                app_component_1.AppComponent, menu_component_1.MenuComponent
+            ],
+            bootstrap: [
+                app_component_1.AppComponent
+            ]
         })
     ], AppModule);
     return AppModule;

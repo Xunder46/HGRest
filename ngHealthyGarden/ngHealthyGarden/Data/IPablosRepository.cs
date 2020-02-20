@@ -10,7 +10,9 @@ namespace ngHealthyGarden.Data
     {
         void AddDish(Dish camp);
         void DeleteDish(Dish camp);
-        Task<Dish[]> GetAllDishesAsync();
+        Task<Dish[]> GetAllDishesByCategoryIdAsync(int categoryId);
         Task<Dish> GetDishAsync(string dishName);
+
+        Task<Category[]> GetAllCategoriesAsync();
     }
 }

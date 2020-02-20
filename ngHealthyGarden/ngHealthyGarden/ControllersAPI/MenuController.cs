@@ -33,9 +33,9 @@ namespace ngHealthyGarden
         {
             try
             {
-                var result = await _pablos.GetAllDishesAsync();
+                var result = await _pablos.GetAllCategoriesAsync();
 
-                var mapped = _mapper.Map<IEnumerable<DishModel>>(result);
+                var mapped = _mapper.Map<IEnumerable<CategoryModel>>(result);
 
                 return Ok(mapped);
             }
