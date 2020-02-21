@@ -13,6 +13,11 @@ var app_component_1 = require("./app.component");
 var web_services_1 = require("./web.services");
 var menu_component_1 = require("./menu/menu.component");
 var http_2 = require("@angular/common/http");
+var app_routing_module_1 = require("./app-routing.module");
+var forms_1 = require("@angular/forms");
+var router_1 = require("@angular/router");
+var common_1 = require("@angular/common");
+var welcome_component_1 = require("./welcome/welcome.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -21,13 +26,17 @@ var AppModule = /** @class */ (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
-                http_2.HttpClientModule
+                http_2.HttpClientModule,
+                app_routing_module_1.AppRoutingModule,
+                router_1.RouterModule,
+                forms_1.FormsModule
             ],
             providers: [
-                web_services_1.WebServices
+                web_services_1.WebServices,
+                { provide: common_1.APP_BASE_HREF, useValue: '/' }
             ],
             declarations: [
-                app_component_1.AppComponent, menu_component_1.MenuComponent
+                app_component_1.AppComponent, menu_component_1.MenuComponent, welcome_component_1.WelcomeComponent
             ],
             bootstrap: [
                 app_component_1.AppComponent

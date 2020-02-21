@@ -1,0 +1,128 @@
+﻿
+
+
+/*classes*/
+.gridFixed {
+	display:grid;
+	grid-template-columns: 1fr auto 1fr;
+	grid-template-rows: 100%;
+	grid-column-gap: 2px;
+}
+
+.logo-container {
+	text-align:center;
+}
+
+.containerFixed {
+	height: auto;
+	padding-top: 20%;
+	width:80%;
+}
+
+.row{
+	margin: 0;
+}
+
+.button {
+	box-sizing: border-box;
+	width: 15em;
+	height: 3em;
+	font-size: 20px;
+	border-radius: 0.5em;
+	margin: 0.5em;
+	box-shadow: 0 0 1em rgba(0,0,0,0.2);
+	color: white;
+	font-family: sans-serif;
+	text-transform: capitalize;
+	line-height: 3em;
+	transition: 0.3s;
+	cursor: pointer;
+}
+
+/* KEYFRAMES */
+@keyframes grow{
+	from{
+		opacity: 0;
+	}
+
+	to{
+		opacity: 1;
+	}
+}
+
+@keyframes button{
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes text{
+	50% {
+		transform: scale(1.5);
+	}
+}
+
+/* SVG STYLES*/
+
+.svg {
+	animation: grow 2s ease-in;
+	top: 0;
+	left: 0;
+	stroke-width: 1;
+	stroke-dasharray: 250;
+	stroke-dashoffset: -250;
+	transition: stroke-dashoffset 2s ease-out;
+}
+
+/*Animations*/
+.button {
+	animation: button 3s ease-out;
+	height: 4em;
+}
+
+.buttonMenu {
+	background: linear-gradient(to right, orange, tomato);
+	text-align: left;
+	padding-left: 10%;
+	transform: perspective(500px) rotateY(45deg);
+}
+
+.buttonMenu:hover {
+	transform: perspective(200px) rotateY(45deg);
+	padding-left: 5%;
+}
+
+.buttonMngmnt {
+	background: linear-gradient(to left, orange, tomato);
+	text-align: right;
+	padding-right: 10%;
+	transform: perspective(500px) rotateY(-45deg);
+}
+
+.buttonMngmnt:hover {
+	transform: perspective(200px) rotateY(-45deg);
+	padding-right: 5%;
+}
+
+	.button:hover {
+		fill: #e79800;
+	}
+
+.text {
+	
+}
+
+.text:nth-of-type(1) {
+	animation-delay: 2.1s;
+	transform-origin: center;
+}
+.text:nth-of-type(2) {
+	animation-delay: 2.5s;
+}
+.text:nth-of-type(3) {
+	animation-delay: 2.7s;
+}
