@@ -239,6 +239,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\1.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\hglogo %282%29.svg" />
     <Content Include="fonts\unnamed.jpg" />
     <Content Include="fonts\untitled.svg" />
     <Content Include="Global.asax" />
@@ -266,6 +267,9 @@
     </Content>
     <Content Include="app\menu\menu.component.html" />
     <Content Include="app\welcome\welcome.component.css" />
+    <Content Include="fonts\CabinSketch-Regular.otf" />
+    <Content Include="fonts\BalooThambi-Regular.ttf" />
+    <Content Include="fonts\Battambang-Regular.ttf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
