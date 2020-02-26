@@ -12,9 +12,11 @@ var menu_component_1 = require("./menu/menu.component");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var welcome_component_1 = require("./welcome/welcome.component");
+var appetizers_component_1 = require("./Categories/Appetizers/appetizers.component");
 var routes = [
     { path: '', component: welcome_component_1.WelcomeComponent },
-    { path: 'menu', component: menu_component_1.MenuComponent }
+    { path: 'menu', component: menu_component_1.MenuComponent },
+    { path: ':category', component: appetizers_component_1.AppetizersComponent }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

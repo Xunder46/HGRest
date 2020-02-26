@@ -50,6 +50,15 @@ namespace ngHealthyGarden.Data
             return await query.ToArrayAsync();
         }
 
+        public async Task<Category> GetCategoryByNameAsync(string category)
+        {
+            IQueryable<Category> query = _context.Categories.Include(c=>c.Dishes);
+
+            query = query.Where(c => c.Description == category);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<Dish> GetDishAsync(string dishName)
         {
             IQueryable<Dish> query = _context.Dishes;

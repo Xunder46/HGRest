@@ -10,30 +10,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var web_services_1 = require("../web.services");
-var platform_browser_1 = require("@angular/platform-browser");
-var MenuComponent = /** @class */ (function () {
-    function MenuComponent(services, sanitizor) {
+var web_services_1 = require("../../web.services");
+var AppetizersComponent = /** @class */ (function () {
+    function AppetizersComponent(services) {
         this.services = services;
-        this.sanitizor = sanitizor;
     }
-    MenuComponent.prototype.ngOnInit = function () {
+    AppetizersComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.services.getCategories().subscribe(function (data) {
-            _this.categories = data;
+        this.services.getCategoryByNameWithDishe(this.categoryName).subscribe(function (data) {
+            _this.category = data;
+            console.log(JSON.stringify(data));
         });
     };
-    MenuComponent = __decorate([
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", String)
+    ], AppetizersComponent.prototype, "categoryName", void 0);
+    AppetizersComponent = __decorate([
         core_1.Component({
-            selector: 'menu',
-            templateUrl: './menu.component.html',
-            styleUrls: ['./menu.component.css'],
-            styles: ["\n      :host \n    {\n      margin: 0; padding: 0;\n    }"
-            ]
+            selector: 'appetizers',
+            templateUrl: './appetizers.component.html',
+            styleUrls: ['./appetizers.component.css']
         }),
-        __metadata("design:paramtypes", [web_services_1.WebServices, platform_browser_1.DomSanitizer])
-    ], MenuComponent);
-    return MenuComponent;
+        __metadata("design:paramtypes", [web_services_1.WebServices])
+    ], AppetizersComponent);
+    return AppetizersComponent;
 }());
-exports.MenuComponent = MenuComponent;
-//# sourceMappingURL=menu.component.js.map
+exports.AppetizersComponent = AppetizersComponent;
+//# sourceMappingURL=appetizers.component.js.map

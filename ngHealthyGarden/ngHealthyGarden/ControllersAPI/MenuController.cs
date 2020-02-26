@@ -46,22 +46,22 @@ namespace ngHealthyGarden
 
         }
 
-        // GET api/<controller>/5
-        [Route("{DishName}")]
-        public async Task<IHttpActionResult> Get(string dishName)
+        // GET api/<controller>/category
+        [Route("{category}")]
+        public async Task<IHttpActionResult> Get(string category)
         {
             try
             {
-                var result = await _pablos.GetDishAsync(dishName);
+                var result = await _pablos.GetCategoryByNameAsync(category);
+
                 if (result==null)
                 {
                     return NotFound();
                 }
-                return Ok(_mapper.Map<DishModel>(result));
+                return Ok(_mapper.Map<CategoryModel>(result));
             }
             catch (Exception ex)
             {
-
                 return InternalServerError(ex);
             }
         }

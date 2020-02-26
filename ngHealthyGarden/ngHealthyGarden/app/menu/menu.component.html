@@ -1,4 +1,11 @@
-﻿<ul *ngFor="let category of categories">
-    <li><button class="btn btn-group">{{category.description|json}}</button></li>
-</ul>
-<a href="/">Go back</a>
+﻿<div class="mainContainer">
+    <div class="flexContainer">
+        <div *ngFor="let category of categories" class="buttonContainer">
+            <a class="buttonImage" href="/{{category.description}}">
+                    <img class="btn button" src="../../fonts/{{category.description}}.jpg" alt="{{category.description}}" />
+                    <strong class="textShadow">{{category.description}}</strong>
+            </a>
+        </div>
+    </div>
+</div>
+<a class="btn buttonBack glyphicon glyphicon-arrow-left" href="/"> BACK</a>

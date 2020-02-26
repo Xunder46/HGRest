@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { WebServices } from './web.services'
@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { AppetizersComponent } from './Categories/Appetizers/appetizers.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
-        AppComponent, MenuComponent, WelcomeComponent
+        AppComponent, MenuComponent, WelcomeComponent, AppetizersComponent
     ],
     bootstrap: [
         AppComponent

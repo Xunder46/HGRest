@@ -1,4 +1,6 @@
-﻿export class Category {
+﻿import { Dish } from "./Dish";
+
+export class Category {
     description: string;
-    dishes: any[];
+    dishes: Dish[];
 }

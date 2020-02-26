@@ -20,6 +20,9 @@ var WebServices = /** @class */ (function () {
     WebServices.prototype.getCategories = function () {
         return this.http.get(this.baseUrl + '/menu');
     };
+    WebServices.prototype.getCategoryByNameWithDishe = function (category) {
+        return this.http.get(this.baseUrl + '/' + category);
+    };
     WebServices = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.HttpClient])

@@ -10,30 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var web_services_1 = require("../web.services");
 var platform_browser_1 = require("@angular/platform-browser");
-var MenuComponent = /** @class */ (function () {
-    function MenuComponent(services, sanitizor) {
-        this.services = services;
-        this.sanitizor = sanitizor;
+var SafeStylePipe = /** @class */ (function () {
+    function SafeStylePipe(sanitizer) {
+        this.sanitizer = sanitizer;
     }
-    MenuComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.services.getCategories().subscribe(function (data) {
-            _this.categories = data;
-        });
+    SafeStylePipe.prototype.transform = function (value, args) {
+        return this.sanitizer.bypassSecurityTrustStyle(value);
     };
-    MenuComponent = __decorate([
-        core_1.Component({
-            selector: 'menu',
-            templateUrl: './menu.component.html',
-            styleUrls: ['./menu.component.css'],
-            styles: ["\n      :host \n    {\n      margin: 0; padding: 0;\n    }"
-            ]
+    SafeStylePipe = __decorate([
+        core_1.Pipe({
+            name: 'safeStyle'
         }),
-        __metadata("design:paramtypes", [web_services_1.WebServices, platform_browser_1.DomSanitizer])
-    ], MenuComponent);
-    return MenuComponent;
+        __metadata("design:paramtypes", [platform_browser_1.DomSanitizer])
+    ], SafeStylePipe);
+    return SafeStylePipe;
 }());
-exports.MenuComponent = MenuComponent;
-//# sourceMappingURL=menu.component.js.map
+exports.SafeStylePipe = SafeStylePipe;
+//# sourceMappingURL=SafePipe.js.map

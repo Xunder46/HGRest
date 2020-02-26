@@ -23,7 +23,6 @@ namespace ngHealthyGarden.ControllersAPI
             _pablos = pablos;
         }
 
-        [Route("{categoryId}")]
         public async Task<IHttpActionResult> Get(int categoryId)
         {
             try

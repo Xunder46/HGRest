@@ -230,7 +230,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\app.component.css" />
     <Content Include="app\app.component.html" />
+    <Content Include="app\Categories\Appetizers\appetizers.component.css" />
+    <Content Include="app\Categories\Appetizers\appetizers.component.html" />
+    <Content Include="app\menu\menu.component.css" />
     <Content Include="app\welcome\welcome.component.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -238,10 +242,17 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\1.jpg" />
+    <Content Include="fonts\Appetizers.jpg" />
+    <Content Include="fonts\DinnerEntrees.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\hglogo %282%29.svg" />
+    <Content Include="fonts\Juices.jpg" />
+    <Content Include="fonts\MainHg.jpg" />
+    <Content Include="fonts\Salads.jpg" />
+    <Content Include="fonts\Smoothies.jpg" />
     <Content Include="fonts\unnamed.jpg" />
     <Content Include="fonts\untitled.svg" />
+    <Content Include="fonts\Wraps.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="MyStyles.css" />
@@ -321,9 +332,12 @@
     <TypeScriptCompile Include="app\app-routing.module.ts" />
     <TypeScriptCompile Include="app\app.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
+    <TypeScriptCompile Include="app\Categories\Appetizers\appetizers.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\menu\menu.component.ts" />
     <TypeScriptCompile Include="app\models\Category.ts" />
+    <TypeScriptCompile Include="app\models\Dish.ts" />
+    <TypeScriptCompile Include="app\SafePipe.ts" />
     <TypeScriptCompile Include="app\web.services.ts" />
     <TypeScriptCompile Include="app\welcome\welcome.component.ts" />
   </ItemGroup>
