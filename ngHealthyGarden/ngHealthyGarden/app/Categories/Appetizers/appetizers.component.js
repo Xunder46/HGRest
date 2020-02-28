@@ -11,28 +11,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var web_services_1 = require("../../web.services");
+var router_1 = require("@angular/router");
 var AppetizersComponent = /** @class */ (function () {
-    function AppetizersComponent(services) {
+    function AppetizersComponent(services, activatedRoute) {
         this.services = services;
+        this.activatedRoute = activatedRoute;
     }
+    //TODO: bring categoryName from the component
     AppetizersComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.categoryName = this.activatedRoute.snapshot.paramMap.get('category');
+        debugger;
         this.services.getCategoryByNameWithDishe(this.categoryName).subscribe(function (data) {
-            _this.category = data;
-            console.log(JSON.stringify(data));
+            _this.dishes = data.dishes.filter(function (thing, i, arr) { return arr.findIndex(function (t) { return t.dishName === thing.dishName; }) === i; });
         });
     };
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", String)
-    ], AppetizersComponent.prototype, "categoryName", void 0);
     AppetizersComponent = __decorate([
         core_1.Component({
             selector: 'appetizers',
             templateUrl: './appetizers.component.html',
-            styleUrls: ['./appetizers.component.css']
+            styleUrls: ['./appetizers.component.css', './../../global-layout.css']
         }),
-        __metadata("design:paramtypes", [web_services_1.WebServices])
+        __metadata("design:paramtypes", [web_services_1.WebServices, router_1.ActivatedRoute])
     ], AppetizersComponent);
     return AppetizersComponent;
 }());

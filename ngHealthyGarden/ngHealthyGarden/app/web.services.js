@@ -21,7 +21,7 @@ var WebServices = /** @class */ (function () {
         return this.http.get(this.baseUrl + '/menu');
     };
     WebServices.prototype.getCategoryByNameWithDishe = function (category) {
-        return this.http.get(this.baseUrl + '/' + category);
+        return this.http.get(this.baseUrl + '/menu/' + category);
     };
     WebServices = __decorate([
         core_1.Injectable(),

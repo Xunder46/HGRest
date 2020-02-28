@@ -7,7 +7,7 @@ import { AppetizersComponent } from '../Categories/Appetizers/appetizers.compone
 @Component({
     selector: 'menu',
     templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.css'],
+    styleUrls: ['./menu.component.css','./../global-layout.css'],
     styles: [`
       :host 
     {

@@ -1,69 +1,17 @@
 ﻿/*#region -_-_-_-_ELEMENTS-_-_-_-_*/
-img {
-    border-radius: 25px;
-}
 
-strong {
-    position: relative;
-    bottom: 4em;
-    color: white;
-    font-size: 35px;
-}
-
-a {
-    display: block;
-    color: white;
-    font-size: 35px;
-    text-decoration: none;
-    transition: 0.5s;
-}
 /*#endregion*/
 
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
-.mainContainer {
-    width: 100%;
-    padding:5%;
-    text-align: center;
-    text-align: -webkit-center;
-}
 
-.flexContainer {
-    display: flex;
-    text-align: center;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.buttonContainer {
-    display: flex;
-    align-items: center;
-    flex: 1 0 30%;
-    height: 20em;
-    justify-content: center;
-    margin: 2em;
-}
-
-.textShadow {
-    text-shadow: 1px 1px grey, 2px 2px grey, 3px 3px darkgrey, 4px 4px darkgrey, 5px 5px black, 6px 6px black;
-}
-
-.button{
-    display: block;
-    background: transparent;
-    height: 20em;
-    width: 25em;
-    text-align: center;
-}
-
-.buttonBack{
-    padding-left:2em;
-    max-width: 5em;
-}
 /*#endregion*/
 
 /*#region -_-_-_-_ANIMATIONS-_-_-_-_*/
-.buttonImage:hover {
-    transform: rotate(3deg) scale(1.1);
+a:hover > .button {
+    transform: rotate(2deg) scale(1.05);
 }
+/*#endregion*/
+
+/*#region -_-_-_-MEDIA QUERIES-_-_-_-_*/
+
 /*#endregion*/

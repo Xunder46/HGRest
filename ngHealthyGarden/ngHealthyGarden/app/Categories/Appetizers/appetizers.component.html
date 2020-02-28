@@ -1,1 +1,24 @@
-﻿
+﻿<div class="iconsContainer">
+    <a class="iconContainer" href="/">
+        <img class="icon" src="../../fonts/Icons/back.png" alt="Back" />
+        <h6>Back</h6>
+    </a>
+    <a class="iconContainer" href="/">
+        <img class="icon" src="../../fonts/Icons/home.png" alt="Home" />
+        <h6>Home</h6>
+    </a>
+    <a class="iconContainer" href="">
+        <img class="icon" src="../../fonts/Icons/cart.png" alt="Cart" />
+        <h6>Cart</h6>
+    </a>
+</div>
+<div class="mainContainer">
+    <div class="flexContainer">
+        <div *ngFor="let dish of dishes" class="buttonContainer">
+            <a class="buttonImage" href="/{{dish.dishName}}">
+                <img class="btn button" src="../../fonts/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}" />
+                <strong class="textShadow">{{dish.dishName}}</strong>
+            </a>
+        </div>
+    </div>
+</div>
