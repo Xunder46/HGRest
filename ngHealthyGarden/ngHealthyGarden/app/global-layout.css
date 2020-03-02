@@ -1,8 +1,10 @@
 ﻿/*#region -_-_-_-_ELEMENTS-_-_-_-_*/
 img {
-    padding: 0 !important;
     border-radius: 25px;
-    transition: 0.5s;
+    padding: 0 !important;
+    margin: auto;
+    transition: 0.8s cubic-bezier(.52,.32,.39,1.36);
+    z-index: 200;
 }
 
 strong {
@@ -63,12 +65,20 @@ h6 {
 }
 
 .buttonContainer {
+    border: solid 4px blanchedalmond; 
+    border-radius: 25px;
+    background-color: blanchedalmond;
+    position: relative;
     display: flex;
     align-items: center;
     flex: 1 0 25%;
-    height: 20em;
+    max-width: 25em;
     justify-content: center;
-    margin: 2em;
+    margin: 1em;
+}
+
+.buttonImage{
+    transform-origin:top left;
 }
 
 .textShadow {

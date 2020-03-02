@@ -17,11 +17,9 @@ var AppetizersComponent = /** @class */ (function () {
         this.services = services;
         this.activatedRoute = activatedRoute;
     }
-    //TODO: bring categoryName from the component
     AppetizersComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.categoryName = this.activatedRoute.snapshot.paramMap.get('category');
-        debugger;
         this.services.getCategoryByNameWithDishe(this.categoryName).subscribe(function (data) {
             _this.dishes = data.dishes.filter(function (thing, i, arr) { return arr.findIndex(function (t) { return t.dishName === thing.dishName; }) === i; });
         });

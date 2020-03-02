@@ -4,6 +4,7 @@ import { Category } from '../../models/Category';
 import { Dish } from '../../models/Dish';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
     selector: 'appetizers',
     templateUrl: './appetizers.component.html',
@@ -19,10 +20,8 @@ export class AppetizersComponent implements OnInit {
        
     }
 
-    //TODO: bring categoryName from the component
     ngOnInit(): void {
         this.categoryName = this.activatedRoute.snapshot.paramMap.get('category');
-        debugger
         this.services.getCategoryByNameWithDishe(this.categoryName).subscribe(data => {
             this.dishes = data.dishes.filter(
                 (thing, i, arr) => arr.findIndex(t => t.dishName === thing.dishName) === i

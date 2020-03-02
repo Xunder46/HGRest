@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AppetizersComponent } from './Categories/Appetizers/appetizers.component';
+import { SplitPipe } from './split.pipe';
 
 @NgModule({
     imports: [
@@ -26,7 +27,7 @@ import { AppetizersComponent } from './Categories/Appetizers/appetizers.componen
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
-        AppComponent, MenuComponent, WelcomeComponent, AppetizersComponent
+        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, AppetizersComponent
     ],
     bootstrap: [
         AppComponent

@@ -1,2 +1,43 @@
-﻿body {
+﻿
+/*#region -_-_-_-_CLASSES-_-_-_-_*/
+.insideImageButton{
+    font-size:14px;
+    font-weight: bold;
+    position: absolute;
+    background: transparent;
+    border: solid 2px darkorange;
+    border-radius: 5px;
+    width: 8em;
+    height:2.5em;
+    margin:1em;
+    color: black;
+    transition: 0.3s;
 }
+
+.insideImageButton:nth-of-type(1){
+    bottom: 1em;
+    left: 2em;
+}
+
+.insideImageButton:nth-of-type(2) {
+    bottom: 1em;
+    right: 2em;
+}
+/*#endregion*/
+
+/*#region -_-_-_-ANIMATIONS-_-_-_-_*/
+
+/*#endregion*/
+
+/*#region -_-_-_-MEDIA QUERIES-_-_-_-_*/
+@media(min-width:1095px) {
+    .buttonImage:hover > img {
+        transform: translateY(-200px);
+    }
+
+    .insideImageButton:hover {
+        background-color: tomato;
+        border-color: tomato;
+    }
+}
+/*#endregion*/

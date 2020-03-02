@@ -14,11 +14,11 @@
 </div>
 <div class="mainContainer">
     <div class="flexContainer">
-        <div *ngFor="let category of categories" class="buttonContainer">
-            <a class="buttonImage" href="/{{category.description}}">
-                    <img class="btn button" src="../../fonts/Dishes/{{category.description}}.jpg" alt="{{category.description}}" />
-                    <strong class="textShadow">{{category.description}}</strong>
+        <div *ngFor="let category of categories" class="">
+            <a class="buttonContainer buttonImage" href="/{{category.description}}">
+                <img class="btn button" src="../../fonts/Dishes/{{category.description}}.jpg" alt="{{category.description}}" />
             </a>
+            <strong class="textShadow">{{category.description|split}}</strong>
         </div>
     </div>
 </div>

@@ -14,11 +14,14 @@
 </div>
 <div class="mainContainer">
     <div class="flexContainer">
-        <div *ngFor="let dish of dishes" class="buttonContainer">
-            <a class="buttonImage" href="/{{dish.dishName}}">
+        <div *ngFor="let dish of dishes" class="">
+            <a class="buttonContainer buttonImage">
                 <img class="btn button" src="../../fonts/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}" />
-                <strong class="textShadow">{{dish.dishName}}</strong>
+
+                <div class="btn insideImageButton">Customize</div>
+                <div class="btn insideImageButton">Add to cart</div>
             </a>
+            <strong class="textShadow">{{dish.dishName | split}}</strong>
         </div>
     </div>
 </div>

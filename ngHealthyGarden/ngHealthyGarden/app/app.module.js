@@ -19,6 +19,7 @@ var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
 var welcome_component_1 = require("./welcome/welcome.component");
 var appetizers_component_1 = require("./Categories/Appetizers/appetizers.component");
+var split_pipe_1 = require("./split.pipe");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -37,7 +38,7 @@ var AppModule = /** @class */ (function () {
                 { provide: common_1.APP_BASE_HREF, useValue: '/' }
             ],
             declarations: [
-                app_component_1.AppComponent, menu_component_1.MenuComponent, welcome_component_1.WelcomeComponent, appetizers_component_1.AppetizersComponent
+                split_pipe_1.SplitPipe, app_component_1.AppComponent, menu_component_1.MenuComponent, welcome_component_1.WelcomeComponent, appetizers_component_1.AppetizersComponent
             ],
             bootstrap: [
                 app_component_1.AppComponent

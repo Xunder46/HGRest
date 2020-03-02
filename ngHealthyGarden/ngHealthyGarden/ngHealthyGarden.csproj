@@ -346,7 +346,7 @@
     <TypeScriptCompile Include="app\menu\menu.component.ts" />
     <TypeScriptCompile Include="app\models\Category.ts" />
     <TypeScriptCompile Include="app\models\Dish.ts" />
-    <TypeScriptCompile Include="app\SafePipe.ts" />
+    <TypeScriptCompile Include="app\split.pipe.ts" />
     <TypeScriptCompile Include="app\web.services.ts" />
     <TypeScriptCompile Include="app\welcome\welcome.component.ts" />
   </ItemGroup>
