@@ -19,7 +19,7 @@
                 <img class="btn button" src="../../fonts/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}" />
 
                 <div class="btn insideImageButton">Customize</div>
-                <div class="btn insideImageButton">Add to cart</div>
+                <div class="btn insideImageButton" (click)="addToCart()">Add to cart</div>
             </a>
             <strong class="textShadow">{{dish.dishName | split}}</strong>
         </div>

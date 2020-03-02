@@ -11,7 +11,7 @@
     height:2.5em;
     margin:1em;
     color: black;
-    transition: 0.3s;
+    transition:  0.3s;
 }
 
 .insideImageButton:nth-of-type(1){
@@ -25,14 +25,14 @@
 }
 /*#endregion*/
 
-/*#region -_-_-_-ANIMATIONS-_-_-_-_*/
+/*#region -_-_-_-KEYFRAMES-_-_-_-_*/
 
 /*#endregion*/
 
 /*#region -_-_-_-MEDIA QUERIES-_-_-_-_*/
 @media(min-width:1095px) {
     .buttonImage:hover > img {
-        transform: translateY(-200px);
+        transform: scale(1.02) translateY(-200px);
     }
 
     .insideImageButton:hover {

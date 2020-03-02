@@ -24,6 +24,8 @@ var AppetizersComponent = /** @class */ (function () {
             _this.dishes = data.dishes.filter(function (thing, i, arr) { return arr.findIndex(function (t) { return t.dishName === thing.dishName; }) === i; });
         });
     };
+    AppetizersComponent.prototype.addToCart = function () {
+    };
     AppetizersComponent = __decorate([
         core_1.Component({
             selector: 'appetizers',
