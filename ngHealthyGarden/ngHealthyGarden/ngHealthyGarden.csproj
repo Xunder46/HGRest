@@ -236,6 +236,9 @@
     <Content Include="app\Categories\Appetizers\appetizers.component.html" />
     <Content Include="app\global-layout.css" />
     <Content Include="app\menu\menu.component.css" />
+    <Content Include="app\navigation\navigation.component.html" />
+    <Content Include="app\shopping-cart\shopping-cart.component.css" />
+    <Content Include="app\shopping-cart\shopping-cart.component.html" />
     <Content Include="app\welcome\welcome.component.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -260,6 +263,7 @@
     <Content Include="fonts\Icons\cart.png" />
     <Content Include="fonts\Icons\home.png" />
     <Content Include="fonts\MainHg.jpg" />
+    <Content Include="fonts\success.png" />
     <Content Include="fonts\untitled.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -346,6 +350,8 @@
     <TypeScriptCompile Include="app\menu\menu.component.ts" />
     <TypeScriptCompile Include="app\models\Category.ts" />
     <TypeScriptCompile Include="app\models\Dish.ts" />
+    <TypeScriptCompile Include="app\navigation\navigation.component.ts" />
+    <TypeScriptCompile Include="app\shopping-cart\shopping-cart.component.ts" />
     <TypeScriptCompile Include="app\split.pipe.ts" />
     <TypeScriptCompile Include="app\web.services.ts" />
     <TypeScriptCompile Include="app\welcome\welcome.component.ts" />

@@ -6,11 +6,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AppetizersComponent } from './Categories/Appetizers/appetizers.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 const routes: Routes = [
-    { path: '', component: WelcomeComponent},
+    { path: '', component: WelcomeComponent },
+    { path: 'shoppingcart', component: ShoppingCartComponent },
     { path: 'menu', component: MenuComponent },
-    { path: ':category', component: AppetizersComponent}
+    { path: ':category', component: AppetizersComponent }
 ];
 
 @NgModule({

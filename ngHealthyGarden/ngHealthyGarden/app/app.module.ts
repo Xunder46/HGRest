@@ -12,6 +12,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AppetizersComponent } from './Categories/Appetizers/appetizers.component';
 import { SplitPipe } from './split.pipe';
+import { NavigationComponent } from './navigation/navigation.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
     imports: [
@@ -27,7 +29,7 @@ import { SplitPipe } from './split.pipe';
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
-        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, AppetizersComponent
+        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, AppetizersComponent, NavigationComponent, ShoppingCartComponent
     ],
     bootstrap: [
         AppComponent

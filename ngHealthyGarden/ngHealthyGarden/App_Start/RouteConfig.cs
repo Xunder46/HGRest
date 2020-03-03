@@ -20,6 +20,12 @@ namespace ngHealthyGarden
         );
 
             routes.MapRoute(
+            name: "Cart",
+            url: "{controller}/shoppingcart",
+            defaults: new { controller = "Home", action = "Index" }
+        );
+
+            routes.MapRoute(
             name: "Category",
             url: "{controller}/{category}"
         );

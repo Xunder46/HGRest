@@ -13,8 +13,10 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var welcome_component_1 = require("./welcome/welcome.component");
 var appetizers_component_1 = require("./Categories/Appetizers/appetizers.component");
+var shopping_cart_component_1 = require("./shopping-cart/shopping-cart.component");
 var routes = [
     { path: '', component: welcome_component_1.WelcomeComponent },
+    { path: 'shoppingcart', component: shopping_cart_component_1.ShoppingCartComponent },
     { path: 'menu', component: menu_component_1.MenuComponent },
     { path: ':category', component: appetizers_component_1.AppetizersComponent }
 ];

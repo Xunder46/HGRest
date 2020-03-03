@@ -21,6 +21,12 @@ namespace ngHealthyGarden
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            config.Routes.MapHttpRoute(
+            name: "CartApi",
+            routeTemplate: "api/menu/shoppingcart",
+            defaults: new { controller = "Home", action = "Index" }
+        );
+
             //config.Routes.MapHttpRoute(
             //    name: "DefaultApi",
             //    routeTemplate: "api/{controller}/{id}",

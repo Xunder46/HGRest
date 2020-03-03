@@ -13,8 +13,10 @@ import { ActivatedRoute } from '@angular/router';
 
 export class AppetizersComponent implements OnInit {
 
+    
     dishes: Dish[];
     categoryName: string;
+    dishesInTheCart: Dish[];
 
     constructor(private services: WebServices, private activatedRoute: ActivatedRoute) {
        
@@ -29,7 +31,20 @@ export class AppetizersComponent implements OnInit {
         })
     }
 
-    addToCart() {
+    addToCart(dish: Dish) {
+        if (!JSON.parse(localStorage.getItem("dishes"))) {
+            this.dishesInTheCart = [];
+        }
+        else {
+            this.dishesInTheCart = JSON.parse(localStorage.getItem("dishes"));
+            
+        }
 
+        this.dishesInTheCart.push(dish);
+        localStorage.setItem("dishes", JSON.stringify(this.dishesInTheCart));
+    }
+
+    showStorage() {
+        console.log(localStorage["dishes"]);
     }
 }

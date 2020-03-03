@@ -1,31 +1,51 @@
 ﻿
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
-.insideImageButton{
-    font-size:14px;
+.insideImageButton {
+    font-size: 14px;
     font-weight: bold;
     position: absolute;
     background: transparent;
     border: solid 2px darkorange;
     border-radius: 5px;
     width: 8em;
-    height:2.5em;
-    margin:1em;
+    height: 2.5em;
+    margin: 1em;
     color: black;
-    transition:  0.3s;
+    transition: 0.3s;
 }
 
-.insideImageButton:nth-of-type(1){
-    bottom: 1em;
-    left: 2em;
-}
+    .insideImageButton:nth-of-type(1) {
+        bottom: 1em;
+        left: 2em;
+    }
 
-.insideImageButton:nth-of-type(2) {
-    bottom: 1em;
-    right: 2em;
+    .insideImageButton:nth-of-type(2) {
+        bottom: 1em;
+        right: 2em;
+    }
+
+.alertContainer{
+    position:absolute;
+    border: solid 2px tomato;
+    border-radius: 4px;
+    display: flex;
+    align-items:stretch;
+    perspective: 1000px;
+    bottom: 30px;
+    left:30px;
+    transform-origin: bottom right;
+    transform: rotate(90deg) scale(0.5);
 }
 /*#endregion*/
 
 /*#region -_-_-_-KEYFRAMES-_-_-_-_*/
+/*#endregion*/
+
+/*#region -_-_-_-ANIMATIONS-_-_-_-_*/
+.insideImageButton:active {
+    transform: scale(0.9);
+}
+
 
 /*#endregion*/
 

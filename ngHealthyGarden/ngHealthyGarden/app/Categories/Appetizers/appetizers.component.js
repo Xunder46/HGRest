@@ -24,7 +24,18 @@ var AppetizersComponent = /** @class */ (function () {
             _this.dishes = data.dishes.filter(function (thing, i, arr) { return arr.findIndex(function (t) { return t.dishName === thing.dishName; }) === i; });
         });
     };
-    AppetizersComponent.prototype.addToCart = function () {
+    AppetizersComponent.prototype.addToCart = function (dish) {
+        if (!JSON.parse(localStorage.getItem("dishes"))) {
+            this.dishesInTheCart = [];
+        }
+        else {
+            this.dishesInTheCart = JSON.parse(localStorage.getItem("dishes"));
+        }
+        this.dishesInTheCart.push(dish);
+        localStorage.setItem("dishes", JSON.stringify(this.dishesInTheCart));
+    };
+    AppetizersComponent.prototype.showStorage = function () {
+        console.log(localStorage["dishes"]);
     };
     AppetizersComponent = __decorate([
         core_1.Component({
