@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var web_services_1 = require("../web.services");
+var web_services_1 = require("../services/web.services");
 var platform_browser_1 = require("@angular/platform-browser");
 var MenuComponent = /** @class */ (function () {
     function MenuComponent(services, sanitizor) {

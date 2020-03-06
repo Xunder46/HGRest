@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { WebServices } from '../web.services'
+import { WebServices } from '../services/web.services'
 import { Category } from '../models/Category';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { AppetizersComponent } from '../Categories/Appetizers/appetizers.component';
+import { AppetizersComponent } from '../Categories/dishes.component';
 
 @Component({
     selector: 'menu',

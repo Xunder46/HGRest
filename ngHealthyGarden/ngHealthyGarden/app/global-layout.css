@@ -28,7 +28,7 @@ h6 {
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
 .mainContainer {
     width: 100%;
-    padding: 10%;
+    padding: 5% 10% 0 10%;
     text-align: center;
     text-align: -webkit-center;
 }
@@ -55,6 +55,7 @@ h6 {
 }
 
 .iconContainer {
+    position: relative;
     margin: 0.2em;
     text-align: center;
 }
@@ -93,12 +94,43 @@ h6 {
     width: 25em;
     text-align: center;
 }
+
+.badge {
+    transform: scale(0.6);
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+/*#endregion*/
+
+/*#region -_-_-_-KEYFRAMES-_-_-_-_*/
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+
+    80%{
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
 /*#endregion*/
 
 /*#region -_-_-_-_ANIMATIONS-_-_-_-_*/
 .icon:hover {
     background-color: tomato;
     border-color: tomato;
+}
+
+.mainContainer{
+    animation: appear 1s ease-in;
 }
 /*#endregion*/
 

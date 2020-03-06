@@ -1,7 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Dish } from '../models/Dish';
+import { CartService } from '../services/shopping-cart.service';
 
 @Component({
+    providers:[CartService],
     selector: 'shopping-cart',
     templateUrl: './shopping-cart.component.html',
     styleUrls: ['./shopping-cart.component.css', './../global-layout.css']
@@ -13,6 +15,10 @@ export class ShoppingCartComponent implements OnInit {
     subtotal: number = 0;
     tax: number = 0;
     total: number = 0;
+
+    constructor(private _cart: CartService) {
+
+    }
 
     ngOnInit() {
         if (!JSON.parse(localStorage.getItem("dishes"))) {
@@ -32,8 +38,7 @@ export class ShoppingCartComponent implements OnInit {
 
     //TODO: when order sent clear local storage
     emptyCart() {
-        localStorage.clear();
-        this.dishesFromLocalStorage = [];
+        this._cart.deleteItems();
         this.cartIsEmpty = true;
     }
 }
