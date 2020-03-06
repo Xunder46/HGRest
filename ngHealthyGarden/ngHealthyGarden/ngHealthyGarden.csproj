@@ -232,8 +232,8 @@
   <ItemGroup>
     <Content Include="app\app.component.css" />
     <Content Include="app\app.component.html" />
-    <Content Include="app\Categories\Appetizers\appetizers.component.css" />
-    <Content Include="app\Categories\Appetizers\appetizers.component.html" />
+    <Content Include="app\Categories\dishes.component.css" />
+    <Content Include="app\Categories\dishes.component.html" />
     <Content Include="app\global-layout.css" />
     <Content Include="app\menu\menu.component.css" />
     <Content Include="app\navigation\navigation.component.html" />
@@ -345,12 +345,14 @@
     <TypeScriptCompile Include="app\app-routing.module.ts" />
     <TypeScriptCompile Include="app\app.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
-    <TypeScriptCompile Include="app\Categories\Appetizers\appetizers.component.ts" />
+    <TypeScriptCompile Include="app\Categories\dishes.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\menu\menu.component.ts" />
     <TypeScriptCompile Include="app\models\Category.ts" />
     <TypeScriptCompile Include="app\models\Dish.ts" />
     <TypeScriptCompile Include="app\navigation\navigation.component.ts" />
+    <TypeScriptCompile Include="app\services\shopping-cart.service.ts" />
+    <TypeScriptCompile Include="app\services\web.services.ts" />
     <TypeScriptCompile Include="app\shopping-cart\shopping-cart.component.ts" />
     <TypeScriptCompile Include="app\split.pipe.ts" />
     <TypeScriptCompile Include="app\web.services.ts" />

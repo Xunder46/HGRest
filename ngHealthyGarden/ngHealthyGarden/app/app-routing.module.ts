@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { AppetizersComponent } from './Categories/Appetizers/appetizers.component';
+import { AppetizersComponent } from './Categories/dishes.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 const routes: Routes = [
