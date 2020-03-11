@@ -23,7 +23,7 @@ var NavigationComponent = /** @class */ (function () {
             else {
                 _this.dishesInTheCart = [];
             }
-        }, 500);
+        }, 200);
     }
     NavigationComponent = __decorate([
         core_1.Component({

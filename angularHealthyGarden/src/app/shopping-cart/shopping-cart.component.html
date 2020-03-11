@@ -1,0 +1,46 @@
+﻿<navigation></navigation>
+<div class="mainContainer">
+    <div *ngIf="!cartIsEmpty">
+        <table class="table cartTable">
+            <thead class="thead-dark cartTableHead">
+                <tr>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Dish name</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody class="cartTableBody">
+                <tr *ngFor="let dish of dishesFromLocalStorage">
+                    <td><img class="image" src="../../assets/Dishes/{{dish.dishName}}.jpg" /></td>
+                    <td>{{dish.dishName|split}}</td>
+                    <td>{{dish.dishName|split}}</td>
+                    <td>{{dish.price|currency}}</td>
+                    <td>{{dish.dishName|split}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="totals">
+            <div class="totals-item">
+                <label>Subtotal</label>
+                <div class="totals-value" id="cart-subtotal">{{subtotal|currency}}</div>
+            </div>
+            <div class="totals-item">
+                <label>Tax (5%)</label>
+                <div class="totals-value" id="cart-tax">{{tax|currency}}</div>
+            </div>
+            <div class="totals-item totals-item-total">
+                <label>Grand Total</label>
+                <div class="totals-value" id="cart-total">{{total|currency}}</div>
+            </div>
+            <button class="checkout">Checkout</button>
+            <button class="checkout" (click)="emptyCart()">Clear all</button>
+        </div>
+    </div>
+    <div *ngIf="cartIsEmpty">
+        <h1>Sorry, but you didn't add anything to your cart...</h1>
+    </div>
+</div>
+

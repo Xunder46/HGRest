@@ -4,14 +4,12 @@ import { Dish } from '../models/Dish';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../services/shopping-cart.service';
 
-
 @Component({
     providers: [CartService],
     selector: 'dishes',
     templateUrl: './dishes.component.html',
     styleUrls: ['./dishes.component.css', './../global-layout.css']
 })
-
 export class AppetizersComponent implements OnInit {
 
     dishes: Dish[];

@@ -1,0 +1,38 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Customize item</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <!-- <div class="form-group">
+          <label for="dateOfBirth">Date of birth</label>
+          <div class="input-group">
+            <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-group">
+          <label for="dateOfBirth">Ingredients</label>
+          <div class="input-group">
+            <input type="checkbox">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="additionalNotes">Additional notes</label>
+          <div class="input-group">
+            <textarea id="additionalNotes" class="form-control"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Add to cart</button>
+    </div>
+  </ng-template>
+  
+  <div class="btn insideImageButton customizeButton" (click)="open(content)">Customize</div>

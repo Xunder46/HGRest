@@ -1,0 +1,17 @@
+﻿<navigation></navigation>
+<div class="mainContainer">
+    <div class="flexContainer">
+        <div *ngFor="let dish of dishes" class="">
+            <a class="buttonContainer buttonImage">
+                <img class="btn button" src="../../assets/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}" />
+
+                <ngbd-modal-basic></ngbd-modal-basic>
+                <div class="btn insideImageButton addToCartButton" (click)="addToCart(dish)">Add to cart</div>
+            </a>
+            <strong class="textShadow">{{dish.dishName | split}}</strong>
+        </div>
+    </div>
+</div>
+<div *ngIf="dishAdded" class="alertContainer">
+    <h6>You have successfully added this dish to your cart</h6>
+</div>

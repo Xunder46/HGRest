@@ -6,7 +6,7 @@ div {
 }
 
 tbody>tr {
-    transition: 0.3s;
+    transition: 0.4s;
 }
 
 tr{
@@ -60,7 +60,7 @@ h1 {
 /*#region -_-_-_-_Animations-_-_-_-_*/
 tbody>tr:hover {
     background-color: aquamarine;
-    transform: scale(1.03);
+    transform: scale(1.01);
 }
 /*#endregion*/
 

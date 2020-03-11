@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { WebServices } from './services/web.services'
@@ -18,6 +19,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 @NgModule({
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         HttpModule,
         HttpClientModule,
         AppRoutingModule,

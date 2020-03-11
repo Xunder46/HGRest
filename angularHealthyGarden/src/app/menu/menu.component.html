@@ -1,0 +1,11 @@
+﻿<navigation></navigation>
+<div class="mainContainer">
+    <div class="flexContainer">
+        <div *ngFor="let category of categories" >
+            <a class="buttonContainer buttonImage" href="/{{category.description}}">
+                <img class="btn button" src="../../assets/Dishes/{{category.description}}.jpg" alt="{{category.description}}" />
+            </a>
+            <strong class="textShadow">{{category.description|split}}</strong>
+        </div>
+    </div>
+</div>

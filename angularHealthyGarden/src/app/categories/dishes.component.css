@@ -1,0 +1,99 @@
+﻿
+/*#region -_-_-_-_CLASSES-_-_-_-_*/
+.insideImageButton {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    background: transparent;
+    border: solid 2px darkorange;
+    border-radius: 5px;
+    width: 8em;
+    height: 2.5em;
+    margin: 1em;
+    color: black;
+    transition: 0.3s;
+}
+
+    .customizeButton {
+        bottom: 1em;
+        left: 2em;
+    }
+
+    .addToCartButton {
+        bottom: 1em;
+        right: 2em;
+    }
+
+.alertContainer{
+    position:absolute;
+    border: solid 2px tomato;
+    border-radius: 4px;
+    display: flex;
+    align-items:stretch;
+    perspective: 1000px;
+    bottom: 30px;
+    left:30px;
+    transform-origin: bottom right;
+    transform: rotate(90deg) scale(0.5);
+}
+/*#endregion*/
+
+/*#region -_-_-_-KEYFRAMES-_-_-_-_*/
+@keyframes alertPupUp{
+    0% {
+        bottom: -5em;
+        left: -5em;
+        opacity: 0;
+        transform: translateX(-10em) rotate(90deg) scale(0.5);
+    }
+
+    10%,80% {
+        bottom: 2em;
+        left: 2em;
+        opacity: 1;
+        transform: translateX(0) rotate(0deg) scale(1)
+    }
+
+    100% {
+        bottom: -5em;
+        left: -5em;
+        opacity: 0;
+        transform: translateX(-10em) rotate(90deg) scale(0.5);
+    }
+}
+/*#endregion*/
+
+/*#region -_-_-_-ANIMATIONS-_-_-_-_*/
+.insideImageButton:active {
+    transform: scale(0.9);
+}
+
+.alertContainer {
+    font-size: 25px;
+    position: absolute;
+    background-color: cadetblue;
+    border: solid 2px darkcyan;
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    perspective: 1000px;
+    bottom: -5em;
+    left: -5em;
+    transform-origin: bottom left;
+    animation: alertPupUp 4s cubic-bezier(.13,-0.15,.59,1.54) forwards;
+    z-index: 2000;
+}
+/*#endregion*/
+
+/*#region -_-_-_-MEDIA QUERIES-_-_-_-_*/
+@media(min-width:1095px) {
+    .buttonImage:hover > img {
+        transform: scale(1.02) translateY(-200px);
+    }
+
+    .insideImageButton:hover {
+        background-color: tomato;
+        border-color: tomato;
+    }
+}
+/*#endregion*/

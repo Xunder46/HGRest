@@ -12,11 +12,11 @@ var CartService = /** @class */ (function () {
         this.dishesInTheCart = [];
     }
     CartService.prototype.addToCart = function (dish) {
-        if (!JSON.parse(localStorage.getItem("dishes"))) {
+        if (!this.getItems()) {
             this.dishesInTheCart = [];
         }
         else {
-            this.dishesInTheCart = JSON.parse(localStorage.getItem("dishes"));
+            this.getItems();
         }
         this.dishesInTheCart.push(dish);
         localStorage.setItem("dishes", JSON.stringify(this.dishesInTheCart));

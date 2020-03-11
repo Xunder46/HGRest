@@ -7,11 +7,11 @@ export class CartService {
     private dishesInTheCart: Dish[] = [];
 
     public addToCart(dish: Dish) {
-        if (!JSON.parse(localStorage.getItem("dishes"))) {
+        if (!this.getItems()) {
             this.dishesInTheCart = [];
         }
         else {
-            this.dishesInTheCart = JSON.parse(localStorage.getItem("dishes"));
+            this.getItems();
 
         }
         this.dishesInTheCart.push(dish);

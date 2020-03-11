@@ -1,0 +1,22 @@
+@import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");
+/* You can add global styles to this file, and also import other style files */
+
+html {
+    width: 100%;
+    height: -webkit-fill-available;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: large;
+}
+
+body {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+}
+
+.background {
+    background: linear-gradient(180deg, rgba(213, 203, 185, 0.8) 20%, rgba(213, 203, 185, 0.8) 80%), url(assets/MainHg.jpg);
+    background-size: cover;
+}
