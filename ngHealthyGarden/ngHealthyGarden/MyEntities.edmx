@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -35,9 +25,16 @@
           <Property Name="SideId" Type="int" />
           <Property Name="TortillaId" Type="int" />
         </EntityType>
+        <EntityType Name="ItemCategories">
+          <Key>
+            <PropertyRef Name="ItemCategoryId" />
+          </Key>
+          <Property Name="ItemCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="DishItems">
+warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ItemDishes">
           <Key>
             <PropertyRef Name="DishId" />
             <PropertyRef Name="ItemId" />
@@ -50,9 +47,9 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemName" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="3" Scale="2" />
-          <Property Name="DishId" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ItemCategoryId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Sides">
           <Key>
@@ -134,20 +131,59 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DishItems_Dishes">
+          <End Role="Dishes" Type="Self.Dishes" Multiplicity="1" />
+          <End Role="ItemDishes" Type="Self.ItemDishes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dishes">
+              <PropertyRef Name="DishId" />
+            </Principal>
+            <Dependent Role="ItemDishes">
+              <PropertyRef Name="DishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DishItems_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemDishes" Type="Self.ItemDishes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="ItemDishes">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingredients_ItemCategories">
+          <End Role="ItemCategories" Type="Self.ItemCategories" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemCategories">
+              <PropertyRef Name="ItemCategoryId" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="ItemCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spGetItemsRelatedToADish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DishId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dishes" EntityType="Self.Dishes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemCategories" EntityType="Self.ItemCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sides" EntityType="Self.Sides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TortillaTypes" EntityType="Self.TortillaTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DishItems" EntityType="Self.DishItems" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="ItemDishes" EntityType="Self.ItemDishes" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [DishItems].[DishId] AS [DishId], 
-    [DishItems].[ItemId] AS [ItemId]
-    FROM [dbo].[DishItems] AS [DishItems]</DefiningQuery>
+    [ItemDishes].[DishId] AS [DishId], 
+    [ItemDishes].[ItemId] AS [ItemId]
+    FROM [dbo].[ItemDishes] AS [ItemDishes]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Dishes_Categories" Association="Self.FK_Dishes_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -165,28 +201,30 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <End Role="TortillaTypes" EntitySet="TortillaTypes" />
             <End Role="Dishes" EntitySet="Dishes" />
           </AssociationSet>
+          <AssociationSet Name="FK_DishItems_Dishes" Association="Self.FK_DishItems_Dishes">
+            <End Role="Dishes" EntitySet="Dishes" />
+            <End Role="ItemDishes" EntitySet="ItemDishes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DishItems_Items" Association="Self.FK_DishItems_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemDishes" EntitySet="ItemDishes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingredients_ItemCategories" Association="Self.FK_Ingredients_ItemCategories">
+            <End Role="ItemCategories" EntitySet="ItemCategories" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Categories" FromRole="Categories" ToRole="Dishes" />
           <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Categories" FromRole="Categories" ToRole="Dishes" />
         </EntityType>
         <EntityType Name="Dish">
           <Key>
@@ -204,39 +242,50 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
           <NavigationProperty Name="Side" Relationship="Self.FK_Dishes_Sides" FromRole="Dishes" ToRole="Sides" />
           <NavigationProperty Name="Size" Relationship="Self.FK_Dishes_Sizes" FromRole="Dishes" ToRole="Sizes" />
           <NavigationProperty Name="TortillaType" Relationship="Self.FK_Dishes_TortillaTypes" FromRole="Dishes" ToRole="TortillaTypes" />
+          <NavigationProperty Name="Items" Relationship="Self.ItemDishes" FromRole="Dishes" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="ItemCategory">
+          <Key>
+            <PropertyRef Name="ItemCategoryId" />
+          </Key>
+          <Property Name="ItemCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Ingredients_ItemCategories" FromRole="ItemCategories" ToRole="Items" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="3" Scale="2" />
-          <Property Name="DishId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ItemCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="ItemCategory" Relationship="Self.FK_Ingredients_ItemCategories" FromRole="Items" ToRole="ItemCategories" />
+          <NavigationProperty Name="Dishes" Relationship="Self.ItemDishes" FromRole="Items" ToRole="Dishes" />
         </EntityType>
         <EntityType Name="Side">
           <Key>
             <PropertyRef Name="SideId" />
           </Key>
           <Property Name="SideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Sides" FromRole="Sides" ToRole="Dishes" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Sides" FromRole="Sides" ToRole="Dishes" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
             <PropertyRef Name="SizeId" />
           </Key>
           <Property Name="SizeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Sizes" FromRole="Sizes" ToRole="Dishes" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Sizes" FromRole="Sizes" ToRole="Dishes" />
         </EntityType>
         <EntityType Name="TortillaType">
           <Key>
             <PropertyRef Name="TortillaId" />
           </Key>
           <Property Name="TortillaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_TortillaTypes" FromRole="TortillaTypes" ToRole="Dishes" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_TortillaTypes" FromRole="TortillaTypes" ToRole="Dishes" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -248,14 +297,6 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="DishItem">
-          <Key>
-            <PropertyRef Name="DishId" />
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="DishId" Type="Int32" Nullable="false" />
-          <Property Name="ItemId" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Dishes_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -305,16 +346,31 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MyEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+        <Association Name="FK_Ingredients_ItemCategories">
+          <End Role="ItemCategories" Type="Self.ItemCategory" Multiplicity="1" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemCategories">
+              <PropertyRef Name="ItemCategoryId" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="ItemCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ItemDishes">
+          <End Role="Dishes" Type="Self.Dish" Multiplicity="*" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Dishes" EntityType="Self.Dish" />
+          <EntitySet Name="ItemCategories" EntityType="Self.ItemCategory" />
           <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Sides" EntityType="Self.Side" />
           <EntitySet Name="Sizes" EntityType="Self.Size" />
           <EntitySet Name="TortillaTypes" EntityType="Self.TortillaType" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="DishItems" EntityType="Self.DishItem" />
           <AssociationSet Name="FK_Dishes_Categories" Association="Self.FK_Dishes_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Dishes" EntitySet="Dishes" />
@@ -331,28 +387,53 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
             <End Role="TortillaTypes" EntitySet="TortillaTypes" />
             <End Role="Dishes" EntitySet="Dishes" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ingredients_ItemCategories" Association="Self.FK_Ingredients_ItemCategories">
+            <End Role="ItemCategories" EntitySet="ItemCategories" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="ItemDishes" Association="Self.ItemDishes">
+            <End Role="Dishes" EntitySet="Dishes" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <FunctionImport Name="spGetItemsRelatedToADish" EntitySet="Items" ReturnType="Collection(Model.Item)">
+            <Parameter Name="DishId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="GetCoursesByStudentId_Result">
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ItemCategoryId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="spGetItemsRelatedToADish_Result">
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ItemCategoryId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="spGetItemsRelatedToADish_Result1">
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ItemCategoryId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="spGetItemsRelatedToADish_Result2">
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ItemCategoryId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="MyEntities">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="Model.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Model.Category">
               <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -370,37 +451,45 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ItemCategories">
+            <EntityTypeMapping TypeName="Model.ItemCategory">
+              <MappingFragment StoreEntitySet="ItemCategories">
+                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="Model.Item">
               <MappingFragment StoreEntitySet="Items">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="DishId" ColumnName="DishId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sides">
             <EntityTypeMapping TypeName="Model.Side">
               <MappingFragment StoreEntitySet="Sides">
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="SideId" ColumnName="SideId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sizes">
             <EntityTypeMapping TypeName="Model.Size">
               <MappingFragment StoreEntitySet="Sizes">
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="SizeId" ColumnName="SizeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TortillaTypes">
             <EntityTypeMapping TypeName="Model.TortillaType">
               <MappingFragment StoreEntitySet="TortillaTypes">
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="TortillaId" ColumnName="TortillaId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -416,14 +505,16 @@ warning 6002: The table/view 'Pablo's.dbo.DishItems' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DishItems">
-            <EntityTypeMapping TypeName="Model.DishItem">
-              <MappingFragment StoreEntitySet="DishItems">
-                <ScalarProperty Name="DishId" ColumnName="DishId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <AssociationSetMapping Name="ItemDishes" TypeName="Model.ItemDishes" StoreEntitySet="ItemDishes">
+            <EndProperty Name="Dishes">
+              <ScalarProperty Name="DishId" ColumnName="DishId" />
+            </EndProperty>
+            <EndProperty Name="Items">
+              <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="spGetItemsRelatedToADish" FunctionName="Model.Store.spGetItemsRelatedToADish">
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

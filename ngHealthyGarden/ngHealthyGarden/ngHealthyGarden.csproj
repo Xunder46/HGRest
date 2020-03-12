@@ -173,22 +173,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Category.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ControllersAPI\DishesController.cs" />
     <Compile Include="ControllersAPI\ItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\IPablosRepository.cs" />
     <Compile Include="Data\PablosMapping.cs" />
     <Compile Include="Data\PablosRepository.cs" />
     <Compile Include="Dish.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DishItem.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    <Compile Include="GetCoursesByStudentId_Result.cs">
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -196,41 +193,50 @@
     <Compile Include="ControllersAPI\MenuController.cs" />
     <Compile Include="Data\PablosDbContext.cs" />
     <Compile Include="Item.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemCategory.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\DishModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
+    <Compile Include="MyEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MyEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MyEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyEntities.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestaurantModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RestaurantModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RestaurantModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RestaurantModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RestaurantModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Side.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Size.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spGetItemsRelatedToADish_Result.cs">
+      <DependentUpon>MyEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spGetItemsRelatedToADish_Result1.cs">
+      <DependentUpon>MyEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spGetItemsRelatedToADish_Result2.cs">
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="TortillaType.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>RestaurantModel.tt</DependentUpon>
+      <DependentUpon>MyEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -271,32 +277,32 @@
     <Content Include="fonts\untitled.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="MyEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyEntities.edmx</DependentUpon>
+      <LastGenOutput>MyEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MyEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyEntities.edmx</DependentUpon>
+      <LastGenOutput>MyEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="MyStyles.css" />
-    <Content Include="RestaurantModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RestaurantModel.edmx</DependentUpon>
-      <LastGenOutput>RestaurantModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="RestaurantModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RestaurantModel.edmx</DependentUpon>
-      <LastGenOutput>RestaurantModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
-    <EntityDeploy Include="RestaurantModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RestaurantModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="RestaurantModel.edmx.diagram">
-      <DependentUpon>RestaurantModel.edmx</DependentUpon>
-    </Content>
     <Content Include="app\menu\menu.component.html" />
     <Content Include="app\welcome\welcome.component.css" />
     <Content Include="fonts\CabinSketch-Regular.otf" />
     <Content Include="fonts\BalooThambi-Regular.ttf" />
     <Content Include="fonts\Battambang-Regular.ttf" />
+    <EntityDeploy Include="MyEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="MyEntities.edmx.diagram">
+      <DependentUpon>MyEntities.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

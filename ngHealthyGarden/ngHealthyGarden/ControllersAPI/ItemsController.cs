@@ -50,7 +50,7 @@ namespace ngHealthyGarden.ControllersAPI
         {
             try
             {
-                var result = await _pablos.GetItemsByDishIdAsync(dishId);
+                var result = _pablos.GetItemsByDishIdAsync(dishId);
 
                 var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
 

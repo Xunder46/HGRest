@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
-
+using System.Data.SqlClient;
 
 namespace ngHealthyGarden
 {
@@ -15,9 +16,9 @@ namespace ngHealthyGarden
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DishItem>().HasKey(sc => new { sc.DishId, sc.ItemId });
-
             modelBuilder.Entity<Item>().ToTable("Items");
+
+            modelBuilder.Entity<Item>().HasMany(d => d.Dishes).WithMany(i => i.Items);
         }
 
         public virtual DbSet<Category> Categories { get; set; }
@@ -27,6 +28,14 @@ namespace ngHealthyGarden
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<TortillaType> TortillaTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<DishItem> DishItems { get; set; }
+
+        public virtual ObjectResult<Item> spGetItemsRelatedToADish(Nullable<int> dishId)
+        {
+            var dishIdParameter = dishId.HasValue ?
+                new SqlParameter("DishId", dishId) :
+                new SqlParameter("DishId", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<Item>("spGetItemsRelatedToADish @DishId", dishIdParameter);
+        }
     }
 }

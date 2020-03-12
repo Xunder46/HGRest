@@ -12,11 +12,13 @@ namespace ngHealthyGarden
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
-    public partial class MyEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public MyEntities()
-            : base("name=MyEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -25,14 +27,22 @@ namespace ngHealthyGarden
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Dish> Dishes { get; set; }
+        public virtual DbSet<ItemCategory> ItemCategories { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<TortillaType> TortillaTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<DishItem> DishItems { get; set; }
+    
+        public virtual ObjectResult<Item> spGetItemsRelatedToADish(Nullable<int> dishId, MergeOption mergeOption)
+        {
+            var dishIdParameter = dishId.HasValue ?
+                new ObjectParameter("DishId", dishId) :
+                new ObjectParameter("DishId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Item>("spGetItemsRelatedToADish", mergeOption, dishIdParameter);
+        }
     }
 }

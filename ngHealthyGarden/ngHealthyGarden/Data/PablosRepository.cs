@@ -80,11 +80,11 @@ namespace ngHealthyGarden.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Item[]> GetItemsByDishIdAsync(int dishId)
+        public Item[] GetItemsByDishIdAsync(int dishId)
         {
-            IQueryable<Item> query = _context.Items.Where(s => s.Dishes.Any(c => c.DishId == dishId));
+            var query = _context.spGetItemsRelatedToADish(dishId);
 
-            return await query.ToArrayAsync();
+            return query.ToArray();
         }
     }
 }
