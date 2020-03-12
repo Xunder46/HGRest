@@ -11,13 +11,17 @@ using System.Web.Http;
 
 namespace ngHealthyGarden.ControllersAPI
 {
-    [RoutePrefix("api/dishes")]
-    public class DishesController : ApiController
+    [RoutePrefix("api/items")]
+    public class ItemsController : ApiController
     {
         private readonly IPablosRepository _pablos;
         private readonly IMapper _mapper;
 
-        public DishesController(IPablosRepository pablos, IMapper mapper)
+        public ItemsController()
+        {
+
+        }
+        public ItemsController(IPablosRepository pablos, IMapper mapper)
         {
             _mapper = mapper;
             _pablos = pablos;
@@ -28,38 +32,35 @@ namespace ngHealthyGarden.ControllersAPI
         {
             try
             {
-                var result = await _pablos.GetAllDishesAsync();
+                var result = await _pablos.GetAllItemsAsync();
 
-                if (result == null)
-                {
-                    return NotFound();
-                }
+                var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
 
-                return Ok(result);
+                return Ok(mapped);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+
         }
 
-        [Route("{category}")]
-        public async Task<IHttpActionResult> Get(string category)
+        [Route("{dishId}")]
+        public async Task<IHttpActionResult> Get(int dishId)
         {
             try
             {
-                var result = await _pablos.GetCategoryWithDishesByCategoryNameAsync(category);
+                var result = await _pablos.GetItemsByDishIdAsync(dishId);
 
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(_mapper.Map<CategoryModel>(result));
+                var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
+
+                return Ok(mapped);
             }
             catch (Exception ex)
             {
-                return InternalServerError(ex);
+                return BadRequest(ex.Message);
             }
+
         }
     }
 }

@@ -17,6 +17,8 @@ namespace ngHealthyGarden.Data
                 .ForMember(c => c.TortillaTypeDescription, opt => opt.MapFrom(m => m.TortillaType.Description));
 
             CreateMap<Category, CategoryModel>();
+
+            CreateMap<Item, ItemModel>();
         }
     }
 }

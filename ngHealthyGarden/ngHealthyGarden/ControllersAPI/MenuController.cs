@@ -39,32 +39,15 @@ namespace ngHealthyGarden
 
                 return Ok(mapped);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
 
         }
 
         // GET api/<controller>/category
-        [Route("{category}")]
-        public async Task<IHttpActionResult> Get(string category)
-        {
-            try
-            {
-                var result = await _pablos.GetCategoryByNameAsync(category);
-
-                if (result==null)
-                {
-                    return NotFound();
-                }
-                return Ok(_mapper.Map<CategoryModel>(result));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+        
 
         // POST api/<controller>
         public void Post([FromBody]string value)

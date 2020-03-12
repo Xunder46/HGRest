@@ -11,7 +11,8 @@ namespace ngHealthyGarden
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TortillaType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,6 +21,7 @@ namespace ngHealthyGarden
             this.Dishes = new HashSet<Dish>();
         }
     
+        [Key]
         public int TortillaId { get; set; }
         public string Description { get; set; }
     

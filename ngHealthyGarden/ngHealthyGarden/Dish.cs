@@ -14,6 +14,12 @@ namespace ngHealthyGarden
     
     public partial class Dish
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Dish()
+        {
+            this.Items1 = new HashSet<Item>();
+        }
+    
         public int DishId { get; set; }
         public string DishName { get; set; }
         public Nullable<decimal> Price { get; set; }
@@ -27,5 +33,7 @@ namespace ngHealthyGarden
         public virtual Side Side { get; set; }
         public virtual Size Size { get; set; }
         public virtual TortillaType TortillaType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items1 { get; set; }
     }
 }

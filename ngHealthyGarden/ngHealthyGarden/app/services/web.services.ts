@@ -16,6 +16,6 @@ export class WebServices {
     }
 
     getCategoryByNameWithDishe(category: string) {
-        return this.http.get<Category>(this.baseUrl + '/menu/' + category)
+        return this.http.get<Category>(this.baseUrl + '/dishes/' + category)
     }
 }

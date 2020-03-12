@@ -176,6 +176,7 @@
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ControllersAPI\DishesController.cs" />
+    <Compile Include="ControllersAPI\ItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
@@ -192,11 +193,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ControllersAPI\MenuController.cs" />
+    <Compile Include="Data\PablosDbContext.cs" />
     <Compile Include="Item.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ControllersAPI\MenuController.cs" />
-    <Compile Include="Data\PablosDbContext.cs" />
+    <Compile Include="ItemCategory.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\DishModel.cs" />
     <Compile Include="Models\ItemModel.cs" />

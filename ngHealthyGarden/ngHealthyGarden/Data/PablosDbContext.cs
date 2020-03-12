@@ -15,7 +15,9 @@ namespace ngHealthyGarden
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            modelBuilder.Entity<DishItem>().HasKey(sc => new { sc.DishId, sc.ItemId });
+
+            modelBuilder.Entity<Item>().ToTable("Items");
         }
 
         public virtual DbSet<Category> Categories { get; set; }
