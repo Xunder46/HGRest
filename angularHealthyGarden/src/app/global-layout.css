@@ -10,13 +10,13 @@ img {
 strong {
     position: relative;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 a, div {
     display: block;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
     text-decoration: none;
 }
 

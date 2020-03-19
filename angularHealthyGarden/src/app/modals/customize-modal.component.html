@@ -6,17 +6,16 @@
       </button>
     </div>
     <div class="modal-body">
-      <form>
-        <!-- <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <div class="input-group">
-            <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-            </div>
-          </div>
-        </div> -->
-        <div class="form-group">
+      <form>  
+        <!--TODO: create templates according to the dishtype-->
+        <div class="form-group" *ngIf="category.description=='DinnerEntrees'">
+          <mat-form-field>
+            <mat-label>Choice of a side</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option *ngFor="let dish of category.dishes">{{dish.description}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <label for="dateOfBirth">Ingredients</label>
           <div class="input-group">
             <input type="checkbox">
@@ -31,8 +30,8 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Add to cart</button>
+      <button type="button" class="btn btn-outline-dark" (click)="addToCart(dish)">Add to cart</button>
     </div>
   </ng-template>
   
-  <div class="btn insideImageButton customizeButton" (click)="open(content)">Customize</div>
+  <div class="btn insideImageButton iWantThisButton" (click)="open(content)">I want this!</div>

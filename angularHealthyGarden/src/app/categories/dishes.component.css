@@ -1,5 +1,18 @@
-﻿
+﻿/*#region -_-_-_-ELEMENTS-_-_-_-_*/
+li, h5{
+    font-size: 18px;
+    display: inline;
+    color: black;
+    text-align: left;
+    text-shadow: 2px 1px wheat;
+}
+/*#endregion*/
+
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
+.dishName{
+    max-width: 10px;
+}
+
 .insideImageButton {
     font-size: 14px;
     font-weight: bold;
@@ -7,21 +20,21 @@
     background: transparent;
     border: solid 2px darkorange;
     border-radius: 5px;
-    width: 8em;
-    height: 2.5em;
-    margin: 1em;
+    width: 12em;
+    height: 3em;
+    margin: 0 auto 1em auto;
     color: black;
     transition: 0.3s;
 }
 
-    .customizeButton {
+    /* .customizeButton {
         bottom: 1em;
         left: 2em;
-    }
+    } */
 
-    .addToCartButton {
+    .iWantThisButton {
         bottom: 1em;
-        right: 2em;
+        left: 8em;
     }
 
 .alertContainer{
@@ -35,6 +48,13 @@
     left:30px;
     transform-origin: bottom right;
     transform: rotate(90deg) scale(0.5);
+}
+
+.itemsContainer{
+    position: absolute;
+    z-index: 2;
+    margin-left: 0;
+    top: 3em;
 }
 /*#endregion*/
 

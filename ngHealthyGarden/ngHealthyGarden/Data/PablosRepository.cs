@@ -80,9 +80,9 @@ namespace ngHealthyGarden.Data
             return await query.ToArrayAsync();
         }
 
-        public Item[] GetItemsByDishIdAsync(int dishId)
+        public Item[] GetItemsByDishIdAsync(string dishName)
         {
-            var query = _context.spGetItemsRelatedToADish(dishId);
+            var query = _context.spGetItemsRelatedToADish(dishName);
 
             return query.ToArray();
         }

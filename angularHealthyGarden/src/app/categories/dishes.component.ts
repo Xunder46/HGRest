@@ -1,9 +1,12 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { WebServices } from '../services/web.services';
 import { Dish } from '../models/Dish';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../services/shopping-cart.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Item } from '../models/Item';
+import { map } from 'rxjs/operators';
+import { Category } from '../models/Category';
 
 @Component({
     animations: [
@@ -30,30 +33,30 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     styleUrls: ['./dishes.component.css', './../global-layout.css']
 })
 
-export class AppetizersComponent implements OnInit {
+export class DishesComponent implements OnInit {
 
-    dishes: Dish[];
+    dishes: Dish[] = [];
     categoryName: string;
     dishAdded: boolean = false;
+    items: Item[][] = [];
+    category: Category
 
-    constructor(private services: WebServices, private activatedRoute: ActivatedRoute, private cart: CartService) {
-       
-    }
+    constructor(private services: WebServices, private activatedRoute: ActivatedRoute, private cart: CartService) { }
 
+    @ViewChild('ingredient', { static: false }) public ingredient: ElementRef;
     ngOnInit(): void {
         this.categoryName = this.activatedRoute.snapshot.paramMap.get('category');
-        this.services.getCategoryByNameWithDishe(this.categoryName).subscribe(data => {
+
+        this.services.getCategoryByNameWithDishes(this.categoryName).subscribe(data => {
+            this.category = data;
             this.dishes = data.dishes.filter(
                 (thing, i, arr) => arr.findIndex(t => t.dishName === thing.dishName) === i
-            );
+            )
+            for (let i = 0; i < this.dishes.length; i++) {
+                this.services.getItemsByDishName(this.dishes[i].dishName).subscribe(items => {
+                    this.items[i] = items;
+                })
+            }
         })
-    }
-
-    addToCart(dish: Dish) {
-        this.cart.addToCart(dish);  
-    }
-
-    showStorage() {
-        console.log(localStorage["dishes"]);
     }
 }

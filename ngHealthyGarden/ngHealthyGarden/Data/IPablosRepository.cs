@@ -22,6 +22,6 @@ namespace ngHealthyGarden.Data
         //Items
         Task<Item[]> GetAllItemsAsync();
 
-        Item[] GetItemsByDishIdAsync(int dishId);
+        Item[] GetItemsByDishIdAsync(string dishName);
     }
 }

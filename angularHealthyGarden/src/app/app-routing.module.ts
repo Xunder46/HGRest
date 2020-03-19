@@ -5,14 +5,16 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { AppetizersComponent } from './Categories/dishes.component';
+import { DishesComponent } from './Categories/dishes.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ManagerOfficeComponent } from './manager-office/manager-office.component';
 
 const routes: Routes = [
     { path: '', component: WelcomeComponent },
     { path: 'shoppingcart', component: ShoppingCartComponent },
+    { path: 'manager', component: ManagerOfficeComponent},
     { path: 'menu', component: MenuComponent },
-    { path: ':category', component: AppetizersComponent }
+    { path: ':category', component: DishesComponent }
 ];
 
 @NgModule({

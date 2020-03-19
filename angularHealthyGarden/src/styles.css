@@ -20,3 +20,5 @@ body {
     background: linear-gradient(180deg, rgba(213, 203, 185, 0.8) 20%, rgba(213, 203, 185, 0.8) 80%), url(assets/MainHg.jpg);
     background-size: cover;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

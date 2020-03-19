@@ -52,6 +52,12 @@ svg{
 	cursor: pointer;
 	transition: all 0.2s;
 }
+
+.buttonManager{
+	margin: 2em;
+	height: 4em;
+	width: 10em;
+}
 /*#endregion*/
 
 /*#region -_-_-_-_KEYFRAMES-_-_-_-_ */

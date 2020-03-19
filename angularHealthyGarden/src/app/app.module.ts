@@ -10,15 +10,18 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { AppetizersComponent } from './Categories/dishes.component';
+import { DishesComponent } from './Categories/dishes.component';
 import { SplitPipe } from './split.pipe';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalBasic } from './modals/customize-modal.component';
+import { ManagerOfficeComponent } from './manager-office/manager-office.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
     imports: [
+        MatSelectModule,
         NgbModule,
         BrowserModule,
         HttpClientModule,
@@ -32,7 +35,7 @@ import { NgbdModalBasic } from './modals/customize-modal.component';
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
-        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, AppetizersComponent, NavigationComponent, ShoppingCartComponent, NgbdModalBasic
+        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, DishesComponent, NavigationComponent, ShoppingCartComponent, NgbdModalBasic, ManagerOfficeComponent
     ],
     bootstrap: [
         AppComponent

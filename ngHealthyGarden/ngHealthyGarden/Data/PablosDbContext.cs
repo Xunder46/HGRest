@@ -29,13 +29,13 @@ namespace ngHealthyGarden
         public virtual DbSet<TortillaType> TortillaTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-        public virtual ObjectResult<Item> spGetItemsRelatedToADish(Nullable<int> dishId)
+        public virtual ObjectResult<Item> spGetItemsRelatedToADish(string dishName)
         {
-            var dishIdParameter = dishId.HasValue ?
-                new SqlParameter("DishId", dishId) :
-                new SqlParameter("DishId", typeof(int));
+            var dishNameParameter = dishName.Length>0 ?
+                new SqlParameter("DishName", dishName) :
+                new SqlParameter("DishName", typeof(string));
 
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<Item>("spGetItemsRelatedToADish @DishId", dishIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<Item>("spGetItemsRelatedToADish @DishName", dishNameParameter);
         }
     }
 }

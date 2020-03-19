@@ -1,14 +1,21 @@
 ﻿<navigation></navigation>
 <div class="mainContainer">
     <div class="flexContainer">
-        <div *ngFor="let dish of dishes" class="">
+        <div *ngFor="let dish of dishes; let i = index">
             <a class="buttonContainer buttonImage">
                 <img class="btn button" src="../../assets/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}" />
 
-                <ngbd-modal-basic></ngbd-modal-basic>
-                <div class="btn insideImageButton addToCartButton" (click)="addToCart(dish)">Add to cart</div>
+                <ul class="itemsContainer">
+                    <li *ngFor="let item of items[i]; let isLast=last" #ingredient id="ingredient">
+                        {{item.description|split}} 
+                        {{isLast ? '' : ', '}}
+                    </li>
+                </ul>
+
+                <ngbd-modal-basic [dish]="dish" [category]="category"></ngbd-modal-basic>
+                <!-- <div class="btn insideImageButton iWantThisButton" (click)="addToCart(dish)">I want this!</div> -->
             </a>
-            <strong class="textShadow">{{dish.dishName | split}}</strong>
+            <strong class="textShadow dishName">{{dish.dishName | split}}</strong>
         </div>
     </div>
 </div>

@@ -45,12 +45,12 @@ namespace ngHealthyGarden.ControllersAPI
 
         }
 
-        [Route("{dishId}")]
-        public async Task<IHttpActionResult> Get(int dishId)
+        [Route("{dishName}")]
+        public async Task<IHttpActionResult> Get(string dishName)
         {
             try
             {
-                var result = _pablos.GetItemsByDishIdAsync(dishId);
+                var result = _pablos.GetItemsByDishIdAsync(dishName);
 
                 var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
 
