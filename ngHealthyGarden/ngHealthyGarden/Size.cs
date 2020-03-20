@@ -14,16 +14,7 @@ namespace ngHealthyGarden
     
     public partial class Size
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Size()
-        {
-            this.Dishes = new HashSet<Dish>();
-        }
-    
         public int SizeId { get; set; }
         public string Description { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Dish> Dishes { get; set; }
     }
 }

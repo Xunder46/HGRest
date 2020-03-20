@@ -11,48 +11,30 @@ using System.Web.Http;
 
 namespace ngHealthyGarden.ControllersAPI
 {
-    [RoutePrefix("api/items")]
-    public class ItemsController : ApiController
+    [RoutePrefix("api/sides")]
+    public class SidesController : ApiController
     {
         private readonly IHGRepository _pablos;
         private readonly IMapper _mapper;
 
-        public ItemsController()
+        public SidesController()
         {
 
         }
-        public ItemsController(IHGRepository pablos, IMapper mapper)
+        public SidesController(IHGRepository pablos, IMapper mapper)
         {
             _mapper = mapper;
             _pablos = pablos;
         }
 
-        [Route()]
-        public async Task<IHttpActionResult> Get()
+        [Route("{categoryId}")]
+        public async Task<IHttpActionResult> Get(int categoryId)
         {
             try
             {
-                var result = await _pablos.GetAllItemsAsync();
+                var result = await _pablos.GetAllSidesByCategoryIdAsync(categoryId);
 
                 var mapped = _mapper.Map<IEnumerable<SideModel>>(result);
-
-                return Ok(mapped);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-        [Route("{dishName}")]
-        public async Task<IHttpActionResult> Get(string dishName)
-        {
-            try
-            {
-                var result = _pablos.GetItemsByDishNameAsync(dishName);
-
-                var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
 
                 return Ok(mapped);
             }

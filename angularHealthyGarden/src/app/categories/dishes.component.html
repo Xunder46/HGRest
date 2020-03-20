@@ -6,13 +6,14 @@
                 <img class="btn button" src="../../assets/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}" />
 
                 <ul class="itemsContainer">
-                    <li *ngFor="let item of items[i]; let isLast=last" #ingredient id="ingredient">
-                        {{item.description|split}} 
+                    <li class="text-info">Ingredients:</li>
+                    <li *ngFor="let ingredient of ingredients[i]; let isLast=last" #ingredient id="ingredient">
+                        {{ingredient.description|split}} 
                         {{isLast ? '' : ', '}}
                     </li>
                 </ul>
 
-                <ngbd-modal-basic [dish]="dish" [category]="category"></ngbd-modal-basic>
+                <ngbd-modal-basic [dish]="dish" [sides]="sides" [category]="category" [ingredients]="ingredients[i]" class="text-dark"></ngbd-modal-basic>
                 <!-- <div class="btn insideImageButton iWantThisButton" (click)="addToCart(dish)">I want this!</div> -->
             </a>
             <strong class="textShadow dishName">{{dish.dishName | split}}</strong>

@@ -11,11 +11,12 @@ namespace ngHealthyGarden
 {
     using System;
     
-    public partial class spGetItemsRelatedToADish_Result1
+    public partial class sp_helpdiagrams_Result
     {
-        public int ItemId { get; set; }
-        public string Description { get; set; }
-        public int ItemCategoryId { get; set; }
-        public decimal Price { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

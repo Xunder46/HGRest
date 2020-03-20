@@ -14,10 +14,10 @@ namespace ngHealthyGarden.ControllersAPI
     [RoutePrefix("api/dishes")]
     public class DishesController : ApiController
     {
-        private readonly IPablosRepository _pablos;
+        private readonly IHGRepository _pablos;
         private readonly IMapper _mapper;
 
-        public DishesController(IPablosRepository pablos, IMapper mapper)
+        public DishesController(IHGRepository pablos, IMapper mapper)
         {
             _mapper = mapper;
             _pablos = pablos;

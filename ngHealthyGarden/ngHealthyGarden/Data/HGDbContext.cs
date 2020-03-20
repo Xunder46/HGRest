@@ -6,9 +6,9 @@ using System.Data.SqlClient;
 
 namespace ngHealthyGarden
 {
-    public partial class PablosDbContext : DbContext
+    public partial class HGDbContext : DbContext
     {
-        public PablosDbContext()
+        public HGDbContext()
             : base("name=MyEntities")
         {
             this.Configuration.ProxyCreationEnabled = false;
@@ -19,6 +19,8 @@ namespace ngHealthyGarden
             modelBuilder.Entity<Item>().ToTable("Items");
 
             modelBuilder.Entity<Item>().HasMany(d => d.Dishes).WithMany(i => i.Items);
+
+            //modelBuilder.Entity<Category>().HasMany(c => c.Dishes).WithRequired(c => c.Category).HasForeignKey(c => c.TortillaId);
         }
 
         public virtual DbSet<Category> Categories { get; set; }

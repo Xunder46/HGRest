@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import 'rxjs/add/operator/toPromise'
 import { Category } from './../models/Category';
 import { Item } from '../models/Item';
+import { Side } from '../models/Side';
 
 @Injectable({
 	providedIn: "root"
@@ -23,4 +24,8 @@ export class WebServices {
     getItemsByDishName(dishName: string){
         return this.http.get<Item[]>(this.baseUrl + 'items/' + dishName)
     } 
+
+    getSidesByCategoryId(categoryId: number){
+        return this.http.get<Side[]>(this.baseUrl + 'sides/' +categoryId)
+    }
 }

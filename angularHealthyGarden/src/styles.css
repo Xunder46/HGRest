@@ -16,6 +16,8 @@ body {
     height: 100%;
 }
 
+.cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 9999!important; } 
+
 .background {
     background: linear-gradient(180deg, rgba(213, 203, 185, 0.8) 20%, rgba(213, 203, 185, 0.8) 80%), url(assets/MainHg.jpg);
     background-size: cover;

@@ -18,6 +18,7 @@ namespace ngHealthyGarden
         public Category()
         {
             this.Dishes = new HashSet<Dish>();
+            this.Sides = new HashSet<Side>();
         }
     
         public int CategoryId { get; set; }
@@ -25,5 +26,7 @@ namespace ngHealthyGarden
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dish> Dishes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Side> Sides { get; set; }
     }
 }

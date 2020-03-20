@@ -1,37 +1,105 @@
 <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Customize item</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>  
-        <!--TODO: create templates according to the dishtype-->
-        <div class="form-group" *ngIf="category.description=='DinnerEntrees'">
-          <mat-form-field>
-            <mat-label>Choice of a side</mat-label>
-            <mat-select [(value)]="selected">
-              <mat-option *ngFor="let dish of category.dishes">{{dish.description}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Customize item</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <!--TODO: create templates according to the dishtype-->
+      <mat-form-field *ngIf="category.description=='DinnerEntrees'" class="select">
+        <mat-label>Choice of a side</mat-label>
+        <mat-select [formControl]="sideControl" required>
+          <mat-option *ngFor="let side of sides" [value]="side">
+            {{side.description|split}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sideControl.hasError('required')">Please choose a side</mat-error>
+      </mat-form-field>
 
-          <label for="dateOfBirth">Ingredients</label>
-          <div class="input-group">
-            <input type="checkbox">
-          </div>
+      <mat-form-field *ngIf="dish.dishName=='MediterraneanSampler'" class="select">
+        <mat-label>Choice of a side</mat-label>
+        <mat-select [formControl]="sideControl" required>
+          <mat-option value="BrownRice">
+            Brown Rice
+          </mat-option>
+          <mat-option value="Quinoa">
+            Quinoa
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sideControl.hasError('required')">Please choose a side</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="dish.dishName=='HummusPlatter'" class="select">
+        <mat-label>Choice of a type</mat-label>
+        <mat-select [formControl]="sideControl" required>
+          <mat-option value="Original">
+            Original
+          </mat-option>
+          <mat-option value="RoastedBeets">
+            Roasted beet
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sideControl.hasError('required')">Please choose a type</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="dish.dishName=='AvocadoCups'" class="select">
+        <mat-label>Choice of stuffing</mat-label>
+        <mat-select [formControl]="sideControl" required>
+          <mat-option value="Tuna">
+            Tuna salad
+          </mat-option>
+          <mat-option value="Chicken">
+            Chicken salad
+          </mat-option>
+          <mat-option value="Both">
+            1 Tuna 1 Chicken
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sideControl.hasError('required')">Please choose stuffing</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="dish.dishName=='LettuceWrapAndRoll'" class="select">
+        <mat-label>Choice of stuffing</mat-label>
+        <mat-select [formControl]="sideControl" required>
+          <mat-option value="Tuna">
+            Tuna salad
+          </mat-option>
+          <mat-option value="Chicken">
+            Chicken salad
+          </mat-option>
+          <mat-option value="Hummus">
+            Hummus
+          </mat-option>
+          <mat-option value="GrilledChicken">
+            Grilled chicken
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sideControl.hasError('required')">Please choose stuffing</mat-error>
+      </mat-form-field>
+
+      <div class="form-group">
+        <label>Ingredients:</label>&nbsp;
+          <mat-checkbox *ngFor="let ingredient of ingredients">
+            {{ingredient.description|split}}&nbsp;
+          </mat-checkbox>
+      </div>
+
+      <div class="form-group">
+        <label for="additionalNotes">Additional notes</label>
+        <div class="input-group">
+          <textarea id="additionalNotes" class="form-control"></textarea>
         </div>
-        <div class="form-group">
-          <label for="additionalNotes">Additional notes</label>
-          <div class="input-group">
-            <textarea id="additionalNotes" class="form-control"></textarea>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="addToCart(dish)">Add to cart</button>
-    </div>
-  </ng-template>
-  
-  <div class="btn insideImageButton iWantThisButton" (click)="open(content)">I want this!</div>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="addToCart(dish)">Add to cart</button>
+  </div>
+
+</ng-template>
+
+<div class="btn insideImageButton iWantThisButton" (click)="open(content)">I want this!</div>

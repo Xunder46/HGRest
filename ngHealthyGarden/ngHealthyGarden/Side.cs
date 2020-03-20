@@ -14,16 +14,11 @@ namespace ngHealthyGarden
     
     public partial class Side
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Side()
-        {
-            this.Dishes = new HashSet<Dish>();
-        }
-    
         public int SideId { get; set; }
         public string Description { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<int> CategoryId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Dish> Dishes { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

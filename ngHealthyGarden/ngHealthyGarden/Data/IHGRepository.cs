@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ngHealthyGarden.Data
 {
-    public interface IPablosRepository
+    public interface IHGRepository
     {
         void AddDish(Dish camp);
         void DeleteDish(Dish camp);
@@ -21,7 +21,9 @@ namespace ngHealthyGarden.Data
 
         //Items
         Task<Item[]> GetAllItemsAsync();
+        Item[] GetItemsByDishNameAsync(string dishName);
 
-        Item[] GetItemsByDishIdAsync(string dishName);
+        //Sides
+        Task<Side[]> GetAllSidesByCategoryIdAsync(int categoryId);
     }
 }

@@ -30,12 +30,12 @@ namespace ngHealthyGarden.App_Start
             //Automapper configuration to be able to map models from entities
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new PablosMapping());
+                cfg.AddProfile(new HGMapping());
             });
             builder.RegisterInstance(config.CreateMapper()).As<IMapper>().SingleInstance();
 
-            builder.RegisterType<PablosDbContext>().InstancePerRequest();
-            builder.RegisterType<PablosRepository>().As<IPablosRepository>().InstancePerRequest();
+            builder.RegisterType<HGDbContext>().InstancePerRequest();
+            builder.RegisterType<HGRepository>().As<IHGRepository>().InstancePerRequest();
         }
     }
 }

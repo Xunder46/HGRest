@@ -14,14 +14,14 @@ namespace ngHealthyGarden
     [RoutePrefix("api/menu")]
     public class MenuController : ApiController
     {
-        private readonly IPablosRepository _pablos;
+        private readonly IHGRepository _pablos;
         private readonly IMapper _mapper;
 
         public MenuController()
         {
 
         }
-        public MenuController(IPablosRepository pablos, IMapper mapper)
+        public MenuController(IHGRepository pablos, IMapper mapper)
         {
             _mapper = mapper;
             _pablos = pablos;

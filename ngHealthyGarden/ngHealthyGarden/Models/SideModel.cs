@@ -5,10 +5,10 @@ using System.Web;
 
 namespace ngHealthyGarden.Models
 {
-    public class CategoryModel
+    public class SideModel
     {
-        public int CategoryId { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<DishModel> Dishes { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<int> CategoryId { get; set; }
     }
 }

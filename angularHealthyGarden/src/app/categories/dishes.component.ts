@@ -1,12 +1,12 @@
-﻿import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { WebServices } from '../services/web.services';
 import { Dish } from '../models/Dish';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../services/shopping-cart.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Item } from '../models/Item';
-import { map } from 'rxjs/operators';
 import { Category } from '../models/Category';
+import { Side } from '../models/Side';
 
 @Component({
     animations: [
@@ -38,12 +38,12 @@ export class DishesComponent implements OnInit {
     dishes: Dish[] = [];
     categoryName: string;
     dishAdded: boolean = false;
-    items: Item[][] = [];
+    ingredients: Item[][] = [];
     category: Category
+    sides: Side[] = [];
 
     constructor(private services: WebServices, private activatedRoute: ActivatedRoute, private cart: CartService) { }
 
-    @ViewChild('ingredient', { static: false }) public ingredient: ElementRef;
     ngOnInit(): void {
         this.categoryName = this.activatedRoute.snapshot.paramMap.get('category');
 
@@ -54,9 +54,12 @@ export class DishesComponent implements OnInit {
             )
             for (let i = 0; i < this.dishes.length; i++) {
                 this.services.getItemsByDishName(this.dishes[i].dishName).subscribe(items => {
-                    this.items[i] = items;
+                    this.ingredients[i] = items;
                 })
             }
+            this.services.getSidesByCategoryId(this.category.categoryId).subscribe(data => {
+                this.sides = data;
+            });
         })
     }
 }

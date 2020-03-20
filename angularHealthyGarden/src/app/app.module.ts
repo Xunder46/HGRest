@@ -6,7 +6,7 @@ import { WebServices } from './services/web.services'
 import { MenuComponent } from './menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -18,16 +18,19 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalBasic } from './modals/customize-modal.component';
 import { ManagerOfficeComponent } from './manager-office/manager-office.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     imports: [
         MatSelectModule,
+        MatCheckboxModule,
         NgbModule,
         BrowserModule,
         HttpClientModule,
         BrowserAnimationsModule,
         AppRoutingModule,
         RouterModule,
+        ReactiveFormsModule,
         FormsModule
     ],
     providers: [

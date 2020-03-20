@@ -173,70 +173,78 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Category.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ControllersAPI\DishesController.cs" />
     <Compile Include="ControllersAPI\ItemsController.cs" />
+    <Compile Include="ControllersAPI\SidesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Data\IPablosRepository.cs" />
-    <Compile Include="Data\PablosMapping.cs" />
-    <Compile Include="Data\PablosRepository.cs" />
+    <Compile Include="C__MigrationHistory.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\IHGRepository.cs" />
+    <Compile Include="Data\HGMapping.cs" />
+    <Compile Include="Data\HGRepository.cs" />
     <Compile Include="Dish.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="GetCoursesByStudentId_Result.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ControllersAPI\MenuController.cs" />
-    <Compile Include="Data\PablosDbContext.cs" />
+    <Compile Include="Data\HGDbContext.cs" />
+    <Compile Include="HGEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HGEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HGEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HGEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HGEntities.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemCategory.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\DishModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
-    <Compile Include="MyEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MyEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MyEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyEntities.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Models\SideModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Side.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Size.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="spGetItemsRelatedToADish_Result.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="spGetItemsRelatedToADish_Result1.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="spGetItemsRelatedToADish_Result2.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="TortillaType.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>MyEntities.tt</DependentUpon>
+      <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -277,15 +285,15 @@
     <Content Include="fonts\untitled.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="MyEntities.Context.tt">
+    <Content Include="HGEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyEntities.edmx</DependentUpon>
-      <LastGenOutput>MyEntities.Context.cs</LastGenOutput>
+      <DependentUpon>HGEntities.edmx</DependentUpon>
+      <LastGenOutput>HGEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="MyEntities.tt">
+    <Content Include="HGEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyEntities.edmx</DependentUpon>
-      <LastGenOutput>MyEntities.cs</LastGenOutput>
+      <DependentUpon>HGEntities.edmx</DependentUpon>
+      <LastGenOutput>HGEntities.cs</LastGenOutput>
     </Content>
     <Content Include="MyStyles.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -296,12 +304,12 @@
     <Content Include="fonts\CabinSketch-Regular.otf" />
     <Content Include="fonts\BalooThambi-Regular.ttf" />
     <Content Include="fonts\Battambang-Regular.ttf" />
-    <EntityDeploy Include="MyEntities.edmx">
+    <EntityDeploy Include="HGEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>HGEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="MyEntities.edmx.diagram">
-      <DependentUpon>MyEntities.edmx</DependentUpon>
+    <Content Include="HGEntities.edmx.diagram">
+      <DependentUpon>HGEntities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

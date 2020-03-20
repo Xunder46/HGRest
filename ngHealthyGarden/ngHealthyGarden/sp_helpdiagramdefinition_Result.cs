@@ -11,11 +11,9 @@ namespace ngHealthyGarden
 {
     using System;
     
-    public partial class spGetItemsRelatedToADish_Result2
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int ItemId { get; set; }
-        public string Description { get; set; }
-        public int ItemCategoryId { get; set; }
-        public decimal Price { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
