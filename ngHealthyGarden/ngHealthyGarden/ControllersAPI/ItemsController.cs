@@ -34,7 +34,7 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 var result = await _pablos.GetAllItemsAsync();
 
-                var mapped = _mapper.Map<IEnumerable<SideModel>>(result);
+                var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
 
                 return Ok(mapped);
             }

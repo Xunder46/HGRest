@@ -41,6 +41,7 @@ export class DishesComponent implements OnInit {
     ingredients: Item[][] = [];
     category: Category
     sides: Side[] = [];
+    allIngredients: Item[];
 
     constructor(private services: WebServices, private activatedRoute: ActivatedRoute, private cart: CartService) { }
 
@@ -59,7 +60,11 @@ export class DishesComponent implements OnInit {
             }
             this.services.getSidesByCategoryId(this.category.categoryId).subscribe(data => {
                 this.sides = data;
+                
             });
+        })
+        this.services.getAllItems().subscribe(data=>{
+            this.allIngredients = data;
         })
     }
 }

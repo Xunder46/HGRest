@@ -21,9 +21,17 @@ export class WebServices {
         return this.http.get<Category>(this.baseUrl + 'dishes/' + category)
     }
 
+    getAllItems(){
+        return this.http.get<Item[]>(this.baseUrl + 'items/')
+    }
+
     getItemsByDishName(dishName: string){
         return this.http.get<Item[]>(this.baseUrl + 'items/' + dishName)
     } 
+
+    getAllSides(){
+        return this.http.get<Side[]>(this.baseUrl + 'sides')
+    }
 
     getSidesByCategoryId(categoryId: number){
         return this.http.get<Side[]>(this.baseUrl + 'sides/' +categoryId)

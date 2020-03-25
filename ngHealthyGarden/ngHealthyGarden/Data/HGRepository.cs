@@ -78,6 +78,13 @@ namespace ngHealthyGarden.Data
         }
 
         //=============SIDES======================
+        public async Task<Side[]> GetAllSidesAsync()
+        {
+            IQueryable<Side> query = _context.Sides.OrderBy(c=>c.Description);
+
+            return await query.ToArrayAsync();
+        }
+
         public async Task<Side[]> GetAllSidesByCategoryIdAsync(int categoryId)
         {
             IQueryable<Side> query = _context.Sides.Where(s => s.CategoryId == categoryId);

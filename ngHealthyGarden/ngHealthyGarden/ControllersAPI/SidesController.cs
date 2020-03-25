@@ -26,6 +26,23 @@ namespace ngHealthyGarden.ControllersAPI
             _mapper = mapper;
             _pablos = pablos;
         }
+        [Route()]
+        public async Task<IHttpActionResult> Get()
+        {
+            try
+            {
+                var result = await _pablos.GetAllSidesAsync();
+
+                var mapped = _mapper.Map<IEnumerable<SideModel>>(result);
+
+                return Ok(mapped);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
 
         [Route("{categoryId}")]
         public async Task<IHttpActionResult> Get(int categoryId)

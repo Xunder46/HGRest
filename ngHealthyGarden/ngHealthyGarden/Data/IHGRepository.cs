@@ -24,6 +24,7 @@ namespace ngHealthyGarden.Data
         Item[] GetItemsByDishNameAsync(string dishName);
 
         //Sides
+        Task<Side[]> GetAllSidesAsync();
         Task<Side[]> GetAllSidesByCategoryIdAsync(int categoryId);
     }
 }

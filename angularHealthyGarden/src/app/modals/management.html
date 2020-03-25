@@ -1,0 +1,42 @@
+<ng-template let-modal #content>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Manage items</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <table class="table table-striped" *ngIf="flag=='sides'">
+                <thead>
+                    <tr>
+                        <th class="hidden"></th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let side of sides">
+                        <td class="hidden"></td>
+                        <td>{{side.description}}</td>
+                        <td>{{side.categoryId}}</td>
+                        <td>{{side.price}}</td>
+                        <td><button class="btn btn-success" (click)="deleteUser(side)"> Delete</button>
+                            <button class="btn btn-success" (click)="editUser(side)" style="margin-left: 20px;">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+</ng-template>
+
+<div class="btn btn-success" (click)="open(content, 'dishes')">Dishes</div>
+
+<div class="btn btn-success" (click)="open(content, 'items')">Items</div>
+
+<div class="btn btn-success" (click)="open(content, 'sides')">Sides</div>

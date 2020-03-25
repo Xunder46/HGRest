@@ -15,10 +15,11 @@ import { SplitPipe } from './split.pipe';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalBasic } from './modals/customize-modal.component';
+import { CustomizeModal } from './modals/customize-modal.component';
 import { ManagerOfficeComponent } from './manager-office/manager-office.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ManagementModal } from './modals/management';
 
 @NgModule({
     imports: [
@@ -38,7 +39,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
-        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, DishesComponent, NavigationComponent, ShoppingCartComponent, NgbdModalBasic, ManagerOfficeComponent
+        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, DishesComponent, NavigationComponent, ShoppingCartComponent, CustomizeModal, ManagementModal, ManagerOfficeComponent
     ],
     bootstrap: [
         AppComponent

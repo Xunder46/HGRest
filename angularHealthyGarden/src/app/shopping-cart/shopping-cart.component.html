@@ -15,8 +15,10 @@
                 <tr *ngFor="let dish of dishesFromLocalStorage">
                     <td><img class="image" src="../../assets/Dishes/{{dish.dishName}}.jpg" /></td>
                     <td>{{dish.dishName|split}}</td>
-                    <td>{{dish.dishName|split}}</td>
-                    <td>{{dish.price|currency}}</td>
+                    <td>
+                        <input type="number" matInput [(ngModel)]="dish.quantity" (click)="refreshPrice(dish)">
+                    </td>
+                    <td>{{dish.price * dish.quantity |currency}}</td>
                     <td>{{dish.dishName|split}}</td>
                 </tr>
             </tbody>
@@ -43,4 +45,3 @@
         <h1>Sorry, but you didn't add anything to your cart...</h1>
     </div>
 </div>
-

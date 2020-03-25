@@ -79,20 +79,54 @@
         <mat-error *ngIf="sideControl.hasError('required')">Please choose stuffing</mat-error>
       </mat-form-field>
 
+      <mat-form-field *ngIf="dish.dishName=='LettuceWrapAndRoll'" class="select">
+        <mat-label>Choice of stuffing</mat-label>
+        <mat-select [formControl]="sideControl" required>
+          <mat-option value="Tuna">
+            Tuna salad
+          </mat-option>
+          <mat-option value="Chicken">
+            Chicken salad
+          </mat-option>
+          <mat-option value="Hummus">
+            Hummus
+          </mat-option>
+          <mat-option value="GrilledChicken">
+            Grilled chicken
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sideControl.hasError('required')">Please choose stuffing</mat-error>
+      </mat-form-field>
+
       <div class="form-group">
         <label>Ingredients:</label>&nbsp;
-          <mat-checkbox *ngFor="let ingredient of ingredients">
-            {{ingredient.description|split}}&nbsp;
-          </mat-checkbox>
+        <mat-checkbox *ngFor="let dishIngredientName of dishIngredientsNames" checked="true"
+          (click)="toggleIngredient(dishIngredientName)">
+          {{dishIngredientName|split}}&nbsp;
+        </mat-checkbox>
       </div>
 
       <div class="form-group">
-        <label for="additionalNotes">Additional notes</label>
-        <div class="input-group">
-          <textarea id="additionalNotes" class="form-control"></textarea>
-        </div>
+        <mat-label>Modifiers:</mat-label>&nbsp;
+        <mat-checkbox *ngFor="let ingredientName of allIngredientsNames; let i = index"
+          (click)="toggleIngredient(ingredientName)">
+          {{ingredientName|split}}&nbsp;
+        </mat-checkbox>
       </div>
 
+      <div class="form-group">
+        <mat-label>Quantity</mat-label>&nbsp;
+        <input type="number" matInput [formControl]="sideControl" min="1" [(ngModel)]="dish.quantity">
+        <mat-error *ngIf="sideControl.hasError('required')">Please enter quantity</mat-error>
+      </div>
+
+      <div class="form-group">
+        <mat-label for="additionalNotes">Additional notes</mat-label>
+        <div class="input-group">
+          <textarea id="additionalNotes" class="form-control" name="message" rows="8" [(ngModel)]="dish.comments"
+            #message='ngModel'></textarea>
+        </div>
+      </div>
     </form>
   </div>
 

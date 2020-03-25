@@ -13,7 +13,7 @@
                     </li>
                 </ul>
 
-                <ngbd-modal-basic [dish]="dish" [sides]="sides" [category]="category" [ingredients]="ingredients[i]" class="text-dark"></ngbd-modal-basic>
+                <customize-modal [dish] = "dish" [allIngredients]="allIngredients" [sides]="sides" [category]="category" [dishIngredients]="ingredients[i]" class="text-dark"></customize-modal>
                 <!-- <div class="btn insideImageButton iWantThisButton" (click)="addToCart(dish)">I want this!</div> -->
             </a>
             <strong class="textShadow dishName">{{dish.dishName | split}}</strong>
