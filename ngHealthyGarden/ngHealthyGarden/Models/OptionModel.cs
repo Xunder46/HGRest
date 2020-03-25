@@ -5,12 +5,11 @@ using System.Web;
 
 namespace ngHealthyGarden.Models
 {
-    public class SideModel
+    public class OptionModel
     {
-        public int SideId { get; set; }
+        public int OptionId { get; set; }
         public string Description { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<int> CategoryId { get; set; }
+        public int DishId { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

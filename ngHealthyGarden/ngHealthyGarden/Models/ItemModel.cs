@@ -7,15 +7,10 @@ namespace ngHealthyGarden.Models
 {
     public class ItemModel
     {
-        public ItemModel()
-        {
-            this.Dishes = new HashSet<Dish>();
-        }
-
+        public int ItemId { get; set; }
         public string Description { get; set; }
         public int ItemCategory { get; set; }
         public decimal Price { get; set; }
-
         public virtual ICollection<Dish> Dishes { get; set; }
     }
 }

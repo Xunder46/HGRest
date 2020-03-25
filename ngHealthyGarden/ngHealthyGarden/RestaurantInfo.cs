@@ -12,20 +12,19 @@ namespace ngHealthyGarden
     using System;
     using System.Collections.Generic;
     
-    public partial class Size
+    public partial class RestaurantInfo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Size()
+        public RestaurantInfo()
         {
-            this.OrderDetails = new HashSet<OrderDetail>();
+            this.ZipCodes = new HashSet<ZipCode>();
         }
     
-        public int SizeId { get; set; }
-        public string Description { get; set; }
-        public int CategoryId { get; set; }
-        public decimal AdditionalPrice { get; set; }
+        public int RestaurantInfoId { get; set; }
+        public string Location { get; set; }
+        public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<ZipCode> ZipCodes { get; set; }
     }
 }

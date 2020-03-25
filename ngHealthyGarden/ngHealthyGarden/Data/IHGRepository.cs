@@ -8,23 +8,38 @@ namespace ngHealthyGarden.Data
 {
     public interface IHGRepository
     {
+        Task<bool> SaveChangesAsync();
+
+        //=============DISHES=====================
         void AddDish(Dish camp);
         void DeleteDish(Dish camp);
-
-        //Dishes
         Task<Dish[]> GetAllDishesAsync();
         Task<Dish> GetDishAsync(string dishName);
 
-        //Categories
+        //=============CATEGORIES=================
         Task<Category[]> GetAllCategoriesAsync();
         Task<Category> GetCategoryWithDishesByCategoryNameAsync(string category);
 
-        //Items
+        //=============ITEMS======================
         Task<Item[]> GetAllItemsAsync();
         Item[] GetItemsByDishNameAsync(string dishName);
 
-        //Sides
+        //=============SIDES======================
         Task<Side[]> GetAllSidesAsync();
         Task<Side[]> GetAllSidesByCategoryIdAsync(int categoryId);
+
+        //=============SIZES=====================
+        Task<Size[]> GetSizesByCategoryIdAsync(int categoryId);
+
+        //=============ZipCodes=====================
+        Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId);
+
+        //=============RESTAURANTS=====================
+        Task<RestaurantInfo[]> GetRestaurantsAsync();
+
+        //=============ORDERS=====================
+        Task<OrderDetail[]> GetOrderDetailsByOrderId(int orderId);
+        void AddOrder(Order o);
+        void AddOrderDetail(OrderDetail[] od, int orderId);
     }
 }

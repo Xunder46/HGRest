@@ -12,9 +12,11 @@ namespace ngHealthyGarden
     using System;
     using System.Collections.Generic;
     
-    public partial class TortillaType
+    public partial class CustomerAccount
     {
-        public int TortillaTypeId { get; set; }
-        public string Description { get; set; }
+        public int CustomerAccountId { get; set; }
+        public int CustomerId { get; set; }
+        public int AmountOfOrders { get; set; }
+        public decimal TotalPaid { get; set; }
     }
 }

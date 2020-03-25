@@ -28,15 +28,24 @@ namespace ngHealthyGarden
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<AddressInfo> AddressInfoes { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<CustomerInfo> CustomerInfoes { get; set; }
         public virtual DbSet<Dish> Dishes { get; set; }
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
         public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Option> Options { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderType> OrderTypes { get; set; }
+        public virtual DbSet<RestaurantInfo> RestaurantInfoes { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TortillaType> TortillaTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ZipCode> ZipCodes { get; set; }
+        public virtual DbSet<CustomerAccount> CustomerAccounts { get; set; }
     
         public virtual ObjectResult<GetCoursesByStudentId_Result> GetCoursesByStudentId(Nullable<int> dishId)
         {
@@ -148,6 +157,15 @@ namespace ngHealthyGarden
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int spCreateOrder(Nullable<int> quantity)
+        {
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreateOrder", quantityParameter);
         }
     
         public virtual ObjectResult<spGetItemsRelatedToADish_Result> spGetItemsRelatedToADish(string dishName)

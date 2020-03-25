@@ -21,6 +21,9 @@ namespace ngHealthyGarden.Data
             CreateMap<Item, ItemModel>();
 
             CreateMap<Side, SideModel>();
+
+            CreateMap<Order, OrderModel>()
+                .ReverseMap();
         }
     }
 }

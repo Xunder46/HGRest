@@ -15,6 +15,10 @@ namespace ngHealthyGarden.Data
             _context = context;
         }
 
+        public async Task<bool> SaveChangesAsync() {
+            return (await _context.SaveChangesAsync())>0;
+        }
+
         //=============DISHES=====================
         public void AddDish(Dish camp)
         {
@@ -39,10 +43,6 @@ namespace ngHealthyGarden.Data
             query = query.Where(c => c.DishName == dishName);
 
             return await query.FirstOrDefaultAsync();
-        }
-        void IHGRepository.AddDish(Dish camp)
-        {
-            throw new NotImplementedException();
         }
 
         //=============CATEGORIES=================
@@ -84,10 +84,50 @@ namespace ngHealthyGarden.Data
 
             return await query.ToArrayAsync();
         }
-
         public async Task<Side[]> GetAllSidesByCategoryIdAsync(int categoryId)
         {
             IQueryable<Side> query = _context.Sides.Where(s => s.CategoryId == categoryId);
+
+            return await query.ToArrayAsync();
+        }
+
+        //=============SIZES=====================
+        public async Task<Size[]> GetSizesByCategoryIdAsync(int categoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        //=============ZipCodes=====================
+        public async Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId)
+        {
+            throw new NotImplementedException();
+        }
+
+        //=============RESTAURANTS=====================
+        public async Task<RestaurantInfo[]> GetRestaurantsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        //=============ORDERS=====================
+        public void AddOrder(Order o)
+        {
+            var query = _context.Orders.Add(o);
+        }
+        public void AddOrderDetail(OrderDetail[] ods, int orderId)
+        {
+            foreach (var od in ods)
+            {
+                var query = _context.OrderDetails.Add(od);
+                query.OrderId = orderId;
+            }
+        }
+        public async Task<OrderDetail[]> GetOrderDetailsByOrderId(int orderId)
+        {
+            IQueryable<OrderDetail> query = _context.OrderDetails.Where(s => s.OrderId == orderId)
+                .Include(d=>d.Order)
+                .Include(d=>d.CustomerInfo)
+                .Include(d=>d.Dish);
 
             return await query.ToArrayAsync();
         }

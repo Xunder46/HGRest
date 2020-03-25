@@ -15,12 +15,53 @@
           <Property Name="Model" Type="varbinary(max)" Nullable="false" />
           <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
+        <EntityType Name="AddressInfo">
+          <Key>
+            <PropertyRef Name="AddressInfoId" />
+          </Key>
+          <Property Name="AddressInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Street" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apartment" Type="nvarchar" MaxLength="5" />
+          <Property Name="ZipId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Pablo's.dbo.CustomerAccount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CustomerAccount">
+          <Key>
+            <PropertyRef Name="CustomerAccountId" />
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="AmountOfOrders" />
+            <PropertyRef Name="TotalPaid" />
+          </Key>
+          <Property Name="CustomerAccountId" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="AmountOfOrders" Type="int" Nullable="false" />
+          <Property Name="TotalPaid" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="CustomerInfoId" />
+          </Key>
+          <Property Name="CustomerInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressInfoId" Type="int" />
         </EntityType>
         <EntityType Name="Dishes">
           <Key>
@@ -29,7 +70,6 @@
           <Property Name="DishId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DishName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="Picture" Type="nvarchar(max)" />
           <Property Name="CategoryId" Type="int" />
         </EntityType>
         <EntityType Name="ItemCategories">
@@ -58,6 +98,53 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="ItemCategoryId" Type="int" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
+        <EntityType Name="Options">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DishId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DishId" Type="int" Nullable="false" />
+          <Property Name="SideId" Type="int" />
+          <Property Name="SizeId" Type="int" />
+          <Property Name="OptionId" Type="int" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="CustomerInfoId" Type="int" Nullable="false" />
+          <Property Name="OrderTypeId" Type="int" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="CommentId" Type="int" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrderTypes">
+          <Key>
+            <PropertyRef Name="OrderTypeId" />
+          </Key>
+          <Property Name="OrderTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderType" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RestaurantInfo">
+          <Key>
+            <PropertyRef Name="RestaurantInfoId" />
+          </Key>
+          <Property Name="RestaurantInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Sides">
           <Key>
             <PropertyRef Name="SideId" />
@@ -72,7 +159,9 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             <PropertyRef Name="SizeId" />
           </Key>
           <Property Name="SizeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="AdditionalPrice" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -83,13 +172,6 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="TortillaTypes">
-          <Key>
-            <PropertyRef Name="TortillaTypeId" />
-          </Key>
-          <Property Name="TortillaTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -102,6 +184,39 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="Role" Type="nvarchar" MaxLength="15" />
         </EntityType>
+        <EntityType Name="ZipCodes">
+          <Key>
+            <PropertyRef Name="ZipCodeId" />
+          </Key>
+          <Property Name="ZipCodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AddressInfo_AddressInfo">
+          <End Role="ZipCodes" Type="Self.ZipCodes" Multiplicity="1" />
+          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZipCodes">
+              <PropertyRef Name="ZipCodeId" />
+            </Principal>
+            <Dependent Role="AddressInfo">
+              <PropertyRef Name="ZipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInfo_AddressInfo">
+          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="0..1" />
+          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressInfo">
+              <PropertyRef Name="AddressInfoId" />
+            </Principal>
+            <Dependent Role="CustomerInfo">
+              <PropertyRef Name="AddressInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Dishes_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Dishes" Type="Self.Dishes" Multiplicity="*" />
@@ -150,6 +265,114 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Options_Dishes">
+          <End Role="Dishes" Type="Self.Dishes" Multiplicity="1" />
+          <End Role="Options" Type="Self.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dishes">
+              <PropertyRef Name="DishId" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="DishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Comments">
+          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="CommentId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_CustomerInfo">
+          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInfo">
+              <PropertyRef Name="CustomerInfoId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="CustomerInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Dishes">
+          <End Role="Dishes" Type="Self.Dishes" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dishes">
+              <PropertyRef Name="DishId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="DishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Options">
+          <End Role="Options" Type="Self.Options" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Options">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_OrderTypes">
+          <End Role="OrderTypes" Type="Self.OrderTypes" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTypes">
+              <PropertyRef Name="OrderTypeId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Sides">
+          <End Role="Sides" Type="Self.Sides" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sides">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="SideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Sizes">
+          <End Role="Sizes" Type="Self.Sizes" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes">
+              <PropertyRef Name="SizeId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="SizeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sides_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Sides" Type="Self.Sides" Multiplicity="*" />
@@ -159,6 +382,18 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             </Principal>
             <Dependent Role="Sides">
               <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZipCodes_RestaurantInfo">
+          <End Role="RestaurantInfo" Type="Self.RestaurantInfo" Multiplicity="1" />
+          <End Role="ZipCodes" Type="Self.ZipCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantInfo">
+              <PropertyRef Name="RestaurantInfoId" />
+            </Principal>
+            <Dependent Role="ZipCodes">
+              <PropertyRef Name="RestaurantId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -196,26 +431,53 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCreateOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Quantity" Type="int" Mode="In" />
+        </Function>
         <Function Name="spGetItemsRelatedToADish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DishName" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AddressInfo" EntityType="Self.AddressInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dishes" EntityType="Self.Dishes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemCategories" EntityType="Self.ItemCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Options" EntityType="Self.Options" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTypes" EntityType="Self.OrderTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantInfo" EntityType="Self.RestaurantInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sides" EntityType="Self.Sides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TortillaTypes" EntityType="Self.TortillaTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZipCodes" EntityType="Self.ZipCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerAccount" EntityType="Self.CustomerAccount" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CustomerAccount].[CustomerAccountId] AS [CustomerAccountId], 
+    [CustomerAccount].[CustomerId] AS [CustomerId], 
+    [CustomerAccount].[AmountOfOrders] AS [AmountOfOrders], 
+    [CustomerAccount].[TotalPaid] AS [TotalPaid]
+    FROM [dbo].[CustomerAccount] AS [CustomerAccount]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ItemDishes" EntityType="Self.ItemDishes" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ItemDishes].[DishId] AS [DishId], 
     [ItemDishes].[ItemId] AS [ItemId]
     FROM [dbo].[ItemDishes] AS [ItemDishes]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_AddressInfo_AddressInfo" Association="Self.FK_AddressInfo_AddressInfo">
+            <End Role="ZipCodes" EntitySet="ZipCodes" />
+            <End Role="AddressInfo" EntitySet="AddressInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInfo_AddressInfo" Association="Self.FK_CustomerInfo_AddressInfo">
+            <End Role="AddressInfo" EntitySet="AddressInfo" />
+            <End Role="CustomerInfo" EntitySet="CustomerInfo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Dishes_Categories" Association="Self.FK_Dishes_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Dishes" EntitySet="Dishes" />
@@ -232,9 +494,49 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             <End Role="ItemCategories" EntitySet="ItemCategories" />
             <End Role="Items" EntitySet="Items" />
           </AssociationSet>
+          <AssociationSet Name="FK_Options_Dishes" Association="Self.FK_Options_Dishes">
+            <End Role="Dishes" EntitySet="Dishes" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Comments" Association="Self.FK_OrderDetails_Comments">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_CustomerInfo" Association="Self.FK_OrderDetails_CustomerInfo">
+            <End Role="CustomerInfo" EntitySet="CustomerInfo" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Dishes" Association="Self.FK_OrderDetails_Dishes">
+            <End Role="Dishes" EntitySet="Dishes" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Options" Association="Self.FK_OrderDetails_Options">
+            <End Role="Options" EntitySet="Options" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_OrderTypes" Association="Self.FK_OrderDetails_OrderTypes">
+            <End Role="OrderTypes" EntitySet="OrderTypes" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Sides" Association="Self.FK_OrderDetails_Sides">
+            <End Role="Sides" EntitySet="Sides" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Sizes" Association="Self.FK_OrderDetails_Sizes">
+            <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sides_Categories" Association="Self.FK_Sides_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Sides" EntitySet="Sides" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZipCodes_RestaurantInfo" Association="Self.FK_ZipCodes_RestaurantInfo">
+            <End Role="RestaurantInfo" EntitySet="RestaurantInfo" />
+            <End Role="ZipCodes" EntitySet="ZipCodes" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -252,6 +554,17 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="AddressInfo">
+          <Key>
+            <PropertyRef Name="AddressInfoId" />
+          </Key>
+          <Property Name="AddressInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apartment" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ZipId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ZipCode" Relationship="Self.FK_AddressInfo_AddressInfo" FromRole="AddressInfo" ToRole="ZipCodes" />
+          <NavigationProperty Name="CustomerInfoes" Relationship="Self.FK_CustomerInfo_AddressInfo" FromRole="AddressInfo" ToRole="CustomerInfo" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -261,6 +574,27 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Categories" FromRole="Categories" ToRole="Dishes" />
           <NavigationProperty Name="Sides" Relationship="Self.FK_Sides_Categories" FromRole="Categories" ToRole="Sides" />
         </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Comments" FromRole="Comments" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="CustomerInfoId" />
+          </Key>
+          <Property Name="CustomerInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressInfoId" Type="Int32" />
+          <NavigationProperty Name="AddressInfo" Relationship="Self.FK_CustomerInfo_AddressInfo" FromRole="CustomerInfo" ToRole="AddressInfo" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_CustomerInfo" FromRole="CustomerInfo" ToRole="OrderDetails" />
+        </EntityType>
         <EntityType Name="Dish">
           <Key>
             <PropertyRef Name="DishId" />
@@ -268,9 +602,10 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="DishId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DishName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CategoryId" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Dishes_Categories" FromRole="Dishes" ToRole="Categories" />
+          <NavigationProperty Name="Options" Relationship="Self.FK_Options_Dishes" FromRole="Dishes" ToRole="Options" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Dishes" FromRole="Dishes" ToRole="OrderDetails" />
           <NavigationProperty Name="Items" Relationship="Self.ItemDishes" FromRole="Dishes" ToRole="Items" />
         </EntityType>
         <EntityType Name="ItemCategory">
@@ -292,6 +627,66 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <NavigationProperty Name="ItemCategory" Relationship="Self.FK_Ingredients_ItemCategories" FromRole="Items" ToRole="ItemCategories" />
           <NavigationProperty Name="Dishes" Relationship="Self.ItemDishes" FromRole="Items" ToRole="Dishes" />
         </EntityType>
+        <EntityType Name="Option">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DishId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dish" Relationship="Self.FK_Options_Dishes" FromRole="Options" ToRole="Dishes" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Options" FromRole="Options" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DishId" Type="Int32" Nullable="false" />
+          <Property Name="SideId" Type="Int32" />
+          <Property Name="SizeId" Type="Int32" />
+          <Property Name="OptionId" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CustomerInfoId" Type="Int32" Nullable="false" />
+          <Property Name="OrderTypeId" Type="Int32" Nullable="false" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <Property Name="CommentId" Type="Int32" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_OrderDetails_Comments" FromRole="OrderDetails" ToRole="Comments" />
+          <NavigationProperty Name="CustomerInfo" Relationship="Self.FK_OrderDetails_CustomerInfo" FromRole="OrderDetails" ToRole="CustomerInfo" />
+          <NavigationProperty Name="Dish" Relationship="Self.FK_OrderDetails_Dishes" FromRole="OrderDetails" ToRole="Dishes" />
+          <NavigationProperty Name="Option" Relationship="Self.FK_OrderDetails_Options" FromRole="OrderDetails" ToRole="Options" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="OrderType" Relationship="Self.FK_OrderDetails_OrderTypes" FromRole="OrderDetails" ToRole="OrderTypes" />
+          <NavigationProperty Name="Side" Relationship="Self.FK_OrderDetails_Sides" FromRole="OrderDetails" ToRole="Sides" />
+          <NavigationProperty Name="Size" Relationship="Self.FK_OrderDetails_Sizes" FromRole="OrderDetails" ToRole="Sizes" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="OrderType">
+          <Key>
+            <PropertyRef Name="OrderTypeId" />
+          </Key>
+          <Property Name="OrderTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderType1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_OrderTypes" FromRole="OrderTypes" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="RestaurantInfo">
+          <Key>
+            <PropertyRef Name="RestaurantInfoId" />
+          </Key>
+          <Property Name="RestaurantInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ZipCodes" Relationship="Self.FK_ZipCodes_RestaurantInfo" FromRole="RestaurantInfo" ToRole="ZipCodes" />
+        </EntityType>
         <EntityType Name="Side">
           <Key>
             <PropertyRef Name="SideId" />
@@ -301,13 +696,17 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CategoryId" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Sides_Categories" FromRole="Sides" ToRole="Categories" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Sides" FromRole="Sides" ToRole="OrderDetails" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
             <PropertyRef Name="SizeId" />
           </Key>
           <Property Name="SizeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="AdditionalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Sizes" FromRole="Sizes" ToRole="OrderDetails" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -318,13 +717,6 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TortillaType">
-          <Key>
-            <PropertyRef Name="TortillaTypeId" />
-          </Key>
-          <Property Name="TortillaTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -337,6 +729,53 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="ZipCode">
+          <Key>
+            <PropertyRef Name="ZipCodeId" />
+          </Key>
+          <Property Name="ZipCodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZipCode1" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AddressInfoes" Relationship="Self.FK_AddressInfo_AddressInfo" FromRole="ZipCodes" ToRole="AddressInfo" />
+          <NavigationProperty Name="RestaurantInfo" Relationship="Self.FK_ZipCodes_RestaurantInfo" FromRole="ZipCodes" ToRole="RestaurantInfo" />
+        </EntityType>
+        <EntityType Name="CustomerAccount">
+          <Key>
+            <PropertyRef Name="CustomerAccountId" />
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="AmountOfOrders" />
+            <PropertyRef Name="TotalPaid" />
+          </Key>
+          <Property Name="CustomerAccountId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="AmountOfOrders" Type="Int32" Nullable="false" />
+          <Property Name="TotalPaid" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AddressInfo_AddressInfo">
+          <End Role="ZipCodes" Type="Self.ZipCode" Multiplicity="1" />
+          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZipCodes">
+              <PropertyRef Name="ZipCodeId" />
+            </Principal>
+            <Dependent Role="AddressInfo">
+              <PropertyRef Name="ZipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInfo_AddressInfo">
+          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="0..1" />
+          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressInfo">
+              <PropertyRef Name="AddressInfoId" />
+            </Principal>
+            <Dependent Role="CustomerInfo">
+              <PropertyRef Name="AddressInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Dishes_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Dishes" Type="Self.Dish" Multiplicity="*" />
@@ -361,6 +800,54 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderDetails_Comments">
+          <End Role="Comments" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="CommentId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_CustomerInfo">
+          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInfo">
+              <PropertyRef Name="CustomerInfoId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="CustomerInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Options_Dishes">
+          <End Role="Dishes" Type="Self.Dish" Multiplicity="1" />
+          <End Role="Options" Type="Self.Option" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dishes">
+              <PropertyRef Name="DishId" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="DishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Dishes">
+          <End Role="Dishes" Type="Self.Dish" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dishes">
+              <PropertyRef Name="DishId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="DishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ingredients_ItemCategories">
           <End Role="ItemCategories" Type="Self.ItemCategory" Multiplicity="1" />
           <End Role="Items" Type="Self.Item" Multiplicity="*" />
@@ -373,21 +860,110 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderDetails_Options">
+          <End Role="Options" Type="Self.Option" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Options">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_OrderTypes">
+          <End Role="OrderTypes" Type="Self.OrderType" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTypes">
+              <PropertyRef Name="OrderTypeId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Sides">
+          <End Role="Sides" Type="Self.Side" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sides">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="SideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Sizes">
+          <End Role="Sizes" Type="Self.Size" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes">
+              <PropertyRef Name="SizeId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="SizeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZipCodes_RestaurantInfo">
+          <End Role="RestaurantInfo" Type="Self.RestaurantInfo" Multiplicity="1" />
+          <End Role="ZipCodes" Type="Self.ZipCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantInfo">
+              <PropertyRef Name="RestaurantInfoId" />
+            </Principal>
+            <Dependent Role="ZipCodes">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ItemDishes">
           <End Role="Dishes" Type="Self.Dish" Multiplicity="*" />
           <End Role="Items" Type="Self.Item" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AddressInfoes" EntityType="Self.AddressInfo" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="CustomerInfoes" EntityType="Self.CustomerInfo" />
           <EntitySet Name="Dishes" EntityType="Self.Dish" />
           <EntitySet Name="ItemCategories" EntityType="Self.ItemCategory" />
           <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Options" EntityType="Self.Option" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderTypes" EntityType="Self.OrderType" />
+          <EntitySet Name="RestaurantInfoes" EntityType="Self.RestaurantInfo" />
           <EntitySet Name="Sides" EntityType="Self.Side" />
           <EntitySet Name="Sizes" EntityType="Self.Size" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="TortillaTypes" EntityType="Self.TortillaType" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="ZipCodes" EntityType="Self.ZipCode" />
+          <EntitySet Name="CustomerAccounts" EntityType="Self.CustomerAccount" />
+          <AssociationSet Name="FK_AddressInfo_AddressInfo" Association="Self.FK_AddressInfo_AddressInfo">
+            <End Role="ZipCodes" EntitySet="ZipCodes" />
+            <End Role="AddressInfo" EntitySet="AddressInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInfo_AddressInfo" Association="Self.FK_CustomerInfo_AddressInfo">
+            <End Role="AddressInfo" EntitySet="AddressInfoes" />
+            <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Dishes_Categories" Association="Self.FK_Dishes_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Dishes" EntitySet="Dishes" />
@@ -396,9 +972,49 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Comments" Association="Self.FK_OrderDetails_Comments">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_CustomerInfo" Association="Self.FK_OrderDetails_CustomerInfo">
+            <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Options_Dishes" Association="Self.FK_Options_Dishes">
+            <End Role="Dishes" EntitySet="Dishes" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Dishes" Association="Self.FK_OrderDetails_Dishes">
+            <End Role="Dishes" EntitySet="Dishes" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ingredients_ItemCategories" Association="Self.FK_Ingredients_ItemCategories">
             <End Role="ItemCategories" EntitySet="ItemCategories" />
             <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Options" Association="Self.FK_OrderDetails_Options">
+            <End Role="Options" EntitySet="Options" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_OrderTypes" Association="Self.FK_OrderDetails_OrderTypes">
+            <End Role="OrderTypes" EntitySet="OrderTypes" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Sides" Association="Self.FK_OrderDetails_Sides">
+            <End Role="Sides" EntitySet="Sides" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Sizes" Association="Self.FK_OrderDetails_Sizes">
+            <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZipCodes_RestaurantInfo" Association="Self.FK_ZipCodes_RestaurantInfo">
+            <End Role="RestaurantInfo" EntitySet="RestaurantInfoes" />
+            <End Role="ZipCodes" EntitySet="ZipCodes" />
           </AssociationSet>
           <AssociationSet Name="ItemDishes" Association="Self.ItemDishes">
             <End Role="Dishes" EntitySet="Dishes" />
@@ -437,6 +1053,9 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="spCreateOrder">
+            <Parameter Name="Quantity" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="spGetItemsRelatedToADish" ReturnType="Collection(Model.spGetItemsRelatedToADish_Result)">
             <Parameter Name="DishName" Mode="In" Type="String" />
           </FunctionImport>
@@ -480,11 +1099,41 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AddressInfoes">
+            <EntityTypeMapping TypeName="Model.AddressInfo">
+              <MappingFragment StoreEntitySet="AddressInfo">
+                <ScalarProperty Name="AddressInfoId" ColumnName="AddressInfoId" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Apartment" ColumnName="Apartment" />
+                <ScalarProperty Name="ZipId" ColumnName="ZipId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Model.Category">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="Model.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInfoes">
+            <EntityTypeMapping TypeName="Model.CustomerInfo">
+              <MappingFragment StoreEntitySet="CustomerInfo">
+                <ScalarProperty Name="CustomerInfoId" ColumnName="CustomerInfoId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AddressInfoId" ColumnName="AddressInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -494,7 +1143,6 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
                 <ScalarProperty Name="DishId" ColumnName="DishId" />
                 <ScalarProperty Name="DishName" ColumnName="DishName" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -517,6 +1165,58 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Options">
+            <EntityTypeMapping TypeName="Model.Option">
+              <MappingFragment StoreEntitySet="Options">
+                <ScalarProperty Name="OptionId" ColumnName="OptionId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DishId" ColumnName="DishId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="Model.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+                <ScalarProperty Name="DishId" ColumnName="DishId" />
+                <ScalarProperty Name="SideId" ColumnName="SideId" />
+                <ScalarProperty Name="SizeId" ColumnName="SizeId" />
+                <ScalarProperty Name="OptionId" ColumnName="OptionId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CustomerInfoId" ColumnName="CustomerInfoId" />
+                <ScalarProperty Name="OrderTypeId" ColumnName="OrderTypeId" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Model.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTypes">
+            <EntityTypeMapping TypeName="Model.OrderType">
+              <MappingFragment StoreEntitySet="OrderTypes">
+                <ScalarProperty Name="OrderTypeId" ColumnName="OrderTypeId" />
+                <ScalarProperty Name="OrderType1" ColumnName="OrderType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestaurantInfoes">
+            <EntityTypeMapping TypeName="Model.RestaurantInfo">
+              <MappingFragment StoreEntitySet="RestaurantInfo">
+                <ScalarProperty Name="RestaurantInfoId" ColumnName="RestaurantInfoId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Sides">
             <EntityTypeMapping TypeName="Model.Side">
               <MappingFragment StoreEntitySet="Sides">
@@ -532,6 +1232,8 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
               <MappingFragment StoreEntitySet="Sizes">
                 <ScalarProperty Name="SizeId" ColumnName="SizeId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="AdditionalPrice" ColumnName="AdditionalPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -546,14 +1248,6 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TortillaTypes">
-            <EntityTypeMapping TypeName="Model.TortillaType">
-              <MappingFragment StoreEntitySet="TortillaTypes">
-                <ScalarProperty Name="TortillaTypeId" ColumnName="TortillaTypeId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="Model.User">
               <MappingFragment StoreEntitySet="Users">
@@ -563,6 +1257,26 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZipCodes">
+            <EntityTypeMapping TypeName="Model.ZipCode">
+              <MappingFragment StoreEntitySet="ZipCodes">
+                <ScalarProperty Name="ZipCodeId" ColumnName="ZipCodeId" />
+                <ScalarProperty Name="ZipCode1" ColumnName="ZipCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerAccounts">
+            <EntityTypeMapping TypeName="Model.CustomerAccount">
+              <MappingFragment StoreEntitySet="CustomerAccount">
+                <ScalarProperty Name="CustomerAccountId" ColumnName="CustomerAccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AmountOfOrders" ColumnName="AmountOfOrders" />
+                <ScalarProperty Name="TotalPaid" ColumnName="TotalPaid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -608,6 +1322,7 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Model.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Model.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="spCreateOrder" FunctionName="Model.Store.spCreateOrder" />
           <FunctionImportMapping FunctionImportName="spGetItemsRelatedToADish" FunctionName="Model.Store.spGetItemsRelatedToADish">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model.spGetItemsRelatedToADish_Result">

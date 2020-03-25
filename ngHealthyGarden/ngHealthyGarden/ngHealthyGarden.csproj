@@ -167,6 +167,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressInfo.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -175,10 +178,20 @@
     <Compile Include="Category.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Comment.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ControllersAPI\DishesController.cs" />
     <Compile Include="ControllersAPI\ItemsController.cs" />
+    <Compile Include="ControllersAPI\OrdersController.cs" />
     <Compile Include="ControllersAPI\SidesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomerAccount.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInfo.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
@@ -217,11 +230,35 @@
     <Compile Include="ItemCategory.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddrssInfoModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\OptionModel.cs" />
+    <Compile Include="Models\CustomerInfoModel.cs" />
     <Compile Include="Models\DishModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\OrderTypeModel.cs" />
+    <Compile Include="Models\RestaurantInfoModel.cs" />
+    <Compile Include="Models\SizeModel.cs" />
     <Compile Include="Models\SideModel.cs" />
+    <Compile Include="Models\ZipCodeModel.cs" />
+    <Compile Include="Option.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDetail.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderType.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestaurantInfo.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Side.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
@@ -240,10 +277,10 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="TortillaType.cs">
+    <Compile Include="User.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="User.cs">
+    <Compile Include="ZipCode.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -40,10 +40,6 @@ export class ShoppingCartComponent implements OnInit {
         this.cartIsEmpty = true;
     }
 
-    opentContent(dish: Dish){
-        this.modalService.open(this.myModal)
-    }
-
     refreshPrice(dish: Dish){
         this.dishesFromLocalStorage.splice(this.dishesFromLocalStorage.indexOf(dish), 1, dish);
         console.log(this.dishesFromLocalStorage)
