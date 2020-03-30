@@ -2,7 +2,7 @@ import { Dish } from './Dish';
 
 export class Item {
     description: string;
-    itemCategory: number;
+    itemCategoryId: number;
     price: number;
     dishes: Dish[];
 }

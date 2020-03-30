@@ -14,7 +14,7 @@ export class ShoppingCartComponent implements OnInit {
     @ViewChild('myModal') myModal;
     
     cartIsEmpty: boolean = true;
-    dishesFromLocalStorage: Dish[];
+    dishesFromLocalStorage: any[];
     subtotal: number = 0;
     tax: number = 0;
     total: number = 0;
@@ -32,6 +32,7 @@ export class ShoppingCartComponent implements OnInit {
             this.cartIsEmpty = false;
         }
         this.buildShoppingCartTotal();
+        console.log(this.dishesFromLocalStorage)
     }
 
     //TODO: when order sent clear local storage
@@ -40,7 +41,7 @@ export class ShoppingCartComponent implements OnInit {
         this.cartIsEmpty = true;
     }
 
-    refreshPrice(dish: Dish){
+    refreshPrice(dish: any){
         this.dishesFromLocalStorage.splice(this.dishesFromLocalStorage.indexOf(dish), 1, dish);
         console.log(this.dishesFromLocalStorage)
         this.buildShoppingCartTotal()
@@ -50,9 +51,10 @@ export class ShoppingCartComponent implements OnInit {
     buildShoppingCartTotal(){
         this.subtotal = 0;
         for (var i = 0; i < this.dishesFromLocalStorage.length; i++) {
-            this.subtotal += this.dishesFromLocalStorage[i].price * this.dishesFromLocalStorage[i].quantity;
+            this.subtotal += this.dishesFromLocalStorage[i].dish.price * this.dishesFromLocalStorage[i].dish.quantity;
         }
         this.tax = this.subtotal * 0.05;
         this.total = this.subtotal + this.tax;
+        console.log(this.subtotal)
     }
 }

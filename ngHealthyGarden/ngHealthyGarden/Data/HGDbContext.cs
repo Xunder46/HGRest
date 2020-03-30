@@ -30,6 +30,7 @@ namespace ngHealthyGarden
         public virtual DbSet<Dish> Dishes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
@@ -42,6 +43,7 @@ namespace ngHealthyGarden
                 new SqlParameter("DishName", dishName) :
                 new SqlParameter("DishName", typeof(string));
 
+            //stored procedure to find ingredients by a dish
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<Item>("spGetItemsRelatedToADish @DishName", dishNameParameter);
         }
     }

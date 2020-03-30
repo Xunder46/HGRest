@@ -8,12 +8,14 @@
                 <ul class="itemsContainer">
                     <li class="text-info">Ingredients:</li>
                     <li *ngFor="let ingredient of ingredients[i]; let isLast=last" #ingredient id="ingredient">
-                        {{ingredient.description|split}} 
+                        {{ingredient.description|split}}
                         {{isLast ? '' : ', '}}
                     </li>
                 </ul>
 
-                <customize-modal [dish] = "dish" [allIngredients]="allIngredients" [sides]="sides" [category]="category" [dishIngredients]="ingredients[i]" class="text-dark"></customize-modal>
+                <customize-modal [dish]="dish" [allIngredients]="allIngredients" [sides]="sides" [sizes]="sizes"
+                    [category]="category" [dishIngredients]="ingredients[i]" class="text-dark">
+                </customize-modal>
                 <!-- <div class="btn insideImageButton iWantThisButton" (click)="addToCart(dish)">I want this!</div> -->
             </a>
             <strong class="textShadow dishName">{{dish.dishName | split}}</strong>

@@ -7,6 +7,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { Item } from '../models/Item';
 import { Category } from '../models/Category';
 import { Side } from '../models/Side';
+import { Size } from '../models/Size';
+import { DishOption } from '../models/DishOption';
 
 @Component({
     animations: [
@@ -42,29 +44,44 @@ export class DishesComponent implements OnInit {
     category: Category
     sides: Side[] = [];
     allIngredients: Item[];
+    sizes: Size[];
+    options: DishOption[];
 
     constructor(private services: WebServices, private activatedRoute: ActivatedRoute, private cart: CartService) { }
 
     ngOnInit(): void {
         this.categoryName = this.activatedRoute.snapshot.paramMap.get('category');
-
+        
+        //GETTING DISHES BY CATEGORY NAME
         this.services.getCategoryByNameWithDishes(this.categoryName).subscribe(data => {
             this.category = data;
             this.dishes = data.dishes.filter(
                 (thing, i, arr) => arr.findIndex(t => t.dishName === thing.dishName) === i
             )
+
+            //GETTING INGREDIENTS FOR EACH DISH
             for (let i = 0; i < this.dishes.length; i++) {
                 this.services.getItemsByDishName(this.dishes[i].dishName).subscribe(items => {
                     this.ingredients[i] = items;
-                })
+                    console.log(items)
+                });
             }
+
+            //GETTING SIDE FOR DISHES BY CATEGORYID
             this.services.getSidesByCategoryId(this.category.categoryId).subscribe(data => {
                 this.sides = data;
-                
             });
-        })
+
+            //GETTING SIZES FOR DISHES BY CATEGORYID
+            this.services.getSizesByCategoryId(this.category.categoryId).subscribe(data => {
+                this.sizes = data;
+            });
+        });
+
+        //GETTING ALL INGREDIENTS
         this.services.getAllItems().subscribe(data=>{
             this.allIngredients = data;
-        })
+        });
+        
     }
 }

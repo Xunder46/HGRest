@@ -55,12 +55,32 @@ h1 {
     margin: 1em;
     display: inline-block;
 }
+
+.cartButton{
+    right: 1em;
+    font-size: 16px;
+    font-weight: bold;
+    background: transparent;
+    border: solid 2px darkorange;
+    border-radius: 5px;
+    width: 10em;
+    height: 3em;
+    margin: 0 1em 1em auto;
+    color: black;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
 /*#endregion*/
 
 /*#region -_-_-_-_Animations-_-_-_-_*/
 tbody>tr:hover {
     background-color: aquamarine;
     transform: scale(1.03);
+}
+
+.cartButton:hover {
+    background-color: tomato;
+    border-color: tomato;
 }
 /*#endregion*/
 

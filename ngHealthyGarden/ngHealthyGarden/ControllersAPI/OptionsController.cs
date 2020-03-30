@@ -9,33 +9,32 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace ngHealthyGarden
+namespace ngHealthyGarden.ControllersAPI
 {
-    [RoutePrefix("api/menu")]
-    public class MenuController : ApiController
+    [RoutePrefix("api/options")]
+    public class OptionsController : ApiController
     {
         private readonly IHGRepository _pablos;
         private readonly IMapper _mapper;
 
-        public MenuController()
+        public OptionsController()
         {
 
         }
-        public MenuController(IHGRepository pablos, IMapper mapper)
+        public OptionsController(IHGRepository pablos, IMapper mapper)
         {
             _mapper = mapper;
             _pablos = pablos;
         }
 
-        // GET api/<controller>
-        [Route()]
-        public async Task<IHttpActionResult> Get()
+        [Route("{dishId}")]
+        public async Task<IHttpActionResult> Get(int dishId)
         {
             try
             {
-                var result = await _pablos.GetAllCategoriesAsync();
+                var result = await _pablos.GetOptionByDishId(dishId);
 
-                var mapped = _mapper.Map<IEnumerable<CategoryModel>>(result);
+                var mapped = _mapper.Map<IEnumerable<OptionModel>>(result);
 
                 return Ok(mapped);
             }

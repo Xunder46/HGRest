@@ -19,7 +19,7 @@ namespace ngHealthyGarden.Data
             return (await _context.SaveChangesAsync())>0;
         }
 
-        //=============DISHES=====================
+        #region =============DISHES=====================
         public void AddDish(Dish camp)
         {
             throw new NotImplementedException();
@@ -44,8 +44,9 @@ namespace ngHealthyGarden.Data
 
             return await query.FirstOrDefaultAsync();
         }
+        #endregion
 
-        //=============CATEGORIES=================
+        #region =============CATEGORIES=================
         public async Task<Category[]> GetAllCategoriesAsync()
         {
             //getting categories with their dishes with their sizes, sides, etc...
@@ -62,11 +63,21 @@ namespace ngHealthyGarden.Data
 
             return await query.FirstOrDefaultAsync();
         }
+        public void AddCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
 
-        //=============ITEMS======================
+        public void DeleteCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region =============ITEMS======================
         public async Task<Item[]> GetAllItemsAsync()
         {
-            IQueryable<Item> query = _context.Items.OrderBy(i=>i.Description);
+            IQueryable<Item> query = _context.Items.OrderBy(i => i.Description);
 
             return await query.ToArrayAsync();
         }
@@ -76,11 +87,20 @@ namespace ngHealthyGarden.Data
 
             return query.ToArray();
         }
+        public void AddItem(Item item)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteItem(Item item)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
-        //=============SIDES======================
+        #region =============SIDES======================
         public async Task<Side[]> GetAllSidesAsync()
         {
-            IQueryable<Side> query = _context.Sides.OrderBy(c=>c.Description);
+            IQueryable<Side> query = _context.Sides.OrderBy(c => c.Description);
 
             return await query.ToArrayAsync();
         }
@@ -90,26 +110,70 @@ namespace ngHealthyGarden.Data
 
             return await query.ToArrayAsync();
         }
-
-        //=============SIZES=====================
-        public async Task<Size[]> GetSizesByCategoryIdAsync(int categoryId)
+        public void AddSide(Side side)
         {
             throw new NotImplementedException();
         }
+        public void DeleteSide(Side side)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
-        //=============ZipCodes=====================
+        #region =============SIZES=====================
+        public async Task<Size[]> GetAllSizesAsync()
+        {
+            IQueryable<Size> query = _context.Sizes.OrderBy(c => c.Description);
+
+            return await query.ToArrayAsync();
+        }
+        public async Task<Size[]> GetSizesByCategoryIdAsync(int categoryId)
+        {
+            IQueryable<Size> query = _context.Sizes.Where(s => s.CategoryId == categoryId);
+
+            return await query.ToArrayAsync();
+        }
+        public void AddSize(Size size)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteSize(Size size)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region =============ZipCodes=====================
         public async Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId)
         {
             throw new NotImplementedException();
         }
+        public void AddZipCode(ZipCode zipCode)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteZipCode(ZipCode zipCode)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
-        //=============RESTAURANTS=====================
+        #region =============RESTAURANTS=====================
         public async Task<RestaurantInfo[]> GetRestaurantsAsync()
         {
             throw new NotImplementedException();
         }
+        public void AddRestaurantInfo(RestaurantInfo restaurantInfo)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteRestaurantInfo(RestaurantInfo restaurantInfo)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
-        //=============ORDERS=====================
+        #region =============ORDERS=====================
         public void AddOrder(Order o)
         {
             var query = _context.Orders.Add(o);
@@ -125,11 +189,25 @@ namespace ngHealthyGarden.Data
         public async Task<OrderDetail[]> GetOrderDetailsByOrderId(int orderId)
         {
             IQueryable<OrderDetail> query = _context.OrderDetails.Where(s => s.OrderId == orderId)
-                .Include(d=>d.Order)
-                .Include(d=>d.CustomerInfo)
-                .Include(d=>d.Dish);
+                .Include(d => d.Order)
+                .Include(d => d.CustomerInfo)
+                .Include(d => d.Dish);
 
             return await query.ToArrayAsync();
         }
+        #endregion
+
+        #region =============OPTIONS=====================
+        public void AddOption(Option o)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<Option[]> GetOptionByDishId(int dishId)
+        {
+            IQueryable<Option> query = _context.Options.Where(o => o.DishId == dishId);
+
+            return await query.ToArrayAsync();
+        }
+        #endregion
     }
 }

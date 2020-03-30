@@ -183,8 +183,10 @@
     </Compile>
     <Compile Include="ControllersAPI\DishesController.cs" />
     <Compile Include="ControllersAPI\ItemsController.cs" />
+    <Compile Include="ControllersAPI\OptionsController.cs" />
     <Compile Include="ControllersAPI\OrdersController.cs" />
     <Compile Include="ControllersAPI\SidesController.cs" />
+    <Compile Include="ControllersAPI\SizeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomerAccount.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>

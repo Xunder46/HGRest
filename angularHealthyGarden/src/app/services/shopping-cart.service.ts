@@ -6,16 +6,12 @@ import { Side } from '../models/Side';
 @Injectable()
 export class CartService {
 
-    private dishesInTheCart: Dish[];
-    private chosenSide: Side[];
+    private dishesInTheCart: any[];
 
-    public addToCart(dish: Dish) {
+    public addToCart(dish: any) {
         
         if (!JSON.parse(localStorage.getItem("dishes"))) {
             this.dishesInTheCart = [];
-        }
-        else if(!JSON.parse(localStorage.getItem("sides"))){
-            this.chosenSide = [];
         }
 
         else {
@@ -26,7 +22,7 @@ export class CartService {
         localStorage.setItem("dishes", JSON.stringify(this.dishesInTheCart));
     }
 
-    public getItems(): Dish[] {
+    public getItems(): any[] {
         this.dishesInTheCart = JSON.parse(localStorage.getItem("dishes"));
         return this.dishesInTheCart;
     }

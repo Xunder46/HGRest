@@ -23,6 +23,10 @@ a {
 h6 {
     font: 0.7em bold;
 }
+
+p{
+    display: inline;
+}
 /*#endregion*/
 
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
@@ -120,10 +124,12 @@ h6 {
 @keyframes appear {
     0% {
         opacity: 0;
+        display: none;
     }
 
     80%{
         opacity: 0;
+        display: none;
     }
 
     100% {
