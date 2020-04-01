@@ -38,7 +38,7 @@
                 <div class="totals-value" id="cart-total">{{total|currency}}</div>
             </div>
         </div>
-        <button class="btn cartButton">Checkout</button>
+        <button class="btn cartButton" (click)="sendToDatabase()">Checkout</button>
         <button class="btn cartButton" (click)="emptyCart()">Clear all</button>
     </div>
     <div *ngIf="cartIsEmpty">

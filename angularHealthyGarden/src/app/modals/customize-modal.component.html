@@ -43,19 +43,32 @@
     <div class="form-group">
       <label>Ingredients:</label>&nbsp;
       <mat-checkbox *ngFor="let dishIngredient of dishIngredients" checked="true"
-        (click)="toggleIngredient(dishIngredient.description)">
+        (click)="toggleDish(dishIngredient)">
         {{dishIngredient.description|split}}&nbsp;
       </mat-checkbox>
       <div>
-        <label>Additional price:</label>&nbsp;
-        {{additionalPrice|currency}}
+        <label>Please, add extra:</label>&nbsp;
+        <p *ngFor="let additionalIngredient of modifiedDishIngredients; let isLast=last ">
+          {{additionalIngredient.description|split}}
+          {{isLast ? '' : ', '}}
+        </p>
+        <div>
+          {{additionalPrice|currency}}
+        </div>
+      </div> <br>
+      <div>
+        <label>Please, remove:</label>&nbsp;
+        <p *ngFor="let ingredientToRemove of removedIngredients; let isLast=last ">
+          {{ingredientToRemove.description|split}}
+          {{isLast ? '' : ', '}}
+        </p>
       </div>
     </div>
 
     <div class="form-group">
       <mat-label>Modifiers:</mat-label>&nbsp;
       <mat-checkbox *ngFor="let ingredient of allIngredients; let i = index"
-        (click)="toggleIngredient(ingredient.description)">
+        (click)="toggleAll(ingredient)">
         {{ingredient.description|split}}&nbsp;
       </mat-checkbox>
     </div>

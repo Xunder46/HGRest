@@ -20,13 +20,13 @@ namespace ngHealthyGarden.Data
         }
 
         #region =============DISHES=====================
-        public void AddDish(Dish camp)
+        public void AddDish(Dish dish)
         {
-            throw new NotImplementedException();
+            _context.Dishes.Add(dish);
         }
-        public void DeleteDish(Dish camp)
+        public void DeleteDish(Dish dish)
         {
-            throw new NotImplementedException();
+            _context.Dishes.Remove(dish);
         }
         public async Task<Dish[]> GetAllDishesAsync()
         {
@@ -49,7 +49,6 @@ namespace ngHealthyGarden.Data
         #region =============CATEGORIES=================
         public async Task<Category[]> GetAllCategoriesAsync()
         {
-            //getting categories with their dishes with their sizes, sides, etc...
             IQueryable<Category> query = _context.Categories
                 .Include(c => c.Dishes);
 
@@ -65,12 +64,11 @@ namespace ngHealthyGarden.Data
         }
         public void AddCategory(Category category)
         {
-            throw new NotImplementedException();
+            _context.Categories.Add(category);
         }
-
         public void DeleteCategory(Category category)
         {
-            throw new NotImplementedException();
+            _context.Categories.Remove(category);
         }
         #endregion
 
@@ -81,6 +79,13 @@ namespace ngHealthyGarden.Data
 
             return await query.ToArrayAsync();
         }
+        public async Task<Item[]> GetItemsByItemCategoryIdAsync(int itemCategoryId)
+        {
+            return await _context.Items
+                .Where(i => i.ItemCategoryId == itemCategoryId)
+                .OrderBy(i => i.Description)
+                .ToArrayAsync();
+        }
         public Item[] GetItemsByDishNameAsync(string dishName)
         {
             var query = _context.spGetItemsRelatedToADish(dishName);
@@ -89,11 +94,12 @@ namespace ngHealthyGarden.Data
         }
         public void AddItem(Item item)
         {
-            throw new NotImplementedException();
+            var query = _context.Items.Add(item);
+
         }
         public void DeleteItem(Item item)
         {
-            throw new NotImplementedException();
+            _context.Items.Remove(item);
         }
         #endregion
 
@@ -112,11 +118,11 @@ namespace ngHealthyGarden.Data
         }
         public void AddSide(Side side)
         {
-            throw new NotImplementedException();
+            _context.Sides.Add(side);
         }
         public void DeleteSide(Side side)
         {
-            throw new NotImplementedException();
+            _context.Sides.Remove(side);
         }
         #endregion
 
@@ -135,41 +141,41 @@ namespace ngHealthyGarden.Data
         }
         public void AddSize(Size size)
         {
-            throw new NotImplementedException();
+            _context.Sizes.Add(size);
         }
         public void DeleteSize(Size size)
         {
-            throw new NotImplementedException();
+            _context.Sizes.Remove(size);
         }
         #endregion
 
         #region =============ZipCodes=====================
         public async Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId)
         {
-            throw new NotImplementedException();
+            return await _context.ZipCodes.Where(z => z.RestaurantId == restaurantId).ToArrayAsync();
         }
         public void AddZipCode(ZipCode zipCode)
         {
-            throw new NotImplementedException();
+            _context.ZipCodes.Add(zipCode);
         }
         public void DeleteZipCode(ZipCode zipCode)
         {
-            throw new NotImplementedException();
+            _context.ZipCodes.Remove(zipCode);
         }
         #endregion
 
         #region =============RESTAURANTS=====================
         public async Task<RestaurantInfo[]> GetRestaurantsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.RestaurantInfo.Select(c => c).ToArrayAsync();
         }
         public void AddRestaurantInfo(RestaurantInfo restaurantInfo)
         {
-            throw new NotImplementedException();
+            _context.RestaurantInfo.Add(restaurantInfo);
         }
         public void DeleteRestaurantInfo(RestaurantInfo restaurantInfo)
         {
-            throw new NotImplementedException();
+            _context.RestaurantInfo.Remove(restaurantInfo);
         }
         #endregion
 
@@ -182,25 +188,47 @@ namespace ngHealthyGarden.Data
         {
             foreach (var od in ods)
             {
+                _context.Entry(od).State = EntityState.Unchanged;
                 var query = _context.OrderDetails.Add(od);
                 query.OrderId = orderId;
+                query.CommentId = od.CommentId;
             }
         }
         public async Task<OrderDetail[]> GetOrderDetailsByOrderId(int orderId)
         {
             IQueryable<OrderDetail> query = _context.OrderDetails.Where(s => s.OrderId == orderId)
-                .Include(d => d.Order)
-                .Include(d => d.CustomerInfo)
-                .Include(d => d.Dish);
+                .Include(d => d.Order).Include(d => d.CustomerInfo)
+                .Include(d => d.Dish).Include(d=>d.Comment)
+                .Include(d=>d.Items).Include(d=>d.Items1)//Items = RemovedIngredients, Items1 = AddedIngredients. Didn't change in order to not mess up EF.
+                .Include(d=>d.Option).Include(d=>d.OrderType)
+                .Include(d=>d.Side).Include(d=>d.Size);
 
             return await query.ToArrayAsync();
+        }
+        public void DeleteOrderAndRelatedOrderDetails(OrderDetail od)
+        {
+            var order = _context.Orders.Where(o => o.OrderId == od.OrderId).FirstOrDefault();
+            var comment = _context.Comments.Where(c => c.CommentId == od.CommentId).FirstOrDefault();
+
+            _context.Comments.Remove(comment);
+            _context.OrderDetails.Remove(od);
+            _context.Orders.Remove(order);
+        }
+        public async Task<OrderDetail[]> GetAllOrdersWithDetailsAsync()
+        {
+            return await _context.OrderDetails.Select(o=>o)
+                .Include(o => o.Comment).Include(o => o.Items)
+                .Include(o => o.CustomerInfo).Include(o => o.Option)
+                .Include(o => o.Dish).Include(o => o.Order)
+                .Include(o => o.OrderType).Include(o => o.Side)
+                .Include(o => o.Size).ToArrayAsync();
         }
         #endregion
 
         #region =============OPTIONS=====================
-        public void AddOption(Option o)
+        public void AddOption(Option option)
         {
-            throw new NotImplementedException();
+            _context.Options.Add(option);
         }
         public async Task<Option[]> GetOptionByDishId(int dishId)
         {
@@ -208,6 +236,90 @@ namespace ngHealthyGarden.Data
 
             return await query.ToArrayAsync();
         }
+        public void DeleteOption(Option option)
+        {
+            _context.Options.Remove(option);
+        }
+        public async Task<Option[]> GetAllOptionsAsync()
+        {
+            return await _context.Options.Select(o => o).ToArrayAsync();
+        }
         #endregion
+
+        #region =============COMMENTS=====================
+        public void AddComment(Comment c)
+        {
+            _context.Comments.Add(c);
+        }
+        public Task<Comment[]> GetAllCommentsAsync()
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteComment(int commentId)
+        {
+            var comment = _context.Comments.Where(c => c.CommentId == commentId).FirstOrDefault();
+            _context.Comments.Remove(comment);
+        }
+        public Comment GetCommentById(int commentId)
+        {
+            return _context.Comments.Where(c => c.CommentId == commentId).FirstOrDefault();
+        }
+        #endregion
+
+        #region =============CUSTOMER_INFO=====================
+        public void AddCustomer(CustomerInfo customerInfo)
+        {
+            _context.CustomerInfo.Add(customerInfo);
+        }
+        public void DeleteCustomer(CustomerInfo customerInfo)
+        {
+            _context.CustomerInfo.Remove(customerInfo);
+        }
+        public async Task<CustomerInfo[]> GetAllCustomersAsync()
+        {
+            return await _context.CustomerInfo.Select(c => c).ToArrayAsync();
+        }
+        public CustomerInfo GetCustomerWithAddressByCustomerId(int customerId)
+        {
+            return _context.CustomerInfo.Where(c => c.CustomerInfoId == customerId)
+                .Include(c=>c.AddressInfo).FirstOrDefault();
+        }
+        #endregion
+
+        #region =============ADDRESS=====================
+        public async Task<AddressInfo[]> GetAllAddressesAsync()
+        {
+            return await _context.AddressInfo.Select(a => a).ToArrayAsync();
+        }
+        public void AddAddress(AddressInfo addressInfo)
+        {
+            _context.AddressInfo.Add(addressInfo);
+        }
+        public void DeleteAddress(AddressInfo addressInfo)
+        {
+            _context.AddressInfo.Remove(addressInfo);
+        }
+        #endregion
+
+        #region =============ITEM_CATEGORIES=====================
+        public async Task<ItemCategory[]> GetAllItemCategoriesAsync()
+        {
+            return await _context.ItemCategories.Select(i => i).ToArrayAsync();
+        }
+        public void AddItemCategory(ItemCategory itemCategory)
+        {
+            _context.ItemCategories.Add(itemCategory);
+        }
+        public void DeleteItemCategory(ItemCategory itemCategory)
+        {
+            _context.ItemCategories.Remove(itemCategory);
+        }
+        #endregion
+
+        #region =============USERS=====================
+
+
+        #endregion
+
     }
 }

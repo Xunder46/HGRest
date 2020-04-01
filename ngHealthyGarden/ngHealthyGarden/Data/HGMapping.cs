@@ -17,7 +17,8 @@ namespace ngHealthyGarden.Data
                 //.ForMember(c => c.TortillaTypeDescription, opt => opt.MapFrom(m => m.TortillaType.Description));
 
             CreateMap<Category, CategoryModel>();
-            CreateMap<Item, ItemModel>();
+            CreateMap<Item, ItemModel>()
+                .ReverseMap();
             CreateMap<Side, SideModel>();
             CreateMap<Order, OrderModel>()
                 .ReverseMap();
@@ -26,6 +27,8 @@ namespace ngHealthyGarden.Data
             CreateMap<CustomerInfo, CustomerInfoModel>();
             CreateMap<Option, OptionModel>();
             CreateMap<Order, OrderModel>();
+            CreateMap<OrderDetail, OrderDetailModel>()
+                .ReverseMap();
             CreateMap<OrderType, OrderTypeModel>();
             CreateMap<RestaurantInfo, RestaurantInfoModel>();
             CreateMap<Size, SizeModel>();

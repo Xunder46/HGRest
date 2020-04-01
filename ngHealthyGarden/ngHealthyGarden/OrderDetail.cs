@@ -14,6 +14,13 @@ namespace ngHealthyGarden
     
     public partial class OrderDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public OrderDetail()
+        {
+            this.Items = new HashSet<Item>();
+            this.Items1 = new HashSet<Item>();
+        }
+    
         public int OrderDetailId { get; set; }
         public int DishId { get; set; }
         public Nullable<int> SideId { get; set; }
@@ -35,5 +42,9 @@ namespace ngHealthyGarden
         public virtual OrderType OrderType { get; set; }
         public virtual Side Side { get; set; }
         public virtual Size Size { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items1 { get; set; }
     }
 }

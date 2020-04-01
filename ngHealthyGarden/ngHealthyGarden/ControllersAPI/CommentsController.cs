@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ngHealthyGarden.Data;
-using ngHealthyGarden.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +10,29 @@ using System.Web.Http;
 
 namespace ngHealthyGarden.ControllersAPI
 {
-    [RoutePrefix("api/orders")]
-    public class OrdersController : ApiController
+    [RoutePrefix("api/comments")]
+    public class CommentsController : ApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
-        public OrdersController()
+        public CommentsController()
         {
 
         }
-        public OrdersController(IHGRepository repo, IMapper mapper)
+        public CommentsController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
         }
 
 
-        [Route("{orderId}", Name = "GetOrder")]
-        public async Task<IHttpActionResult> Get(int orderId)
+        [Route(Name = "GetComments")]
+        public async Task<IHttpActionResult> Get()
         {
             try
             {
-                var result = await _repo.GetOrderDetailsByOrderId(orderId);
+                var result = await _repo.GetAllCommentsAsync();
 
                 if (result == null)
                 {
@@ -49,20 +48,17 @@ namespace ngHealthyGarden.ControllersAPI
         }
 
         [Route()]
-        public async Task<IHttpActionResult> Post(OrderModel o)
+        public async Task<IHttpActionResult> Post(Comment comment)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var order = _mapper.Map<Order>(o);
-
-                    _repo.AddOrder(order);
+                    _repo.AddComment(comment);
 
                     if (await _repo.SaveChangesAsync())
                     {
-                        var newOrderModel = _mapper.Map<OrderModel>(order);
-                        return Created("GetOrder", new { orderId = newOrderModel.OrderId });
+                        return Created("GetComments", new { commentId = comment.CommentId });
                     }
                 }
 
@@ -74,28 +70,29 @@ namespace ngHealthyGarden.ControllersAPI
             return BadRequest();
         }
 
-        [Route("{orderId}")]
-        public async Task<IHttpActionResult> Post(int orderId, OrderDetailModel[] ods)
+        [Route("commentId")]
+        public async Task<IHttpActionResult> Delete(int commentId)
         {
             try
             {
-                if (ModelState.IsValid)
+                var comment = _repo.GetCommentById(commentId);
+                if (comment == null) return NotFound();
+
+                _repo.DeleteComment(commentId);
+                if (await _repo.SaveChangesAsync())
                 {
-                    var orderDetail = _mapper.Map<OrderDetail[]>(ods);
-
-                    _repo.AddOrderDetail(orderDetail, orderId);
-
-                    if (await _repo.SaveChangesAsync())
-                    {
-                        return Created("GetOrder", new { orderId = orderId });
-                    }
+                    return Ok();
+                }
+                else
+                {
+                    return InternalServerError();
                 }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return InternalServerError(ex);
             }
-            return BadRequest();
         }
+
     }
 }

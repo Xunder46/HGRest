@@ -20,5 +20,8 @@ namespace ngHealthyGarden
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        public Nullable<int> CustomerInfoId { get; set; }
+    
+        public virtual CustomerInfo CustomerInfo { get; set; }
     }
 }

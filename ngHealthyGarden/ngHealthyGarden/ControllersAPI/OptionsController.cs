@@ -14,17 +14,17 @@ namespace ngHealthyGarden.ControllersAPI
     [RoutePrefix("api/options")]
     public class OptionsController : ApiController
     {
-        private readonly IHGRepository _pablos;
+        private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
         public OptionsController()
         {
 
         }
-        public OptionsController(IHGRepository pablos, IMapper mapper)
+        public OptionsController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
-            _pablos = pablos;
+            _repo = repo;
         }
 
         [Route("{dishId}")]
@@ -32,7 +32,7 @@ namespace ngHealthyGarden.ControllersAPI
         {
             try
             {
-                var result = await _pablos.GetOptionByDishId(dishId);
+                var result = await _repo.GetOptionByDishId(dishId);
 
                 var mapped = _mapper.Map<IEnumerable<OptionModel>>(result);
 

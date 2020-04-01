@@ -181,6 +181,8 @@
     <Compile Include="Comment.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ControllersAPI\CommentsController.cs" />
+    <Compile Include="ControllersAPI\CustomerInfoController.cs" />
     <Compile Include="ControllersAPI\DishesController.cs" />
     <Compile Include="ControllersAPI\ItemsController.cs" />
     <Compile Include="ControllersAPI\OptionsController.cs" />
@@ -188,13 +190,7 @@
     <Compile Include="ControllersAPI\SidesController.cs" />
     <Compile Include="ControllersAPI\SizeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="CustomerAccount.cs">
-      <DependentUpon>HGEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="CustomerInfo.cs">
-      <DependentUpon>HGEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\IHGRepository.cs" />
@@ -239,6 +235,8 @@
     <Compile Include="Models\CustomerInfoModel.cs" />
     <Compile Include="Models\DishModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
+    <Compile Include="Models\RemovedIngredients.cs" />
+    <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\OrderTypeModel.cs" />
     <Compile Include="Models\RestaurantInfoModel.cs" />
@@ -268,15 +266,6 @@
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="spGetItemsRelatedToADish_Result.cs">
-      <DependentUpon>HGEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>HGEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>HGEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">

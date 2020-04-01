@@ -1,3 +1,5 @@
+import { Item } from './Item';
+
 export class OrderDetails {
     orderDetailId: number;
     dishId: number;
@@ -11,4 +13,6 @@ export class OrderDetails {
     restaurantId: number;
     commentId?: number;
     orderId: number;
+    items: Item[];
+    items1: Item[];
 }

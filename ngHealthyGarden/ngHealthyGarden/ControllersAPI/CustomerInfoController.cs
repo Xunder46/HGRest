@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ngHealthyGarden.Data;
-using ngHealthyGarden.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +10,28 @@ using System.Web.Http;
 
 namespace ngHealthyGarden.ControllersAPI
 {
-    [RoutePrefix("api/orders")]
-    public class OrdersController : ApiController
+    [RoutePrefix("api/customers")]
+    public class CustomerInfoController : ApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
-        public OrdersController()
+        public CustomerInfoController()
         {
 
         }
-        public OrdersController(IHGRepository repo, IMapper mapper)
+        public CustomerInfoController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
         }
 
-
-        [Route("{orderId}", Name = "GetOrder")]
-        public async Task<IHttpActionResult> Get(int orderId)
+        [Route(Name = "GetCustomers")]
+        public async Task<IHttpActionResult> Get()
         {
             try
             {
-                var result = await _repo.GetOrderDetailsByOrderId(orderId);
+                var result = await _repo.GetAllCustomersAsync();
 
                 if (result == null)
                 {
@@ -49,20 +47,17 @@ namespace ngHealthyGarden.ControllersAPI
         }
 
         [Route()]
-        public async Task<IHttpActionResult> Post(OrderModel o)
+        public async Task<IHttpActionResult> Post(CustomerInfo customer)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var order = _mapper.Map<Order>(o);
-
-                    _repo.AddOrder(order);
+                    _repo.AddCustomer(customer);
 
                     if (await _repo.SaveChangesAsync())
                     {
-                        var newOrderModel = _mapper.Map<OrderModel>(order);
-                        return Created("GetOrder", new { orderId = newOrderModel.OrderId });
+                        return Created("GetCustomers", new { customerInfoId = customer.CustomerInfoId });
                     }
                 }
 
@@ -74,28 +69,29 @@ namespace ngHealthyGarden.ControllersAPI
             return BadRequest();
         }
 
-        [Route("{orderId}")]
-        public async Task<IHttpActionResult> Post(int orderId, OrderDetailModel[] ods)
+        [Route()]
+        public async Task<IHttpActionResult> Delete(CustomerInfo customer)
         {
             try
             {
-                if (ModelState.IsValid)
+                var c = _repo.GetCustomerWithAddressByCustomerId(customer.CustomerInfoId);
+                if (c == null) return NotFound();
+
+                _repo.DeleteCustomer(customer);
+                if (await _repo.SaveChangesAsync())
                 {
-                    var orderDetail = _mapper.Map<OrderDetail[]>(ods);
-
-                    _repo.AddOrderDetail(orderDetail, orderId);
-
-                    if (await _repo.SaveChangesAsync())
-                    {
-                        return Created("GetOrder", new { orderId = orderId });
-                    }
+                    return Ok();
+                }
+                else
+                {
+                    return InternalServerError();
                 }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return InternalServerError(ex);
             }
-            return BadRequest();
         }
+
     }
 }

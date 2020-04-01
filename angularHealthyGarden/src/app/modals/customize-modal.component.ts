@@ -20,8 +20,6 @@ export class CustomizeModal implements OnInit {
   //UsefulProperties
   categoryId: number;
   closeResult: string;
-  dishIngredientsNames: string[];
-  allIngredientsNames: string[];
   options: DishOption[];
   comments: string;
   additionalPrice: number = 0.0;
@@ -39,7 +37,8 @@ export class CustomizeModal implements OnInit {
   chosenSide: Side;
   chosenSize: Size;
   chosenOption: DishOption;
-  modifiedDishIngredients: Item[];
+  modifiedDishIngredients: Item[] = [];
+  removedIngredients: Item[] = [];
 
   constructor(private modalService: NgbModal, private cart: CartService, private services: WebServices) { }
 
@@ -50,62 +49,50 @@ export class CustomizeModal implements OnInit {
   }
 
   open(content) {
-    this.dishIngredientsNames = [];
-    this.allIngredientsNames = [];
-
-    for (let i = 0; i < this.allIngredients.length; i++) {
-      this.allIngredientsNames.push(this.allIngredients[i].description);
-    }
-    for (let i = 0; i < this.dishIngredients.length; i++) {
-      this.dishIngredientsNames.push(this.dishIngredients[i].description);
-    }
-    this.allIngredientsNames = this.allIngredientsNames.filter(a => !this.dishIngredientsNames.includes(a))
-
+    this.modifiedDishIngredients = [];
+    this.removedIngredients = [];
+    this.additionalPrice = 0;
     this.modalService.open(content, { ariaLabelledBy: 'customize-modal' }).result;
   }
 
   addToCart(_dish: Dish) {
-    this.getOnlyNewlyAddedIngredients();
-
     var dish = {
       dish: _dish,
-      chosenOption: this.chosenOption,
-      chosenSize: this.chosenSize,
-      chosenSide: this.chosenSide,
-      dishIngredients: this.modifiedDishIngredients
+      chosenOption: this.chosenOption || new DishOption(),
+      chosenSize: this.chosenSize || new Size(),
+      chosenSide: this.chosenSide || new Side(),
+      additionalIngredients: this.modifiedDishIngredients,
+      removedIngredients: this.removedIngredients,
+      comments: this.dish.comments
     }
-
+    console.log(dish)
     this.cart.addToCart(dish);
-    this.modalService.dismissAll("dish added")
+    this.modalService.dismissAll();
   }
 
-  toggleIngredient(ingredientName: string) {
-    TODO://Add and remove ingredient + display price correctly (array of all and array of dish. Push and remove on click)
-    if (this.dishIngredients.includes(this.allIngredients.find(a=>a.description==ingredientName))) {
-      debugger
-      this.allIngredients.push(this.dishIngredients.find(d=>d.description==ingredientName));
-      this.allIngredients.sort();
-      this.dishIngredients = this.dishIngredients.filter(d => d.description != ingredientName);
+  toggleDish(ingredient: Item) {
+    if(!this.removedIngredients.includes(ingredient)){
+      this.removedIngredients.push(ingredient);
     }
-    else {
-      this.dishIngredients.push(this.allIngredients.find(d=>d.description==ingredientName));
-      this.allIngredients = this.allIngredients.filter(d => d.description != ingredientName);
-      this.allIngredients.sort();
+    else{
+      let rIndex = this.removedIngredients.indexOf(ingredient)
+      this.removedIngredients.splice(rIndex,1);
     }
-    this.getOnlyNewlyAddedIngredients();
+  }
+
+  toggleAll(ingredient: Item){
+    this.additionalPrice = 0;
+
+    if(this.modifiedDishIngredients.includes(this.allIngredients.find(a=>a==ingredient))){
+      let mIndex = this.modifiedDishIngredients.indexOf(ingredient);
+      this.modifiedDishIngredients.splice(mIndex, 1);
+    }
+    else{
+      this.modifiedDishIngredients.push(ingredient);
+    }
+
     for (let i = 0; i < this.modifiedDishIngredients.length; i++) {
       this.additionalPrice = this.additionalPrice + this.modifiedDishIngredients[i].price;
-    }
-  }
-
-  getOnlyNewlyAddedIngredients(){
-    this.modifiedDishIngredients = [];
-    for (let i = 0; i < this.dishIngredients.length; i++) {
-      this.modifiedDishIngredients.push(this.dishIngredients[i])
-      console.log(this.modifiedDishIngredients)
-    }
-    for (let i = 0; i < this.dishIngredients.length; i++) {
-       this.modifiedDishIngredients.filter(m => m.description != this.dishIngredients[i].description);
     }
   }
 }

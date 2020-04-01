@@ -17,7 +17,9 @@ namespace ngHealthyGarden
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Item()
         {
+            this.OrderDetails = new HashSet<OrderDetail>();
             this.Dishes = new HashSet<Dish>();
+            this.OrderDetails1 = new HashSet<OrderDetail>();
         }
     
         public int ItemId { get; set; }
@@ -27,6 +29,10 @@ namespace ngHealthyGarden
     
         public virtual ItemCategory ItemCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dish> Dishes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails1 { get; set; }
     }
 }

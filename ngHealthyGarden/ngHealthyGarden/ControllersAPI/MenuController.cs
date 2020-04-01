@@ -14,17 +14,17 @@ namespace ngHealthyGarden
     [RoutePrefix("api/menu")]
     public class MenuController : ApiController
     {
-        private readonly IHGRepository _pablos;
+        private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
         public MenuController()
         {
 
         }
-        public MenuController(IHGRepository pablos, IMapper mapper)
+        public MenuController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
-            _pablos = pablos;
+            _repo = repo;
         }
 
         // GET api/<controller>
@@ -33,7 +33,7 @@ namespace ngHealthyGarden
         {
             try
             {
-                var result = await _pablos.GetAllCategoriesAsync();
+                var result = await _repo.GetAllCategoriesAsync();
 
                 var mapped = _mapper.Map<IEnumerable<CategoryModel>>(result);
 

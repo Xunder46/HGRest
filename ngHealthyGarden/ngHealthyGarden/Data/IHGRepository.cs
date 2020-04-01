@@ -28,6 +28,7 @@ namespace ngHealthyGarden.Data
         void AddItem(Item item);
         void DeleteItem(Item item);
         Task<Item[]> GetAllItemsAsync();
+        Task<Item[]> GetItemsByItemCategoryIdAsync(int itemCategoryId);
         Item[] GetItemsByDishNameAsync(string dishName);
         #endregion
 
@@ -59,13 +60,49 @@ namespace ngHealthyGarden.Data
 
         #region =============ORDERS=====================
         void AddOrder(Order o);
-        void AddOrderDetail(OrderDetail[] od, int orderId);
+        void AddOrderDetail(OrderDetail[] ods, int orderId);
+        void DeleteOrderAndRelatedOrderDetails(OrderDetail od);
+        Task<OrderDetail[]> GetAllOrdersWithDetailsAsync();
         Task<OrderDetail[]> GetOrderDetailsByOrderId(int orderId);
         #endregion
 
         #region =============OPTIONS=====================
         void AddOption(Option o);
+        void DeleteOption(Option option);
+        Task<Option[]> GetAllOptionsAsync();
         Task<Option[]> GetOptionByDishId(int dishId);
         #endregion
+
+        #region =============COMMENTS=====================
+        void AddComment(Comment c);
+        void DeleteComment(int commentId);
+        Task<Comment[]> GetAllCommentsAsync();
+        Comment GetCommentById(int commentId);
+        #endregion
+
+        #region =============CUSTOMER_INFO=====================
+        void AddCustomer(CustomerInfo customerInfo);
+        void DeleteCustomer(CustomerInfo customerInfo);
+        Task<CustomerInfo[]> GetAllCustomersAsync();
+        CustomerInfo GetCustomerWithAddressByCustomerId(int customerId);
+        #endregion
+
+        #region =============ADDRESS=====================
+        Task<AddressInfo[]> GetAllAddressesAsync();
+        void AddAddress(AddressInfo addressInfo);
+        void DeleteAddress(AddressInfo addressInfo);
+        #endregion
+
+        #region =============ITEM_CATEGORIES=====================
+        Task<ItemCategory[]> GetAllItemCategoriesAsync();
+        void AddItemCategory(ItemCategory itemCategory);
+        void DeleteItemCategory(ItemCategory itemCategory);
+        #endregion
+
+        #region =============USERS=====================
+    
+        
+        #endregion
+
     }
 }

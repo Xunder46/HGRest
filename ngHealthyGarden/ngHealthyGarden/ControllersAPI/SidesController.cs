@@ -14,24 +14,24 @@ namespace ngHealthyGarden.ControllersAPI
     [RoutePrefix("api/sides")]
     public class SidesController : ApiController
     {
-        private readonly IHGRepository _pablos;
+        private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
         public SidesController()
         {
 
         }
-        public SidesController(IHGRepository pablos, IMapper mapper)
+        public SidesController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
-            _pablos = pablos;
+            _repo = repo;
         }
         [Route()]
         public async Task<IHttpActionResult> Get()
         {
             try
             {
-                var result = await _pablos.GetAllSidesAsync();
+                var result = await _repo.GetAllSidesAsync();
 
                 var mapped = _mapper.Map<IEnumerable<SideModel>>(result);
 
@@ -49,7 +49,7 @@ namespace ngHealthyGarden.ControllersAPI
         {
             try
             {
-                var result = await _pablos.GetAllSidesByCategoryIdAsync(categoryId);
+                var result = await _repo.GetAllSidesByCategoryIdAsync(categoryId);
 
                 var mapped = _mapper.Map<IEnumerable<SideModel>>(result);
 

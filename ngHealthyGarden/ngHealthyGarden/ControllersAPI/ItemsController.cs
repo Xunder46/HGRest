@@ -14,17 +14,17 @@ namespace ngHealthyGarden.ControllersAPI
     [RoutePrefix("api/items")]
     public class ItemsController : ApiController
     {
-        private readonly IHGRepository _pablos;
+        private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
         public ItemsController()
         {
 
         }
-        public ItemsController(IHGRepository pablos, IMapper mapper)
+        public ItemsController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
-            _pablos = pablos;
+            _repo = repo;
         }
 
         [Route()]
@@ -32,7 +32,7 @@ namespace ngHealthyGarden.ControllersAPI
         {
             try
             {
-                var result = await _pablos.GetAllItemsAsync();
+                var result = await _repo.GetAllItemsAsync();
 
                 var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
 
@@ -45,12 +45,12 @@ namespace ngHealthyGarden.ControllersAPI
 
         }
 
-        [Route("{dishName}")]
+        [Route("{dishName}", Name ="GetItem")]
         public async Task<IHttpActionResult> Get(string dishName)
         {
             try
             {
-                var result = _pablos.GetItemsByDishNameAsync(dishName);
+                var result = _repo.GetItemsByDishNameAsync(dishName);
 
                 var mapped = _mapper.Map<IEnumerable<ItemModel>>(result);
 
@@ -61,6 +61,32 @@ namespace ngHealthyGarden.ControllersAPI
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        [Route()]
+        public async Task<IHttpActionResult> Post(ItemModel i)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = _mapper.Map<Item>(i);
+
+                    _repo.AddItem(item);
+
+                    if (await _repo.SaveChangesAsync())
+                    {
+                        var newOrderModel = _mapper.Map<ItemModel>(item);
+                        return Created("GetItem", new { itemId = newOrderModel.ItemId });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return BadRequest();
         }
     }
 }

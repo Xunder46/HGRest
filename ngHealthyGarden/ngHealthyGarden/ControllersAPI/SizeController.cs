@@ -14,17 +14,17 @@ namespace ngHealthyGarden.ControllersAPI
     [RoutePrefix("api/sizes")]
     public class SizeController : ApiController
     {
-        private readonly IHGRepository _pablos;
+        private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
         public SizeController()
         {
 
         }
-        public SizeController(IHGRepository pablos, IMapper mapper)
+        public SizeController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
-            _pablos = pablos;
+            _repo = repo;
         }
 
         [Route("{categoryId}")]
@@ -32,7 +32,7 @@ namespace ngHealthyGarden.ControllersAPI
         {
             try
             {
-                var result = await _pablos.GetSizesByCategoryIdAsync(categoryId);
+                var result = await _repo.GetSizesByCategoryIdAsync(categoryId);
 
                 var mapped = _mapper.Map<IEnumerable<SizeModel>>(result);
 
