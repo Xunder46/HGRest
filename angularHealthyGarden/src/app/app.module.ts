@@ -20,6 +20,9 @@ import { ManagerOfficeComponent } from './manager-office/manager-office.componen
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ManagementModal } from './modals/management';
+import { UserComponent } from './user/user.component';
+import { SignUpComponent } from './user/sign-up/sign-up.component';
+import { LogInComponent } from './user/log-in/log-in.component';
 
 @NgModule({
     imports: [
@@ -39,7 +42,19 @@ import { ManagementModal } from './modals/management';
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
-        SplitPipe, AppComponent, MenuComponent, WelcomeComponent, DishesComponent, NavigationComponent, ShoppingCartComponent, CustomizeModal, ManagementModal, ManagerOfficeComponent
+        SplitPipe, 
+        AppComponent, 
+        MenuComponent, 
+        WelcomeComponent, 
+        DishesComponent, 
+        NavigationComponent, 
+        ShoppingCartComponent, 
+        CustomizeModal, 
+        ManagementModal, 
+        ManagerOfficeComponent,
+        UserComponent,
+        SignUpComponent,
+        LogInComponent
     ],
     bootstrap: [
         AppComponent
