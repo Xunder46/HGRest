@@ -23,11 +23,13 @@ import { ManagementModal } from './modals/management';
 import { UserComponent } from './user/user.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { LogInComponent } from './user/log-in/log-in.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
     imports: [
         MatSelectModule,
         MatCheckboxModule,
+        MatTabsModule,
         NgbModule,
         BrowserModule,
         HttpClientModule,

@@ -5,7 +5,7 @@ import { User } from 'src/app/models/User';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./../../../../node_modules/materialize-css/dist/css/materialize.min.css', './sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
   user: User;

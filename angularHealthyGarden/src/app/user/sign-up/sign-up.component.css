@@ -1,22 +1,25 @@
+/*#region -_-_-_-_ELEMENTS-_-_-_-_*/
 h2{
-    font: 500 30px/42px Roboto, "Helvetica Neue", sans-serif;
-    color: white ;
+    font: 500 25px/30px Roboto, "Helvetica Neue", sans-serif !important;
+    color: white;
+    margin: 1em;
 }
+/*#endregion*/
 
+/*#region -_-_-_-CLASSES-_-_-_-_*/
 .btn-large{
     background-color: darkorange;
-    width: 100%;   
+    width: 100%;
 }
 
 .row .col{
     min-height: auto !important;
     margin: 0 !important;
-    padding-top: 2em;
+    padding-top: 1.5em;
 }
 
 .header{
     background-color: darkorange;
-    height: 5em;
 }
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
@@ -31,3 +34,4 @@ input[type=password]:not(.browser-default):focus:not([readonly])+label
 .btn-large:hover{
     background-color: tomato;
 }
+/*#endregion*/
