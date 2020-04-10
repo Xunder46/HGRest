@@ -8,21 +8,24 @@ using System.Web.Http;
 using Autofac.Integration.WebApi;
 using ngHealthyGarden.Data;
 using AutoMapper;
+using System.Web.Mvc;
+using Autofac.Integration.Mvc;
 
-namespace ngHealthyGarden.App_Start
+namespace ngHealthyGarden
 {
     public class AutofacConfig
     {
-        public static void Register()
+        public static IContainer Register()
         {
             var builder = new ContainerBuilder();
-            var config = GlobalConfiguration.Configuration;
+            var config = new HttpConfiguration();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             RegisterServices(builder);
             builder.RegisterWebApiFilterProvider(config);
             builder.RegisterWebApiModelBinderProvider();
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            return container;
         }
 
         private static void RegisterServices(ContainerBuilder builder)

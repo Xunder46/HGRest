@@ -41,52 +41,7 @@ namespace ngHealthyGarden
         public virtual DbSet<RestaurantInfo> RestaurantInfoes { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
-    
-        public virtual ObjectResult<GetCoursesByStudentId_Result> GetCoursesByStudentId(Nullable<int> dishId)
-        {
-            var dishIdParameter = dishId.HasValue ?
-                new ObjectParameter("DishId", dishId) :
-                new ObjectParameter("DishId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCoursesByStudentId_Result>("GetCoursesByStudentId", dishIdParameter);
-        }
-    
-        public virtual int spAddAddedIngredients(Nullable<int> orderDetailId, Nullable<int> itemId)
-        {
-            var orderDetailIdParameter = orderDetailId.HasValue ?
-                new ObjectParameter("OrderDetailId", orderDetailId) :
-                new ObjectParameter("OrderDetailId", typeof(int));
-    
-            var itemIdParameter = itemId.HasValue ?
-                new ObjectParameter("ItemId", itemId) :
-                new ObjectParameter("ItemId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddAddedIngredients", orderDetailIdParameter, itemIdParameter);
-        }
-    
-        public virtual int spAddRemovedIngredients(Nullable<int> orderDetailId, Nullable<int> itemId)
-        {
-            var orderDetailIdParameter = orderDetailId.HasValue ?
-                new ObjectParameter("OrderDetailId", orderDetailId) :
-                new ObjectParameter("OrderDetailId", typeof(int));
-    
-            var itemIdParameter = itemId.HasValue ?
-                new ObjectParameter("ItemId", itemId) :
-                new ObjectParameter("ItemId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddRemovedIngredients", orderDetailIdParameter, itemIdParameter);
-        }
-    
-        public virtual int spCreateOrder(Nullable<int> quantity)
-        {
-            var quantityParameter = quantity.HasValue ?
-                new ObjectParameter("Quantity", quantity) :
-                new ObjectParameter("Quantity", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreateOrder", quantityParameter);
-        }
     
         public virtual ObjectResult<spGetItemsRelatedToADish_Result> spGetItemsRelatedToADish(string dishName)
         {

@@ -1,17 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/User';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { WebServices } from 'src/app/services/web.services';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./../../../../node_modules/materialize-css/dist/css/materialize.min.css', './log-in.component.css', './../sign-up/sign-up.component.css']
+  styleUrls: ['./../../../../node_modules/materialize-css/dist/css/materialize.min.css', './../user.component.css']
 })
 export class LogInComponent implements OnInit {
-  user: User;
+  errorMessage: string;
+  hide = true;
+  user: any;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  response: HttpErrorResponse;
 
-  constructor() { }
+  @Output() message: EventEmitter<string> = new EventEmitter();
+
+  constructor(private services: WebServices, private router: Router) { }
 
   ngOnInit(): void {
     this.resetForm();
@@ -21,16 +30,34 @@ export class LogInComponent implements OnInit {
     if (form != null)
       form.reset();
     this.user = {
-      firstName: '',
-      lastName: '',
       username: '',
       password: '',
-      role: '',
-      customerInfoId: 0
     }
   }
 
   OnSubmit(form: NgForm) {
-    console.log(this.user)
+    this.services.login(this.user.username, this.user.password).pipe(
+      retry(0),
+      catchError(this.handleError)
+    ).subscribe(data => {
+      if (data) {
+        localStorage.setItem("user", JSON.stringify(data));
+        this.router.navigate(['/menu']);
+      }
+    })
+    this.resetForm(form);
+  }
+
+  handleError = (error) => {
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      this.errorMessage = `Error: ${error.error.error_description}`;
+      this.message.emit(this.errorMessage)
+    } else {
+      // server-side error
+      this.errorMessage = error.error.error_description;
+      this.message.emit(this.errorMessage)
+    }
+    return throwError(this.errorMessage);
   }
 }

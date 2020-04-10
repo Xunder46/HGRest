@@ -11,9 +11,12 @@ import { ManagerOfficeComponent } from './manager-office/manager-office.componen
 import { UserComponent } from './user/user.component';
 import { LogInComponent } from './user/log-in/log-in.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
+import { AccountComponent } from './account/account/account.component';
+import { AuthGuard } from './services/auth-guard';
 
 const routes: Routes = [
     { path: '', component: WelcomeComponent },
+    { path: 'account', canActivate: [AuthGuard], component: AccountComponent},
     { 
         path: 'login', component: UserComponent,
         children: [{path: '', component: LogInComponent}]

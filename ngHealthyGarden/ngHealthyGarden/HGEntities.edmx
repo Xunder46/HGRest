@@ -22,7 +22,8 @@ warning 6002: The table/view 'Pablo's.dbo.AddedIngredients' does not have a prim
           <Property Name="AddressInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Street" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Apartment" Type="nvarchar" MaxLength="5" />
-          <Property Name="ZipId" Type="int" Nullable="false" />
+          <Property Name="ZipCodeId" Type="int" Nullable="false" />
+          <Property Name="CustomerInfoId" Type="int" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -45,9 +46,6 @@ warning 6002: The table/view 'Pablo's.dbo.AddedIngredients' does not have a prim
           <Property Name="CustomerInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="AddressInfoId" Type="int" />
         </EntityType>
         <EntityType Name="Dishes">
           <Key>
@@ -159,18 +157,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="AdditionalPrice" Type="money" Nullable="false" />
         </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
-          <Property Name="Role" Type="nvarchar" MaxLength="15" />
-          <Property Name="CustomerInfoId" Type="int" />
-        </EntityType>
         <EntityType Name="ZipCodes">
           <Key>
             <PropertyRef Name="ZipCodeId" />
@@ -212,19 +198,19 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
               <PropertyRef Name="ZipCodeId" />
             </Principal>
             <Dependent Role="AddressInfo">
-              <PropertyRef Name="ZipId" />
+              <PropertyRef Name="ZipCodeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CustomerInfo_AddressInfo">
-          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="0..1" />
-          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="*" />
+        <Association Name="FK_AddressInfo_CustomerInfo">
+          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="0..1" />
+          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AddressInfo">
-              <PropertyRef Name="AddressInfoId" />
+            <Principal Role="CustomerInfo">
+              <PropertyRef Name="CustomerInfoId" />
             </Principal>
-            <Dependent Role="CustomerInfo">
-              <PropertyRef Name="AddressInfoId" />
+            <Dependent Role="AddressInfo">
+              <PropertyRef Name="CustomerInfoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -420,18 +406,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Users_CustomerInfo">
-          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomerInfo">
-              <PropertyRef Name="CustomerInfoId" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="CustomerInfoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ZipCodes_RestaurantInfo">
           <End Role="RestaurantInfo" Type="Self.RestaurantInfo" Multiplicity="1" />
           <End Role="ZipCodes" Type="Self.ZipCodes" Multiplicity="*" />
@@ -444,20 +418,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetCoursesByStudentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="DishId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="spAddAddedIngredients" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="OrderDetailId" Type="int" Mode="In" />
-          <Parameter Name="ItemId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="spAddRemovedIngredients" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="OrderDetailId" Type="int" Mode="In" />
-          <Parameter Name="ItemId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="spCreateOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Quantity" Type="int" Mode="In" />
-        </Function>
         <Function Name="spGetItemsRelatedToADish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DishName" Type="nvarchar" Mode="In" />
         </Function>
@@ -476,7 +436,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySet Name="RestaurantInfo" EntityType="Self.RestaurantInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sides" EntityType="Self.Sides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZipCodes" EntityType="Self.ZipCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AddedIngredients" EntityType="Self.AddedIngredients" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -508,9 +467,9 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <End Role="ZipCodes" EntitySet="ZipCodes" />
             <End Role="AddressInfo" EntitySet="AddressInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK_CustomerInfo_AddressInfo" Association="Self.FK_CustomerInfo_AddressInfo">
-            <End Role="AddressInfo" EntitySet="AddressInfo" />
+          <AssociationSet Name="FK_AddressInfo_CustomerInfo" Association="Self.FK_AddressInfo_CustomerInfo">
             <End Role="CustomerInfo" EntitySet="CustomerInfo" />
+            <End Role="AddressInfo" EntitySet="AddressInfo" />
           </AssociationSet>
           <AssociationSet Name="FK_Dishes_Categories" Association="Self.FK_Dishes_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -576,10 +535,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
-          <AssociationSet Name="FK_Users_CustomerInfo" Association="Self.FK_Users_CustomerInfo">
-            <End Role="CustomerInfo" EntitySet="CustomerInfo" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_ZipCodes_RestaurantInfo" Association="Self.FK_ZipCodes_RestaurantInfo">
             <End Role="RestaurantInfo" EntitySet="RestaurantInfo" />
             <End Role="ZipCodes" EntitySet="ZipCodes" />
@@ -597,9 +552,10 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="AddressInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Apartment" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="ZipId" Type="Int32" Nullable="false" />
+          <Property Name="ZipCodeId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerInfoId" Type="Int32" />
           <NavigationProperty Name="ZipCode" Relationship="Self.FK_AddressInfo_AddressInfo" FromRole="AddressInfo" ToRole="ZipCodes" />
-          <NavigationProperty Name="CustomerInfoes" Relationship="Self.FK_CustomerInfo_AddressInfo" FromRole="AddressInfo" ToRole="CustomerInfo" />
+          <NavigationProperty Name="CustomerInfo" Relationship="Self.FK_AddressInfo_CustomerInfo" FromRole="AddressInfo" ToRole="CustomerInfo" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -625,12 +581,8 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="CustomerInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AddressInfoId" Type="Int32" />
-          <NavigationProperty Name="AddressInfo" Relationship="Self.FK_CustomerInfo_AddressInfo" FromRole="CustomerInfo" ToRole="AddressInfo" />
+          <NavigationProperty Name="AddressInfoes" Relationship="Self.FK_AddressInfo_CustomerInfo" FromRole="CustomerInfo" ToRole="AddressInfo" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_CustomerInfo" FromRole="CustomerInfo" ToRole="OrderDetails" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Users_CustomerInfo" FromRole="CustomerInfo" ToRole="Users" />
         </EntityType>
         <EntityType Name="Dish">
           <Key>
@@ -749,19 +701,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="AdditionalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Sizes" FromRole="Sizes" ToRole="OrderDetails" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Role" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerInfoId" Type="Int32" />
-          <NavigationProperty Name="CustomerInfo" Relationship="Self.FK_Users_CustomerInfo" FromRole="Users" ToRole="CustomerInfo" />
-        </EntityType>
         <EntityType Name="ZipCode">
           <Key>
             <PropertyRef Name="ZipCodeId" />
@@ -781,19 +720,19 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
               <PropertyRef Name="ZipCodeId" />
             </Principal>
             <Dependent Role="AddressInfo">
-              <PropertyRef Name="ZipId" />
+              <PropertyRef Name="ZipCodeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CustomerInfo_AddressInfo">
-          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="0..1" />
-          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="*" />
+        <Association Name="FK_AddressInfo_CustomerInfo">
+          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="0..1" />
+          <End Role="AddressInfo" Type="Self.AddressInfo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AddressInfo">
-              <PropertyRef Name="AddressInfoId" />
+            <Principal Role="CustomerInfo">
+              <PropertyRef Name="CustomerInfoId" />
             </Principal>
-            <Dependent Role="CustomerInfo">
-              <PropertyRef Name="AddressInfoId" />
+            <Dependent Role="AddressInfo">
+              <PropertyRef Name="CustomerInfoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -841,18 +780,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
               <PropertyRef Name="CustomerInfoId" />
             </Principal>
             <Dependent Role="OrderDetails">
-              <PropertyRef Name="CustomerInfoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_CustomerInfo">
-          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomerInfo">
-              <PropertyRef Name="CustomerInfoId" />
-            </Principal>
-            <Dependent Role="Users">
               <PropertyRef Name="CustomerInfoId" />
             </Dependent>
           </ReferentialConstraint>
@@ -992,15 +919,14 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySet Name="RestaurantInfoes" EntityType="Self.RestaurantInfo" />
           <EntitySet Name="Sides" EntityType="Self.Side" />
           <EntitySet Name="Sizes" EntityType="Self.Size" />
-          <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="ZipCodes" EntityType="Self.ZipCode" />
           <AssociationSet Name="FK_AddressInfo_AddressInfo" Association="Self.FK_AddressInfo_AddressInfo">
             <End Role="ZipCodes" EntitySet="ZipCodes" />
             <End Role="AddressInfo" EntitySet="AddressInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK_CustomerInfo_AddressInfo" Association="Self.FK_CustomerInfo_AddressInfo">
-            <End Role="AddressInfo" EntitySet="AddressInfoes" />
+          <AssociationSet Name="FK_AddressInfo_CustomerInfo" Association="Self.FK_AddressInfo_CustomerInfo">
             <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
+            <End Role="AddressInfo" EntitySet="AddressInfoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Dishes_Categories" Association="Self.FK_Dishes_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -1017,10 +943,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <AssociationSet Name="FK_OrderDetails_CustomerInfo" Association="Self.FK_OrderDetails_CustomerInfo">
             <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_CustomerInfo" Association="Self.FK_Users_CustomerInfo">
-            <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
-            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Options_Dishes" Association="Self.FK_Options_Dishes">
             <End Role="Dishes" EntitySet="Dishes" />
@@ -1070,30 +992,10 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <End Role="Items" EntitySet="Items" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-          <FunctionImport Name="GetCoursesByStudentId" ReturnType="Collection(Model.GetCoursesByStudentId_Result)">
-            <Parameter Name="DishId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spAddAddedIngredients">
-            <Parameter Name="OrderDetailId" Mode="In" Type="Int32" />
-            <Parameter Name="ItemId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spAddRemovedIngredients">
-            <Parameter Name="OrderDetailId" Mode="In" Type="Int32" />
-            <Parameter Name="ItemId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spCreateOrder">
-            <Parameter Name="Quantity" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="spGetItemsRelatedToADish" ReturnType="Collection(Model.spGetItemsRelatedToADish_Result)">
             <Parameter Name="DishName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="GetCoursesByStudentId_Result">
-          <Property Type="Int32" Name="ItemId" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="ItemCategoryId" Nullable="false" />
-          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
-        </ComplexType>
         <ComplexType Name="spGetItemsRelatedToADish_Result">
           <Property Type="Int32" Name="ItemId" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
@@ -1112,7 +1014,8 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
                 <ScalarProperty Name="AddressInfoId" ColumnName="AddressInfoId" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
                 <ScalarProperty Name="Apartment" ColumnName="Apartment" />
-                <ScalarProperty Name="ZipId" ColumnName="ZipId" />
+                <ScalarProperty Name="ZipCodeId" ColumnName="ZipCodeId" />
+                <ScalarProperty Name="CustomerInfoId" ColumnName="CustomerInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1138,9 +1041,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
                 <ScalarProperty Name="CustomerInfoId" ColumnName="CustomerInfoId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="AddressInfoId" ColumnName="AddressInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1244,19 +1144,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Model.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="CustomerInfoId" ColumnName="CustomerInfoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ZipCodes">
             <EntityTypeMapping TypeName="Model.ZipCode">
               <MappingFragment StoreEntitySet="ZipCodes">
@@ -1291,19 +1178,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
               <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="GetCoursesByStudentId" FunctionName="Model.Store.GetCoursesByStudentId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model.GetCoursesByStudentId_Result">
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spAddAddedIngredients" FunctionName="Model.Store.spAddAddedIngredients" />
-          <FunctionImportMapping FunctionImportName="spAddRemovedIngredients" FunctionName="Model.Store.spAddRemovedIngredients" />
-          <FunctionImportMapping FunctionImportName="spCreateOrder" FunctionName="Model.Store.spCreateOrder" />
           <FunctionImportMapping FunctionImportName="spGetItemsRelatedToADish" FunctionName="Model.Store.spGetItemsRelatedToADish">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model.spGetItemsRelatedToADish_Result">

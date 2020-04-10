@@ -11,9 +11,9 @@ html {
 }
 
 body {
-    padding-top: 0;
-    padding-bottom: 0;
-    height: 100%;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-height: 100%;
 }
 
 .cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 9999!important; } 

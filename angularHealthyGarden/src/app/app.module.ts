@@ -24,6 +24,8 @@ import { UserComponent } from './user/user.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { LogInComponent } from './user/log-in/log-in.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { AccountComponent } from './account/account/account.component';
+import { AuthGuard } from './services/auth-guard';
 
 @NgModule({
     imports: [
@@ -41,6 +43,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     ],
     providers: [
         WebServices,
+        AuthGuard,
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
@@ -56,7 +59,8 @@ import {MatTabsModule} from '@angular/material/tabs';
         ManagerOfficeComponent,
         UserComponent,
         SignUpComponent,
-        LogInComponent
+        LogInComponent,
+        AccountComponent
     ],
     bootstrap: [
         AppComponent

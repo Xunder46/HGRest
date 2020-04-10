@@ -543,15 +543,21 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 UserName = createUserModel.Username,
                 Email = createUserModel.Email,
-                FirstName = createUserModel.FirstName,
-                LastName = createUserModel.LastName,
                 CustomerInfoId = createUserModel.CustomerInfoId,
                 JoinDate = DateTime.Now.Date,
             };
 
             IdentityResult addUserResult = await AppUserManager.CreateAsync(user, createUserModel.Password);
 
-            if (!addUserResult.Succeeded)
+            if (addUserResult.Succeeded)
+            {
+                IdentityResult addRoleResult = await AppUserManager.AddToRoleAsync(user.Id, "Customer");
+                if (!addRoleResult.Succeeded)
+                {
+                    return GetErrorResult(addRoleResult);
+                }
+            }
+            else
             {
                 return GetErrorResult(addUserResult);
             }
@@ -560,8 +566,9 @@ namespace ngHealthyGarden.ControllersAPI
 
             var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
 
-            await this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account"
-                , "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            //TODO: Uncomment to send email confirmations
+            //await this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account"
+                //, "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
             Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 

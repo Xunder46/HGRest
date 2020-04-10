@@ -11,6 +11,7 @@ namespace ngHealthyGarden.Models
         public string Street { get; set; }
         public string Apartment { get; set; }
         public int ZipId { get; set; }
+        public int? CustomerInfoId { get; set; }
         public virtual ICollection<CustomerInfo> CustomerInfoes { get; set; }
     }
 }

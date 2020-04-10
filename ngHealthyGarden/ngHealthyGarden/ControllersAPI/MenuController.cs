@@ -12,6 +12,7 @@ using System.Web.Http;
 namespace ngHealthyGarden
 {
     [RoutePrefix("api/menu")]
+    [AllowAnonymous]
     public class MenuController : ApiController
     {
         private readonly IHGRepository _repo;

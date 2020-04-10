@@ -20,14 +20,6 @@ namespace ngHealthyGarden.Models.IdentityModels
         //}
 
         [Required]
-        [MaxLength(100)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MaxLength(100)]
-        public string LastName { get; set; }
-
-        [Required]
         public DateTime JoinDate { get; set; }
 
         public int? CustomerInfoId { get; set; }

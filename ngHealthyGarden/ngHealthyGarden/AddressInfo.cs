@@ -14,19 +14,13 @@ namespace ngHealthyGarden
     
     public partial class AddressInfo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AddressInfo()
-        {
-            this.CustomerInfoes = new HashSet<CustomerInfo>();
-        }
-    
         public int AddressInfoId { get; set; }
         public string Street { get; set; }
         public string Apartment { get; set; }
-        public int ZipId { get; set; }
+        public int ZipCodeId { get; set; }
+        public Nullable<int> CustomerInfoId { get; set; }
     
         public virtual ZipCode ZipCode { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerInfo> CustomerInfoes { get; set; }
+        public virtual CustomerInfo CustomerInfo { get; set; }
     }
 }

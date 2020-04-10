@@ -12,16 +12,17 @@
                         <label data-error="Required field!">Username</label>
                     </div>
                     <div class="input-field col s6">
-                        <input class="validate" type="password" name="Password" #Password="ngModel"
+                        <input class="validate" [type]="hide ? 'password' : 'text'" name="Password" #Password="ngModel"
                             [(ngModel)]="user.password" required minlength="3">
                         <label
                             [attr.data-error]="Password.errors!=null?(Password.errors.required?'Required field!':'Minimum 3 characters needed'):''">Password</label>
+                        <img src="../../../assets/Icons/eye.png" (click)="hide = !hide">
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <button [disabled]="!userLoginForm.valid" class="btn-large btn-submit"
-                            type="submit">Log in</button>
+                        <button [disabled]="!userLoginForm.valid" class="btn-large btn-submit" type="submit">Log
+                            in</button>
                     </div>
                 </div>
             </form>

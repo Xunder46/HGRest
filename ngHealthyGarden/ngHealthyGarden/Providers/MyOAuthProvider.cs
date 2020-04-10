@@ -12,6 +12,7 @@ using Microsoft.Owin.Security.OAuth;
 using ngHealthyGarden.App_Start;
 using ngHealthyGarden.Models;
 using ngHealthyGarden.Models.IdentityModels;
+using System.Web.Http.Cors;
 
 namespace ngHealthyGarden.Providers
 {

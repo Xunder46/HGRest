@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit, OnChanges } from '@angular/core';
 import { Dish } from '../models/Dish';
 import { CartService } from '../services/shopping-cart.service';
 
@@ -13,6 +13,7 @@ export class NavigationComponent {
     cart: any;
     counter: number;
     dishesInTheCart: Dish[] = [];
+    token: string;
 
     constructor(private _cart: CartService) {
         setInterval(() => {
@@ -23,5 +24,15 @@ export class NavigationComponent {
                 this.dishesInTheCart = [];
             }
         }, 200)
+        
+    }
+
+    isLoggedIn(){
+        let user = localStorage.getItem('user');
+        if (user) {
+            let token = JSON.parse(user).access_token;
+            this.token = token;
+            return this.token ? true : false;
+        }
     }
 }

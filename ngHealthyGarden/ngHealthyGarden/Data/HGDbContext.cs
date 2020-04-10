@@ -48,7 +48,7 @@ namespace ngHealthyGarden
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        //public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
         public virtual DbSet<RestaurantInfo> RestaurantInfo { get; set; }
 

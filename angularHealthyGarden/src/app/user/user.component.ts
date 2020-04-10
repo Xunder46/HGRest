@@ -6,11 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  color: "white";
+  message: string;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  getErrorMessage(message: string){
+    this.message = message.replace(/['"]+/g, '');
+  }
 }

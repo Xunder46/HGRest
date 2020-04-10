@@ -83,7 +83,7 @@ export class ShoppingCartComponent implements OnInit {
             else{
                 orderDetail.commentId = null;
             }
-            orderDetail.customerInfoId = 2;
+            orderDetail.customerInfoId = 3;
             orderDetail.dishId = this.dishesFromLocalStorage[i].dish.dishId;
             orderDetail.items = this.dishesFromLocalStorage[i].removedIngredients;
             orderDetail.items1 = this.dishesFromLocalStorage[i].additionalIngredients;
@@ -101,10 +101,12 @@ export class ShoppingCartComponent implements OnInit {
         console.log(orderDetails)
 
         let utc = new Date().toJSON().slice(0, 10);
-        order.orderDate = '4/1/2020';
+        order.orderDate = utc;
 
         this.services.setNewOrder(order).subscribe(data => {
             this.services.setNewOrderDetails(data.orderId, orderDetails).subscribe(data => console.log(data))
         });
+        
+        this.emptyCart();
     }
 }

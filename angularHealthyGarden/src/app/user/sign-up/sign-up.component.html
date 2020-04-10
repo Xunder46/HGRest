@@ -8,30 +8,28 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <input class="validate" type="text" name="UserName" #UserName="ngModel"
-                            [(ngModel)]="user.username" required>
-                        <label data-error="Required field!">Username</label>
+                            [(ngModel)]="user.username" required minlength="6">
+                        <label
+                            [attr.data-error]="UserName.errors!=null?(UserName.errors.required?'Required field!':'Minimum 6 characters needed'):''">Username</label>
                     </div>
                     <div class="input-field col s6">
-                        <input class="validate" type="password" name="Password" #Password="ngModel"
-                            [(ngModel)]="user.password" required minlength="3">
-                        <label
-                            [attr.data-error]="Password.errors!=null?(Password.errors.required?'Required field!':'Minimum 3 characters needed'):''">Password</label>
+                        <input class="validate" type="email" name="email" #Email="ngModel" [(ngModel)]="user.email" required>
+                        <label data-error="Please enter a valid email">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
-                        <input type="text" name="FirstName" #FirstName="ngModel" [(ngModel)]="user.firstName">
-                        <label>First Name</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input type="text" name="LastName" #LastName="ngModel" [(ngModel)]="user.lastName">
-                        <label>Last Name</label>
+                        <input class="validate" [type]="hide ? 'password' : 'text'" name="Password" #Password="ngModel"
+                            [(ngModel)]="user.password" required minlength="6">
+                        <label
+                            [attr.data-error]="Password.errors!=null?(Password.errors.required?'Required field!':'Minimum 6 characters needed'):''">Password</label>
+                        <img src="../../../assets/Icons/eye.png" (click)="hide = !hide">
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <button [disabled]="!userRegistrationForm.valid" class="btn-large btn-submit"
-                            type="submit">Sign up</button>
+                        <button [disabled]="!userRegistrationForm.valid" class="btn-large btn-submit" type="submit">Sign
+                            up</button>
                     </div>
                 </div>
             </form>

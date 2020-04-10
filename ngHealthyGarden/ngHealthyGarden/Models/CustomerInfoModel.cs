@@ -12,7 +12,6 @@ namespace ngHealthyGarden.Models
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public int? AddressInfoId { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

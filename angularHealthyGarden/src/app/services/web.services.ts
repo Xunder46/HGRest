@@ -1,4 +1,4 @@
-﻿import { HttpClient } from '@angular/common/http';
+﻿import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core'
 import 'rxjs/add/operator/toPromise'
 import { Category } from './../models/Category';
@@ -9,6 +9,7 @@ import { DishOption } from '../models/DishOption';
 import { Order } from '../models/Order';
 import { OrderDetails } from '../models/OrderDetails';
 import { Comment } from '../models/Comment';
+import { User } from '../models/User';
 
 @Injectable({
     providedIn: "root"
@@ -79,8 +80,21 @@ export class WebServices {
     //#endregion
 
     //#region COMMENTS 
-    addComment(comment: Comment){
-        return this.http.post<Comment>(this.baseUrl +"comments", comment);
+    addComment(comment: Comment) {
+        return this.http.post<Comment>(this.baseUrl + "comments", comment);
+    }
+    //#endregion
+
+    //#region USERS 
+    login(username, password){
+        var data = "username="+username+"&password="+password+"&grant_type=password";
+        var reqHeader = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        
+        return this.http.post("https://localhost:44384/auth/token", data, {headers: reqHeader});
+    }
+
+    signup(user: any){
+        return this.http.post<any>(this.baseUrl + "account/create", user);
     }
     //#endregion
 }

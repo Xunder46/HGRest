@@ -17,14 +17,6 @@ namespace ngHealthyGarden.Models.IdentityModels
         [Display(Name = "Username")]
         public string Username { get; set; }
 
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-
-        [Required]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-
         [Display(Name = "Role Name")]
         public string RoleName { get; set; }
 

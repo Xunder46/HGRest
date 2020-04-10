@@ -18,9 +18,13 @@ using System.Configuration;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security;
+using Autofac;
+using Autofac.Integration.WebApi;
+using System.Web.Http.Cors;
 
 namespace ngHealthyGarden
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     public partial class Startup
     {
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
@@ -77,12 +81,17 @@ namespace ngHealthyGarden
             //});
 
             HttpConfiguration httpConfig = new HttpConfiguration();
+            IContainer container = AutofacConfig.Register();
+
+            var dependencyResolver = new AutofacWebApiDependencyResolver(container);
+            httpConfig.DependencyResolver = dependencyResolver;
 
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
             ConfigureWebApi(httpConfig);
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseAutofacMiddleware(container);
             app.UseWebApi(httpConfig);
         }
 

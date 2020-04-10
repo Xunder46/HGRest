@@ -279,10 +279,12 @@ namespace ngHealthyGarden.Data
         {
             return await _context.CustomerInfo.Select(c => c).ToArrayAsync();
         }
-        public CustomerInfo GetCustomerWithAddressByCustomerId(int customerId)
+        public async Task<AddressInfo[]> GetCustomerWithAddressByCustomerId(int customerId)
         {
-            return _context.CustomerInfo.Where(c => c.CustomerInfoId == customerId)
-                .Include(c=>c.AddressInfo).FirstOrDefault();
+            IQueryable<AddressInfo> query =  _context.AddressInfo.Where(c => c.CustomerInfoId == customerId)
+                .Include(a=>a.CustomerInfo)
+                .Include(a=>a.ZipCode);
+            return await query.ToArrayAsync();
         }
         #endregion
 

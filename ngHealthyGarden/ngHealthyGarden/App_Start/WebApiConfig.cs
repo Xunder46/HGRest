@@ -3,7 +3,9 @@ using ngHealthyGarden.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNet;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ngHealthyGarden
 {
@@ -12,12 +14,20 @@ namespace ngHealthyGarden
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            AutofacConfig.Register();
+            //AutofacConfig.Register();
 
             //Json serrialize to camelcase
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
+            //Enabling cors for angular app
+            var enableCorsAttribute = new EnableCorsAttribute(origins: "*", headers: "*", methods: "*");
 
+            var json = config.Formatters.JsonFormatter;
+
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+            config.EnableCors(enableCorsAttribute);
             // Web API routes
             config.MapHttpAttributeRoutes();
 

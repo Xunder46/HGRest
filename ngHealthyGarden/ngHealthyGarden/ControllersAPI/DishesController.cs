@@ -17,6 +17,11 @@ namespace ngHealthyGarden.ControllersAPI
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
+        public DishesController()
+        {
+
+        }
+
         public DishesController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
