@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Customize item</h4>
+    <h2 class="modal-title" id="modal-basic-title">Customize item</h2>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -17,27 +17,27 @@
           {{side.description|split}}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="sideControl.hasError('required')">Please choose an option</mat-error>
+      <mat-error *ngIf="sideControl.hasError('required')">Please select</mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="options.length > 0" class="select">
       <mat-label>Options</mat-label>
-      <mat-select [formControl]="sideControl" required [(ngModel)]="chosenOption">
+      <mat-select [formControl]="optionsControl" required [(ngModel)]="chosenOption">
         <mat-option *ngFor="let option of options" [value]="option">
           {{option.description|split}}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="sideControl.hasError('required')">Please choose an option</mat-error>
+      <mat-error *ngIf="optionsControl.hasError('required')">Please choose an option</mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="sizes.length > 0" class="select">
       <mat-label>Sizes</mat-label>
-      <mat-select required [(ngModel)]="chosenSize">
+      <mat-select [formControl]="sizeControl" required [(ngModel)]="chosenSize">
         <mat-option *ngFor="let size of sizes" [value]="size">
           {{size.description|split}}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="sideControl.hasError('required')">Please choose a size</mat-error>
+      <mat-error *ngIf="sizeControl.hasError('required')">Please choose a size</mat-error>
     </mat-form-field>
 
     <div class="form-group">
@@ -75,8 +75,8 @@
 
     <div class="form-group">
       <mat-label>Quantity</mat-label>&nbsp;
-      <input type="number" matInput [formControl]="sideControl" min="1" [(ngModel)]="dish.quantity">
-      <mat-error *ngIf="sideControl.hasError('required')">Please enter quantity</mat-error>
+      <input type="number" class="form-control" matInput [formControl]="quantityControl" min="1" [(ngModel)]="dish.quantity">
+      <mat-error *ngIf="quantityControl.hasError('required')">Please enter quantity</mat-error>
     </div>
 
     <div class="form-group">
@@ -89,7 +89,10 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="addToCart(dish)">Add to cart</button>
+    <button type="button" class="btn btn-outline-dark" [disabled]="(sides.length > 0?sideControl.untouched:null)
+                                                                   ||(options.length > 0?optionsControl.untouched:null)
+                                                                   ||(sizes.length > 0?sizeControl.untouched:null)
+                                                                   || dish.quantity<=0" (click)="addToCart(dish)">Add to cart</button>
   </div>
 
 </ng-template>

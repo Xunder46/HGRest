@@ -6,4 +6,5 @@
         <app-sign-up (message)="getErrorMessage($event)"></app-sign-up>
     </mat-tab>
 </mat-tab-group>
+<button class="btn btn-back" (click)="back()"><img class="icon-back" src="./../../assets/Icons/back.png">Go back</button>
 <h4>{{message|json}}</h4>

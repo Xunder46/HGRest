@@ -1,0 +1,78 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h2 class="modal-title" id="modal-basic-title">Checkout</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <mat-form-field>
+            <mat-label>Order type</mat-label>
+            <mat-select [formControl]="orderTypeControl" required [(ngModel)]="chosenType">
+                <mat-option *ngFor="let type of orderTypes" [value]="type">
+                    {{type.orderType1}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderTypeControl.hasError('required')">Please choose order type</mat-error>
+        </mat-form-field>
+        <div class="form-group" *ngIf="orderTypeControl.dirty">
+            <mat-label for="phoneNumber">Phone number</mat-label>&nbsp;
+            <input type="tel" matInput numbersOnly [formControl]="phoneNumber" class="form-control" required [(ngModel)]="customerPhoneNumber">
+            <mat-error *ngIf="phoneNumber.hasError('required')&&phoneNumber.touched">Please enter correct phone number
+                that we can call to reach you</mat-error>
+        </div>
+        <div class="form-group" *ngIf="customerPhoneNumber&&customerPhoneNumber.length==10">
+            <mat-label for="firstName">First name</mat-label>&nbsp;
+            <input type="text" matInput [formControl]="firstName" class="form-control" required>
+            <mat-error *ngIf="firstName.hasError('required')&&phoneNumber.touched">Please enter your first name
+            </mat-error>
+        </div>
+        <div class="form-group" *ngIf="customerPhoneNumber&&customerPhoneNumber.length==10">
+            <mat-label for="lastName">Last name</mat-label>&nbsp;
+            <input type="text" matInput [formControl]="lastName" class="form-control" required>
+            <mat-error *ngIf="lastName.hasError('required')&&phoneNumber.touched">Please enter your last name
+            </mat-error>
+        </div>
+        <mat-form-field *ngIf="lastName.value&&chosenType.orderType1==='Delivery'">
+            <mat-label for="address">Zip code</mat-label>&nbsp;
+            <mat-select [formControl]="zipCode" required [(ngModel)]="chosenZip">
+                <mat-option *ngFor="let zip of zipCodes" [value]="zip">
+                    {{zip.zipCode1}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="zipCode.hasError('required')">Please select your zipcode</mat-error>
+            <h4 *ngIf="zipCode.hasError('required')">*If you don't see your zipcode it means you are out of our delivery
+                range</h4>
+        </mat-form-field>
+        <div class="form-group" *ngIf="chosenZip&&chosenType.orderType1==='Delivery'">
+            <mat-label for="address">Address</mat-label>&nbsp;
+            <input type="text" matInput [formControl]="address" class="form-control" [(ngModel)]="customerAddress" required>
+            <mat-error *ngIf="address.hasError('required')">Please enter your address</mat-error>
+        </div>
+        <mat-form-field *ngIf="lastName.value&&chosenType&&chosenType.orderType1=='Pickup'">
+            <mat-label for="address">Location</mat-label>&nbsp;
+            <mat-select [formControl]="restaurantControl" required [(ngModel)]="chosenRestaurant">
+                <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant">
+                    {{restaurant.location}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="restaurantControl.hasError('required')">Please select the restaurant where you are picking up</mat-error>
+        </mat-form-field>
+        <div class="form-group" *ngIf="chosenRestaurant||customerAddress">
+            <mat-label for="address">What time?</mat-label>&nbsp;
+            <input type="time" matInput id="appt" [formControl]="time" class="form-control" name="time" min="09:00" max="22:00" [(ngModel)]="requestedTime" required>
+            <mat-error *ngIf="time.hasError('required')">Please select time</mat-error>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button *ngIf="chosenType&&chosenType.orderType1=='Delivery'" type="button" class="btn btn-outline-dark" (click)="sendToDatabase()" [disabled]="phoneNumber.hasError('required')
+                                                                                                                                ||time.hasError('required')
+                                                                                                                                ||address.hasError('required')">Place order</button>
+        <button *ngIf="chosenType&&chosenType.orderType1=='Pickup'" type="button" class="btn btn-outline-dark" (click)="sendToDatabase()" [disabled]="phoneNumber.hasError('required')
+                                                                                                                               ||firstName.hasError('required')
+                                                                                                                               ||lastName.hasError('required')
+                                                                                                                               ||time.hasError('required')
+                                                                                                                               ||restaurantControl.hasError('required')">Place order</button>
+    </div>
+</ng-template>
+<button class="btn cartButton" (click)="open(content)">Checkout</button>

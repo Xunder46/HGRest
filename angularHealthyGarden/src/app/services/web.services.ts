@@ -10,6 +10,11 @@ import { Order } from '../models/Order';
 import { OrderDetails } from '../models/OrderDetails';
 import { Comment } from '../models/Comment';
 import { User } from '../models/User';
+import { ZipCode } from '../models/ZipCode';
+import { CustomerInfo } from '../models/CustomerInfo';
+import { OrderType } from '../models/OrderType';
+import { Restaurant } from '../models/Restaurant';
+import { AddressInfo } from '../models/Address';
 
 @Injectable({
     providedIn: "root"
@@ -77,6 +82,9 @@ export class WebServices {
     setNewOrderDetails(orderId: number, od: OrderDetails[]) {
         return this.http.post<OrderDetails[]>(this.baseUrl + 'orders/' + orderId, od);
     }
+    getOrderTypes(){
+        return this.http.get<OrderType[]>(this.baseUrl + "ordertypes");
+    }
     //#endregion
 
     //#region COMMENTS 
@@ -86,15 +94,60 @@ export class WebServices {
     //#endregion
 
     //#region USERS 
+    getUserByPhoneNumber(phoneNumber:string){
+        return this.http.get<User>(this.baseUrl + "account/user" + phoneNumber);
+    }
     login(username, password){
         var data = "username="+username+"&password="+password+"&grant_type=password";
         var reqHeader = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
         
         return this.http.post("https://localhost:44384/auth/token", data, {headers: reqHeader});
     }
-
     signup(user: any){
         return this.http.post<any>(this.baseUrl + "account/create", user);
     }
+    updateUser(user: any){
+        return this.http.put<any>(this.baseUrl + "account/update", user);
+    }
+    createCustomerDetails(customerInfo:CustomerInfo){
+        return this.http.post<CustomerInfo>(this.baseUrl + "customers", customerInfo);
+    }
+    getUserInfo(){
+        return this.http.get<User>(this.baseUrl+"account/userclaims", {headers: new HttpHeaders({
+            'Authorization': 'Bearer '+ JSON.parse(localStorage.getItem('user')),
+            'Content-Type':'application/json'
+        })})
+    }
     //#endregion
+
+    //#region ZIPCODES
+    getZipCodes(){
+        return this.http.get<ZipCode[]>(this.baseUrl + "zipcodes");
+    }
+
+    getZipCodeById(zipCodeId:number){
+        return this.http.get<ZipCode>(this.baseUrl + "zipcodes/" + zipCodeId);
+    }
+    //#endregion
+
+    //#region RESTAURANTS 
+    getAllRestaurants(){
+        return this.http.get<Restaurant[]>(this.baseUrl+"restaurants");
+    }
+
+
+//#endregion
+
+    //#region CUSTOMER_INFO 
+    getAllCusttomerInfo(customerInfoId:number){
+        return this.http.get<CustomerInfo[]>(this.baseUrl+"customers/" + customerInfoId);
+    }
+    //#endregion
+
+    //#region ADDRESS_INFO 
+    getAddressInfoById(customerInfoId:number){
+        return this.http.get<AddressInfo[]>(this.baseUrl+"address/" + customerInfoId);
+    }
+    //#endregion
+
 }

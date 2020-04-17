@@ -55,4 +55,20 @@ namespace ngHealthyGarden.Models.IdentityModels
         public string ConfirmPassword { get; set; }
 
     }
+
+    public class UpdateUserBindingModel
+    {
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+    }
 }

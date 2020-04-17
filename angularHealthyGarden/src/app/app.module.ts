@@ -26,6 +26,8 @@ import { LogInComponent } from './user/log-in/log-in.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AccountComponent } from './account/account/account.component';
 import { AuthGuard } from './services/auth-guard';
+import { CheckoutModalComponent } from './modals/checkout-modal/checkout-modal.component';
+import { OnlynumberDirective } from './directives/only-numbers.directive';
 
 @NgModule({
     imports: [
@@ -60,7 +62,9 @@ import { AuthGuard } from './services/auth-guard';
         UserComponent,
         SignUpComponent,
         LogInComponent,
-        AccountComponent
+        AccountComponent,
+        CheckoutModalComponent,
+        OnlynumberDirective
     ],
     bootstrap: [
         AppComponent

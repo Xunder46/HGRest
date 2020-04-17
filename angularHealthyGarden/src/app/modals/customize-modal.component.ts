@@ -5,7 +5,7 @@ import { Dish } from '../models/Dish';
 import { Category } from '../models/Category';
 import { WebServices } from '../services/web.services';
 import { Side } from '../models/Side';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, NgForm } from '@angular/forms';
 import { Item } from '../models/Item';
 import { DishOption } from '../models/DishOption';
 import { Size } from '../models/Size';
@@ -17,15 +17,20 @@ import { Size } from '../models/Size';
 })
 export class CustomizeModal implements OnInit {
 
-  //UsefulProperties
+  //Useful properties
   categoryId: number;
   closeResult: string;
   options: DishOption[];
   comments: string;
   additionalPrice: number = 0.0;
 
+  //controls
   sideControl = new FormControl('', Validators.required);
+  quantityControl = new FormControl('', Validators.required);
+  optionsControl = new FormControl('', Validators.required);
+  sizeControl = new FormControl('', Validators.required);
 
+  //parent component inputs
   @Input() dish: Dish;
   @Input() sides: Side[];
   @Input() category: Category;
@@ -46,6 +51,7 @@ export class CustomizeModal implements OnInit {
     this.services.getOptionsByDishId(this.dish.dishId).subscribe(options => {
       this.options = options;
     })
+    this.dish.quantity = 1;
   }
 
   open(content) {

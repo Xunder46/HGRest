@@ -10,6 +10,7 @@ using ngHealthyGarden.Data;
 using AutoMapper;
 using System.Web.Mvc;
 using Autofac.Integration.Mvc;
+using ngHealthyGarden.Models.IdentityModels;
 
 namespace ngHealthyGarden
 {
@@ -38,6 +39,7 @@ namespace ngHealthyGarden
             builder.RegisterInstance(config.CreateMapper()).As<IMapper>().SingleInstance();
 
             builder.RegisterType<HGDbContext>().InstancePerRequest();
+            builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
             builder.RegisterType<HGRepository>().As<IHGRepository>().InstancePerRequest();
         }
     }

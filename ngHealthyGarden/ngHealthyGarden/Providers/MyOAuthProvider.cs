@@ -47,8 +47,11 @@ namespace ngHealthyGarden.Providers
                 return;
             }
 
-            ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
-
+            ClaimsIdentity oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
+            
+            oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
+            oAuthIdentity.AddClaim(new Claim("Email", user.Email));
+            oAuthIdentity.AddClaim(new Claim("CustomerInfoId", user.CustomerInfoId.ToString()));
             var ticket = new AuthenticationTicket(oAuthIdentity, null);
 
             context.Validated(ticket);

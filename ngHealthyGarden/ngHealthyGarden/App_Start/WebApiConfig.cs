@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNet;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
 
 namespace ngHealthyGarden
 {
@@ -24,7 +25,7 @@ namespace ngHealthyGarden
 
             var json = config.Formatters.JsonFormatter;
 
-            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            json.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             config.EnableCors(enableCorsAttribute);

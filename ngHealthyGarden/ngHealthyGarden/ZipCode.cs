@@ -11,7 +11,12 @@ namespace ngHealthyGarden
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Runtime.Serialization;
+
+    [DataContract(IsReference = true)]
+    [MetadataType(typeof(ZipCode))]
     public partial class ZipCode
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,13 +25,22 @@ namespace ngHealthyGarden
             this.AddressInfoes = new HashSet<AddressInfo>();
         }
     
+        [DataMember]
         public int ZipCodeId { get; set; }
+        [Column("ZipCode")]
+        [DataMember]
         public string ZipCode1 { get; set; }
+        [DataMember]
         public string City { get; set; }
+        [DataMember]
+        [Column("RestaurantId")]
         public int RestaurantId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [DataMember]
         public virtual ICollection<AddressInfo> AddressInfoes { get; set; }
+        [ForeignKey("RestaurantId")]
+        [DataMember]
         public virtual RestaurantInfo RestaurantInfo { get; set; }
     }
 }

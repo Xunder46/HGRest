@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ngHealthyGarden.Models.IdentityModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -10,9 +11,11 @@ namespace ngHealthyGarden.Data
     public class HGRepository : IHGRepository
     {
         private readonly HGDbContext _context;
-        public HGRepository(HGDbContext context)
+        private readonly ApplicationDbContext _app;
+        public HGRepository(HGDbContext context, ApplicationDbContext app)
         {
             _context = context;
+            _app = app;
         }
 
         public async Task<bool> SaveChangesAsync() {
@@ -162,6 +165,21 @@ namespace ngHealthyGarden.Data
         {
             _context.ZipCodes.Remove(zipCode);
         }
+        public async Task<ZipCode> GetRestaurantByZipCodeAsync(string zipCode)
+        {
+            return await _context.ZipCodes.Where(z=>z.ZipCode1==zipCode)
+                .Include(z=>z.RestaurantInfo)
+                .Include(z=>z.AddressInfoes).FirstOrDefaultAsync();
+        }
+        public async Task<ZipCode[]> GetAllZipCodesAsync()
+        {
+            return await _context.ZipCodes.OrderBy(z => z.ZipCode1).ToArrayAsync();
+        }
+
+        public async Task<ZipCode> GetZipCodeById(int zipCodeId)
+        {
+            return await _context.ZipCodes.FirstOrDefaultAsync(z => z.ZipCodeId == zipCodeId);
+        }
         #endregion
 
         #region =============RESTAURANTS=====================
@@ -279,11 +297,11 @@ namespace ngHealthyGarden.Data
         {
             return await _context.CustomerInfo.Select(c => c).ToArrayAsync();
         }
-        public async Task<AddressInfo[]> GetCustomerWithAddressByCustomerId(int customerId)
+        public async Task<CustomerInfo[]> GetCustomerWithAddressByCustomerId(int customerId)
         {
-            IQueryable<AddressInfo> query =  _context.AddressInfo.Where(c => c.CustomerInfoId == customerId)
-                .Include(a=>a.CustomerInfo)
-                .Include(a=>a.ZipCode);
+            IQueryable<CustomerInfo> query = _context.CustomerInfo
+                .Where(c => c.CustomerInfoId == customerId)
+                .Include(c=>c.AddressInfoes);
             return await query.ToArrayAsync();
         }
         #endregion
@@ -292,6 +310,10 @@ namespace ngHealthyGarden.Data
         public async Task<AddressInfo[]> GetAllAddressesAsync()
         {
             return await _context.AddressInfo.Select(a => a).ToArrayAsync();
+        }
+        public async Task<AddressInfo> GetAddressInfoById(int customerInfoId)
+        {
+            return await _context.AddressInfo.FirstOrDefaultAsync(a => a.CustomerInfoId == customerInfoId);
         }
         public void AddAddress(AddressInfo addressInfo)
         {
@@ -319,9 +341,18 @@ namespace ngHealthyGarden.Data
         #endregion
 
         #region =============USERS=====================
-
+        public async Task<ApplicationUser> GetUserByPhone(string phoneNumber)
+        {
+            return await _app.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
+        }
 
         #endregion
 
+        #region =============ORDER_Types=====================
+        public async Task<OrderType[]> GetOrderTypesAsync()
+        {
+            return await _context.OrderTypes.Select(o => o).ToArrayAsync();
+        }
+        #endregion
     }
 }

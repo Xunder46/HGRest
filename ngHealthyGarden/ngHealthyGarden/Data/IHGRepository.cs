@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ngHealthyGarden.Models.IdentityModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,9 @@ namespace ngHealthyGarden.Data
         void AddZipCode(ZipCode zipCode);
         void DeleteZipCode(ZipCode zipCode);
         Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId);
+        Task<ZipCode> GetRestaurantByZipCodeAsync(string zipCode);
+        Task<ZipCode[]> GetAllZipCodesAsync();
+        Task<ZipCode> GetZipCodeById(int zipCodeId);
         #endregion
 
         #region =============RESTAURANTS=====================
@@ -84,11 +88,12 @@ namespace ngHealthyGarden.Data
         void AddCustomer(CustomerInfo customerInfo);
         void DeleteCustomer(CustomerInfo customerInfo);
         Task<CustomerInfo[]> GetAllCustomersAsync();
-        Task<AddressInfo[]> GetCustomerWithAddressByCustomerId(int customerId);
+        Task<CustomerInfo[]> GetCustomerWithAddressByCustomerId(int customerId);
         #endregion
 
         #region =============ADDRESS=====================
         Task<AddressInfo[]> GetAllAddressesAsync();
+        Task<AddressInfo> GetAddressInfoById(int addressInfoId);
         void AddAddress(AddressInfo addressInfo);
         void DeleteAddress(AddressInfo addressInfo);
         #endregion
@@ -100,9 +105,13 @@ namespace ngHealthyGarden.Data
         #endregion
 
         #region =============USERS=====================
-    
-        
+
+        Task<ApplicationUser> GetUserByPhone(string phoneNumber);
+
         #endregion
 
+        #region =============ORDER_Types=====================
+        Task<OrderType[]> GetOrderTypesAsync();
+        #endregion
     }
 }

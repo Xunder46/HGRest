@@ -9,17 +9,25 @@
                     <th scope="col">Qty</th>
                     <th scope="col">Price</th>
                     <th scope="col">Total</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="cartTableBody">
                 <tr *ngFor="let dish of dishesFromLocalStorage">
                     <td><img class="image" src="../../assets/Dishes/{{dish.dish.dishName}}.jpg" /></td>
-                    <td>{{dish.dish.dishName|split}}</td>
                     <td>
-                        <input type="number" matInput [(ngModel)]="dish.dish.quantity" (click)="refreshPrice(dish)">
+                        {{dish.dish.dishName|split}}
+                        <h4>{{dish.dish.comments}}</h4>
                     </td>
+                    <td>
+                        <input type="number" min="1" matInput [(ngModel)]="dish.dish.quantity" (click)="refreshPrice(dish)" class="form-control">
+                    </td>
+                    <td>{{dish.dish.price|currency}}</td>
                     <td>{{dish.dish.price * dish.dish.quantity |currency}}</td>
-                    <td>{{dish.dish.dishName|split}}</td>
+                    <td>
+                        <div (click)="deleteDish(dish)" class="btn cancelButton" alt="delete" title="Delete this dish">Delete</div>
+                        <img src="./../../assets/Icons/cancel.png" class="btn cancelIcon">
+                    </td>
                 </tr>
             </tbody>
             
@@ -30,7 +38,7 @@
                 <div class="totals-value" id="cart-subtotal">{{subtotal|currency}}</div>
             </div>
             <div class="totals-item">
-                <label>Tax (5%)</label>
+                <label>Tax (6.625%)</label>
                 <div class="totals-value" id="cart-tax">{{tax|currency}}</div>
             </div>
             <div class="totals-item totals-item-total">
@@ -38,7 +46,7 @@
                 <div class="totals-value" id="cart-total">{{total|currency}}</div>
             </div>
         </div>
-        <button class="btn cartButton" (click)="sendToDatabase()">Checkout</button>
+        <checkout-modal [dishesFromLocalStorage]="dishesFromLocalStorage" [(cartIsEmpty)]="cartIsEmpty"></checkout-modal>
         <button class="btn cartButton" (click)="emptyCart()">Clear all</button>
     </div>
     <div *ngIf="cartIsEmpty">

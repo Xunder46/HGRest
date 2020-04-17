@@ -33,7 +33,8 @@ namespace ngHealthyGarden
                     m.MapRightKey("ItemId");
                     m.ToTable("AddedIngredients");
                 });
-
+            modelBuilder.Entity<RestaurantInfo>().ToTable("RestaurantInfo");
+            modelBuilder.Entity<AddressInfo>().ToTable("AddressInfo");
         }
 
         public virtual DbSet<AddressInfo> AddressInfo { get; set; }
@@ -43,6 +44,7 @@ namespace ngHealthyGarden
         public virtual DbSet<Dish> Dishes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<OrderType> OrderTypes { get; set; }
         public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }

@@ -1,9 +1,13 @@
+import { AddressInfo } from './Address';
+import { CustomerInfo } from './CustomerInfo';
+
 export class User{
-    firstName: string;
-    lastName: string;
+    userId: string;
     username: string;
-    password: string;
-    role: string;
-    customerInfoId: number;
     email: string;
+    phoneNumber: string;
+    customerInfoId: number;
+    joinDate: Date;
+    customerInfo: CustomerInfo;
+    addressInfo: AddressInfo;
 }

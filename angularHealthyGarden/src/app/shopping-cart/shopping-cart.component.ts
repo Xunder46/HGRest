@@ -15,8 +15,6 @@ import { Comment } from '../models/Comment';
 })
 export class ShoppingCartComponent implements OnInit {
 
-    @ViewChild('myModal') myModal;
-
     cartIsEmpty: boolean = true;
     dishesFromLocalStorage: any[];
     subtotal: number = 0;
@@ -36,7 +34,6 @@ export class ShoppingCartComponent implements OnInit {
             this.cartIsEmpty = false;
         }
         this.buildShoppingCartTotal();
-        console.log(this.dishesFromLocalStorage)
     }
 
     //TODO: when order sent clear local storage
@@ -47,7 +44,6 @@ export class ShoppingCartComponent implements OnInit {
 
     refreshPrice(dish: any) {
         this.dishesFromLocalStorage.splice(this.dishesFromLocalStorage.indexOf(dish), 1, dish);
-        console.log(this.dishesFromLocalStorage)
         this.buildShoppingCartTotal()
 
     }
@@ -62,12 +58,11 @@ export class ShoppingCartComponent implements OnInit {
                 }
             }
         }
-        this.tax = this.subtotal * 0.05;
+        this.tax = this.subtotal * 0.06625;
         this.total = this.subtotal + this.tax;
     }
 
     sendToDatabase() {
-        console.log('done')
         let order = new Order();
         let orderDetails: OrderDetails[] = []
         for (var i = 0; i < this.dishesFromLocalStorage.length; i++) {
@@ -94,7 +89,6 @@ export class ShoppingCartComponent implements OnInit {
             orderDetail.price = this.dishesFromLocalStorage[i].dish.price;
             orderDetail.quantity = this.dishesFromLocalStorage[i].dish.quantity;
             orderDetail.restaurantId = 1;
-            orderDetail.quantity = this.dishesFromLocalStorage[i].dish.quantity;
 
             orderDetails.push(orderDetail);
         }
@@ -108,5 +102,11 @@ export class ShoppingCartComponent implements OnInit {
         });
         
         this.emptyCart();
+    }
+
+    deleteDish(dish: any){
+        let dishToRemove = this.dishesFromLocalStorage.indexOf(dish);
+        this.dishesFromLocalStorage.splice(dishToRemove, 1);
+        localStorage.setItem("dishes", JSON.stringify(this.dishesFromLocalStorage));
     }
 }

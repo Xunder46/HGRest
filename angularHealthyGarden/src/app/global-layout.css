@@ -27,6 +27,11 @@ h6 {
 p{
     display: inline;
 }
+
+input[type="number"] {
+    border-radius: 2mm;
+    width: 4em;
+}
 /*#endregion*/
 
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
@@ -107,8 +112,8 @@ p{
 .badge {
     transform: scale(0.6);
     position: absolute;
-    top: -15px;
-    right: -15px;
+    top: -10px;
+    right: -10px;
     padding: 5px 10px;
     border-radius: 50%;
     background-color: red;

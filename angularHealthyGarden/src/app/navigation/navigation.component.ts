@@ -30,7 +30,7 @@ export class NavigationComponent {
     isLoggedIn(){
         let user = localStorage.getItem('user');
         if (user) {
-            let token = JSON.parse(user).access_token;
+            let token = JSON.parse(user);
             this.token = token;
             return this.token ? true : false;
         }

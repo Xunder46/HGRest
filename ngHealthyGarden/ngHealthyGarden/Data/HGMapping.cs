@@ -22,7 +22,7 @@ namespace ngHealthyGarden.Data
             CreateMap<Side, SideModel>();
             CreateMap<Order, OrderModel>()
                 .ReverseMap();
-            CreateMap<AddressInfo, AddrssInfoModel>();
+            CreateMap<AddressInfo, AddressInfoModel>();
             CreateMap<Comment, CommentModel>();
             CreateMap<CustomerInfo, CustomerInfoModel>();
             CreateMap<Option, OptionModel>();

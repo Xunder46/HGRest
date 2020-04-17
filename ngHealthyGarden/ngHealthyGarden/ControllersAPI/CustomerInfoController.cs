@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ngHealthyGarden.Data;
+using ngHealthyGarden.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,27 @@ namespace ngHealthyGarden.ControllersAPI
                 }
 
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("{customerInfoId}")]
+        public async Task<IHttpActionResult> Get(int customerInfoId)
+        {
+            try
+            {
+                var result = await _repo.GetCustomerWithAddressByCustomerId(customerInfoId);
+                var mapped = _mapper.Map<IEnumerable<CustomerInfoModel>>(result);
+
+                if (mapped == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(mapped);
             }
             catch (Exception ex)
             {

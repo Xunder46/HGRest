@@ -1,4 +1,5 @@
 import { OrderDetails } from './OrderDetails';
+import { AddressInfo } from './Address';
 
 export class CustomerInfo {
     customerInfoId: number;
@@ -6,6 +7,6 @@ export class CustomerInfo {
     lastName?: string;
     phoneNumber?: string;
     email?: string;
-    addressInfoId?: number;
-    orderDetails: OrderDetails[];
+    orderDetails?: OrderDetails[];
+    addressInfoes?: AddressInfo[];
 }

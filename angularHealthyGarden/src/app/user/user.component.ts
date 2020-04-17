@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -8,12 +9,16 @@ import { Component, OnInit } from '@angular/core';
 export class UserComponent implements OnInit {
   message: string;
 
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit(): void {
   }
 
   getErrorMessage(message: string){
     this.message = message.replace(/['"]+/g, '');
+  }
+
+  back(){
+    this.route.navigate(['']);
   }
 }

@@ -39,9 +39,9 @@ export class LogInComponent implements OnInit {
     this.services.login(this.user.username, this.user.password).pipe(
       retry(0),
       catchError(this.handleError)
-    ).subscribe(data => {
+    ).subscribe((data:any) => {
       if (data) {
-        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(data.access_token));
         this.router.navigate(['/menu']);
       }
     })

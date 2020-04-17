@@ -354,6 +354,7 @@
     <Compile Include="Comment.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ControllersAPI\AddressInfoController.cs" />
     <Compile Include="ControllersAPI\BaseApiController.cs" />
     <Compile Include="ControllersAPI\ClaimsController.cs" />
     <Compile Include="ControllersAPI\CommentsController.cs" />
@@ -362,11 +363,14 @@
     <Compile Include="ControllersAPI\ItemsController.cs" />
     <Compile Include="ControllersAPI\OptionsController.cs" />
     <Compile Include="ControllersAPI\OrdersController.cs" />
+    <Compile Include="ControllersAPI\OrderTypeController.cs" />
+    <Compile Include="ControllersAPI\RestaurantController.cs" />
     <Compile Include="ControllersAPI\RolesController.cs" />
     <Compile Include="ControllersAPI\SidesController.cs" />
     <Compile Include="ControllersAPI\SizeController.cs" />
     <Compile Include="ControllersAPI\AccountController.cs" />
     <Compile Include="ControllersAPI\ValuesController.cs" />
+    <Compile Include="ControllersAPI\ZipCodesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomerInfo.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
@@ -426,7 +430,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AddrssInfoModel.cs" />
+    <Compile Include="Models\AddressInfoModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\IdentityModels\IdentityModels.cs" />
