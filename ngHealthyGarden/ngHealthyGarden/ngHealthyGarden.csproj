@@ -484,16 +484,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\app.component.css" />
-    <Content Include="app\app.component.html" />
-    <Content Include="app\Categories\dishes.component.css" />
-    <Content Include="app\Categories\dishes.component.html" />
-    <Content Include="app\global-layout.css" />
-    <Content Include="app\menu\menu.component.css" />
-    <Content Include="app\navigation\navigation.component.html" />
-    <Content Include="app\shopping-cart\shopping-cart.component.css" />
-    <Content Include="app\shopping-cart\shopping-cart.component.html" />
-    <Content Include="app\welcome\welcome.component.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -534,9 +524,6 @@
     <Content Include="MyStyles.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="package.json" />
-    <Content Include="app\menu\menu.component.html" />
-    <Content Include="app\welcome\welcome.component.css" />
     <Content Include="fonts\CabinSketch-Regular.otf" />
     <Content Include="fonts\BalooThambi-Regular.ttf" />
     <Content Include="fonts\Battambang-Regular.ttf" />
@@ -574,8 +561,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="systemjs-angular-loader.js" />
-    <Content Include="systemjs.config.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -588,12 +573,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="tsconfig.json" />
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
     <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\modals\onDishPopUp\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -612,23 +595,6 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="app\app-routing.module.ts" />
-    <TypeScriptCompile Include="app\app.component.ts" />
-    <TypeScriptCompile Include="app\app.module.ts" />
-    <TypeScriptCompile Include="app\Categories\dishes.component.ts" />
-    <TypeScriptCompile Include="app\main.ts" />
-    <TypeScriptCompile Include="app\menu\menu.component.ts" />
-    <TypeScriptCompile Include="app\models\Category.ts" />
-    <TypeScriptCompile Include="app\models\Dish.ts" />
-    <TypeScriptCompile Include="app\navigation\navigation.component.ts" />
-    <TypeScriptCompile Include="app\services\shopping-cart.service.ts" />
-    <TypeScriptCompile Include="app\services\web.services.ts" />
-    <TypeScriptCompile Include="app\shopping-cart\shopping-cart.component.ts" />
-    <TypeScriptCompile Include="app\split.pipe.ts" />
-    <TypeScriptCompile Include="app\web.services.ts" />
-    <TypeScriptCompile Include="app\welcome\welcome.component.ts" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202004022321185_InitialCreate.resx">

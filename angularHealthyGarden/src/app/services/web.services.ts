@@ -25,19 +25,15 @@ export class WebServices {
     constructor(private http: HttpClient) { }
 
     //#region CATEGORIES 
-
     getCategories() {
         return this.http.get<Category[]>(this.baseUrl + 'menu');
     }
-
     getCategoryByNameWithDishes(category: string) {
         return this.http.get<Category>(this.baseUrl + 'dishes/' + category)
     }
-
     //#endregion
 
     //#region ITEMS 
-
     getAllItems() {
         return this.http.get<Item[]>(this.baseUrl + 'items/')
     }
@@ -45,16 +41,12 @@ export class WebServices {
     getItemsByDishName(dishName: string) {
         return this.http.get<Item[]>(this.baseUrl + 'items/' + dishName)
     }
-
     //#endregion
 
     //#region SIDES 
-
-
     getAllSides() {
         return this.http.get<Side[]>(this.baseUrl + 'sides')
     }
-
     getSidesByCategoryId(categoryId: number) {
         return this.http.get<Side[]>(this.baseUrl + 'sides/' + categoryId)
     }
@@ -68,11 +60,9 @@ export class WebServices {
     //#endregion
 
     //#region OPTIONS
-
     getOptionsByDishId(dishId: number) {
         return this.http.get<DishOption[]>(this.baseUrl + 'options/' + dishId)
     }
-
     //#endregion
 
     //#region ORDERS 
@@ -95,7 +85,7 @@ export class WebServices {
 
     //#region USERS 
     getUserByPhoneNumber(phoneNumber:string){
-        return this.http.get<User>(this.baseUrl + "account/user" + phoneNumber);
+        return this.http.get<User>(this.baseUrl + "account/" + phoneNumber);
     }
     login(username, password){
         var data = "username="+username+"&password="+password+"&grant_type=password";
@@ -109,12 +99,11 @@ export class WebServices {
     updateUser(user: any){
         return this.http.put<any>(this.baseUrl + "account/update", user);
     }
-    createCustomerDetails(customerInfo:CustomerInfo){
-        return this.http.post<CustomerInfo>(this.baseUrl + "customers", customerInfo);
-    }
     getUserInfo(){
+        let user = JSON.parse(localStorage.getItem('user'));
+        let token = user.token;
         return this.http.get<User>(this.baseUrl+"account/userclaims", {headers: new HttpHeaders({
-            'Authorization': 'Bearer '+ JSON.parse(localStorage.getItem('user')),
+            'Authorization': 'Bearer '+ token,
             'Content-Type':'application/json'
         })})
     }
@@ -124,7 +113,6 @@ export class WebServices {
     getZipCodes(){
         return this.http.get<ZipCode[]>(this.baseUrl + "zipcodes");
     }
-
     getZipCodeById(zipCodeId:number){
         return this.http.get<ZipCode>(this.baseUrl + "zipcodes/" + zipCodeId);
     }
@@ -134,19 +122,32 @@ export class WebServices {
     getAllRestaurants(){
         return this.http.get<Restaurant[]>(this.baseUrl+"restaurants");
     }
-
-
-//#endregion
+    getRestaurantByZipCode(zipCode: string){
+        return this.http.get<ZipCode>(this.baseUrl + "restaurants/" + zipCode);
+    }
+    //#endregion
 
     //#region CUSTOMER_INFO 
     getAllCusttomerInfo(customerInfoId:number){
-        return this.http.get<CustomerInfo[]>(this.baseUrl+"customers/" + customerInfoId);
+        return this.http.get<CustomerInfo>(this.baseUrl+"customers/" + customerInfoId);
+    }
+    createCustomerDetails(customerInfo:CustomerInfo){
+        return this.http.post<CustomerInfo>(this.baseUrl + "customers", customerInfo);
+    }
+    updateCustomerInfo(customerInfo: CustomerInfo) {
+        return this.http.put<CustomerInfo>(this.baseUrl + "customer", customerInfo);
     }
     //#endregion
 
     //#region ADDRESS_INFO 
+    getAllAddresses(){
+        return this.http.get<AddressInfo[]>(this.baseUrl + "addressinfo");    
+    }
     getAddressInfoById(customerInfoId:number){
-        return this.http.get<AddressInfo[]>(this.baseUrl+"address/" + customerInfoId);
+        return this.http.get<AddressInfo[]>(this.baseUrl+"addressinfo/" + customerInfoId);
+    }
+    addCustomerAddress(addressInfo: AddressInfo){
+        return this.http.post<AddressInfo>(this.baseUrl+"addressinfo", addressInfo);
     }
     //#endregion
 

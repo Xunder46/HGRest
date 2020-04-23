@@ -15,4 +15,5 @@ export class OrderDetails {
     orderId: number;
     items: Item[];
     items1: Item[];
+    requestedTime: string;
 }

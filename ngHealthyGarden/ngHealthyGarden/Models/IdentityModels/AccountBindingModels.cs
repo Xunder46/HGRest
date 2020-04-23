@@ -29,8 +29,14 @@ namespace ngHealthyGarden.Models.IdentityModels
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [StringLength(10, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 10)]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "PhoneNumber")]
+        public string PhoneNumber { get; set; }
 
         public int? CustomerInfoId { get; set; }
     }
@@ -58,17 +64,16 @@ namespace ngHealthyGarden.Models.IdentityModels
 
     public class UpdateUserBindingModel
     {
-        [Required]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }
+
+        public int CustomerInfoId { get; set; }
     }
 }

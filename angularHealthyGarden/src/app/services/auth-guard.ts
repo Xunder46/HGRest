@@ -7,7 +7,7 @@ export class AuthGuard implements CanActivate {
 
     base_url: string;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) { }
 
     canActivate() {
         // Check to see if a user has a valid token
@@ -23,14 +23,10 @@ export class AuthGuard implements CanActivate {
 
     isAuthenticated() {
         // get the auth token from localStorage
-        let user = localStorage.getItem('user');
-        if (user) {
-            let token = JSON.parse(user).access_token;
-            if (token) {
-                return true;
-            }
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user.token) {
+            return true;
         }
-    
         return false;
     }
 }

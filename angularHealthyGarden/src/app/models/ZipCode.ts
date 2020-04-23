@@ -1,6 +1,6 @@
 export class ZipCode {
     zipCodeId: number;
-    zipCodeDescription: string;
+    zipCode1: string;
     city: string;
     restaurantId: number;
 }

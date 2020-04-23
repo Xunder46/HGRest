@@ -11,12 +11,12 @@ import { retry, catchError } from 'rxjs/operators';
   styleUrls: ['./../../../../node_modules/materialize-css/dist/css/materialize.min.css', './../user.component.css']
 })
 export class SignUpComponent implements OnInit {
-  errorMessage: string;
+  errorMessage: string[];
   hide = true;
   user: any;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
-  @Output() message: EventEmitter<string> = new EventEmitter();
+  @Output() messages: EventEmitter<string[]> = new EventEmitter();
 
   constructor(private services: WebServices) { }
 
@@ -40,21 +40,31 @@ export class SignUpComponent implements OnInit {
     this.services.signup(this.user).pipe(
       retry(0),
       catchError(this.handleError)
-    ).subscribe(data=>data)
-    this.resetForm();
+    ).subscribe(data=>{
+      this.resetForm();
+    })
+    
   }
 
   handleError = (error) => {
+    this.errorMessage = [];
     if (error.error instanceof ErrorEvent) {
       // client-side error
-      this.errorMessage = `Error: ${error.error.modelState.createUserModel.Email[0]}`;
-      this.message.emit(this.errorMessage)
+      this.errorMessage.push(`Error: ${error.error.modelState.createUserModel.Email[0]}`);
+      this.messages.emit(this.errorMessage)
     } else {
       // server-side error
-      this.errorMessage = error.error.modelState["createUserModel.Email"][0].replace(['"'], '');
-      this.message.emit(this.errorMessage)
+      if(error.error.modelState){
+        for(let i = 0; i<error.error.modelState[""].length; i++){
+          this.errorMessage.push(`Error: ${error.error.modelState[""][i]}`);
+        }
+        this.messages.emit(this.errorMessage)
+      }
+      else{
+        this.errorMessage.push(`Error: ${error.error.message}`);
+        this.messages.emit(this.errorMessage);
+      }
     }
     return throwError(this.errorMessage);
   }
-
 } 

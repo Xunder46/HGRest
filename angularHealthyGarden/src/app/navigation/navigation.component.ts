@@ -14,25 +14,34 @@ export class NavigationComponent {
     counter: number;
     dishesInTheCart: Dish[] = [];
     token: string;
+    dishesCount: number;
 
     constructor(private _cart: CartService) {
         setInterval(() => {
+            this.dishesCount = 0;
             if (this._cart.getItems()) {
-                this.dishesInTheCart = this._cart.getItems()
+                this.dishesInTheCart = this._cart.getItems();
+                 _cart.getItems().forEach(a=>{
+                    this.dishesCount = this.dishesCount + a.dish.quantity;
+                })
             }
             else {
                 this.dishesInTheCart = [];
             }
-        }, 200)
-        
+        }, 500)
     }
 
     isLoggedIn(){
-        let user = localStorage.getItem('user');
+        let user = JSON.parse(localStorage.getItem('user'));
+        var now = new Date();
         if (user) {
-            let token = JSON.parse(user);
-            this.token = token;
-            return this.token ? true : false;
+            if((now.getTime()-user.logInTime)<21600000){
+                this.token = user.token;
+                return this.token ? true : false;
+            }
+            else{
+                localStorage.removeItem("user");
+            }
         }
     }
 }

@@ -88,7 +88,7 @@ namespace ngHealthyGarden.Data
         void AddCustomer(CustomerInfo customerInfo);
         void DeleteCustomer(CustomerInfo customerInfo);
         Task<CustomerInfo[]> GetAllCustomersAsync();
-        Task<CustomerInfo[]> GetCustomerWithAddressByCustomerId(int customerId);
+        Task<CustomerInfo> GetCustomerWithAddressByCustomerId(int customerId);
         #endregion
 
         #region =============ADDRESS=====================
@@ -107,6 +107,7 @@ namespace ngHealthyGarden.Data
         #region =============USERS=====================
 
         Task<ApplicationUser> GetUserByPhone(string phoneNumber);
+        bool Exists(string phoneNumber);
 
         #endregion
 

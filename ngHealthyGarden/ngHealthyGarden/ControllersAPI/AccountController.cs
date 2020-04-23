@@ -75,7 +75,7 @@ namespace ngHealthyGarden.ControllersAPI
             return NotFound();
         }
 
-        [Route("user/{phoneNumber}")]
+        [Route("{phoneNumber}")]
         [AllowAnonymous]
         public async Task<IHttpActionResult> GetUserByPhone(string phoneNumber)
         {
@@ -94,12 +94,19 @@ namespace ngHealthyGarden.ControllersAPI
                 return BadRequest(ModelState);
             }
 
+            if (_repo.Exists(createUserModel.PhoneNumber))
+            {
+                return BadRequest("Phone number is already taken");
+            }
+
             var user = new ApplicationUser()
             {
                 UserName = createUserModel.Username,
                 Email = createUserModel.Email,
                 CustomerInfoId = createUserModel.CustomerInfoId,
                 JoinDate = DateTime.Now.Date,
+                PhoneNumber = createUserModel.PhoneNumber,
+                EmailConfirmed = true
             };
 
             IdentityResult addUserResult = await AppUserManager.CreateAsync(user, createUserModel.Password);
@@ -131,28 +138,24 @@ namespace ngHealthyGarden.ControllersAPI
         }
 
         [Route("update")]
-        [Authorize(Roles = "Customer")]
+        //[Authorize()]
+        [HttpPut]
         public async Task<IHttpActionResult> UpdateUser(UpdateUserBindingModel updateUserModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            
+            var u = AppUserManager.FindByName(updateUserModel.Username);
+            u.CustomerInfoId = updateUserModel.CustomerInfoId;
 
-            var user = new ApplicationUser()
-            {
-                UserName = updateUserModel.Username,
-                Email = updateUserModel.Email,
-                PhoneNumber = updateUserModel.PhoneNumber
-            };
-
-            IdentityResult updateUserResult = await AppUserManager.UpdateAsync(user);
-
+            IdentityResult updateUserResult = await AppUserManager.UpdateAsync(u);
             if (updateUserResult.Succeeded)
             {
-                Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+                Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = u.Id }));
 
-                return Created(locationHeader, TheModelFactory.Create(user));
+                return Created(locationHeader, TheModelFactory.Create(u));
             }
             else
             {
@@ -280,7 +283,9 @@ namespace ngHealthyGarden.ControllersAPI
             user.Username = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
             user.Email = claims.FirstOrDefault(c => c.Type == "Email")?.Value;
             user.RoleName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
-            user.CustomerInfoId = Convert.ToInt32(claims.FirstOrDefault(c => c.Type == "CustomerInfoId").Value);
+            var id = 0;
+            int.TryParse(claims.FirstOrDefault(c => c.Type == "CustomerInfoId")?.Value, out id);
+            user.CustomerInfoId = id;
             return user;
         }
     }

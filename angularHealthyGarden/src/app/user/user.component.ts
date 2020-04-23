@@ -7,15 +7,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  message: string;
+  messages: string[];
 
   constructor(private route: Router) { }
 
   ngOnInit(): void {
   }
 
-  getErrorMessage(message: string){
-    this.message = message.replace(/['"]+/g, '');
+  getErrorMessage(_messages: string[]){
+    this.messages = [];
+    this.messages= _messages;
   }
 
   back(){

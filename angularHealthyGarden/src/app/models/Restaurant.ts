@@ -1,7 +1,7 @@
 import { ZipCode } from './ZipCode';
 
 export class Restaurant {
-    restaurantId: number;
+    restaurantInfoId: number;
     location: string;
     phoneNumber: string;
     zipCodes: ZipCode[];

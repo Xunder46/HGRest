@@ -12,13 +12,13 @@ import { retry, catchError } from 'rxjs/operators';
   styleUrls: ['./../../../../node_modules/materialize-css/dist/css/materialize.min.css', './../user.component.css']
 })
 export class LogInComponent implements OnInit {
-  errorMessage: string;
+  errorMessage: string[];
   hide = true;
   user: any;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   response: HttpErrorResponse;
 
-  @Output() message: EventEmitter<string> = new EventEmitter();
+  @Output() messages: EventEmitter<string[]> = new EventEmitter();
 
   constructor(private services: WebServices, private router: Router) { }
 
@@ -41,7 +41,13 @@ export class LogInComponent implements OnInit {
       catchError(this.handleError)
     ).subscribe((data:any) => {
       if (data) {
-        localStorage.setItem("user", JSON.stringify(data.access_token));
+        let token = data.access_token;
+        let now = new Date().getTime();
+        let user = {
+          token: token,
+          logInTime: now
+        }
+        localStorage.setItem("user", JSON.stringify(user));
         this.router.navigate(['/menu']);
       }
     })
@@ -49,14 +55,15 @@ export class LogInComponent implements OnInit {
   }
 
   handleError = (error) => {
+    this.errorMessage = [];
     if (error.error instanceof ErrorEvent) {
       // client-side error
-      this.errorMessage = `Error: ${error.error.error_description}`;
-      this.message.emit(this.errorMessage)
+      this.errorMessage.push(`Error: ${error.error.error_description}`);
+      this.messages.emit(this.errorMessage)
     } else {
       // server-side error
-      this.errorMessage = error.error.error_description;
-      this.message.emit(this.errorMessage)
+      this.errorMessage.push(error.error.error_description);
+      this.messages.emit(this.errorMessage)
     }
     return throwError(this.errorMessage);
   }

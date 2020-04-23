@@ -36,7 +36,6 @@ export class ShoppingCartComponent implements OnInit {
         this.buildShoppingCartTotal();
     }
 
-    //TODO: when order sent clear local storage
     emptyCart() {
         this._cart.deleteItems();
         this.cartIsEmpty = true;
@@ -44,8 +43,8 @@ export class ShoppingCartComponent implements OnInit {
 
     refreshPrice(dish: any) {
         this.dishesFromLocalStorage.splice(this.dishesFromLocalStorage.indexOf(dish), 1, dish);
-        this.buildShoppingCartTotal()
-
+        localStorage.setItem("dishes", JSON.stringify(this.dishesFromLocalStorage));
+        this.buildShoppingCartTotal();
     }
 
     buildShoppingCartTotal() {
@@ -60,48 +59,6 @@ export class ShoppingCartComponent implements OnInit {
         }
         this.tax = this.subtotal * 0.06625;
         this.total = this.subtotal + this.tax;
-    }
-
-    sendToDatabase() {
-        let order = new Order();
-        let orderDetails: OrderDetails[] = []
-        for (var i = 0; i < this.dishesFromLocalStorage.length; i++) {
-            let orderDetail = new OrderDetails();
-            let dishComment = new Comment();
-
-            if(this.dishesFromLocalStorage[i].comments){
-                dishComment.comments = this.dishesFromLocalStorage[i].comments;
-                this.services.addComment(dishComment).subscribe(data=>{
-                    orderDetail.commentId = data.commentId;
-                });
-            }
-            else{
-                orderDetail.commentId = null;
-            }
-            orderDetail.customerInfoId = 3;
-            orderDetail.dishId = this.dishesFromLocalStorage[i].dish.dishId;
-            orderDetail.items = this.dishesFromLocalStorage[i].removedIngredients;
-            orderDetail.items1 = this.dishesFromLocalStorage[i].additionalIngredients;
-            orderDetail.optionId = this.dishesFromLocalStorage[i].chosenOption.optionId || null;
-            orderDetail.sideId = this.dishesFromLocalStorage[i].chosenSide.sideId || null;
-            orderDetail.sizeId = this.dishesFromLocalStorage[i].chosenSize.sizeId || null;
-            orderDetail.orderTypeId = 1;
-            orderDetail.price = this.dishesFromLocalStorage[i].dish.price;
-            orderDetail.quantity = this.dishesFromLocalStorage[i].dish.quantity;
-            orderDetail.restaurantId = 1;
-
-            orderDetails.push(orderDetail);
-        }
-        console.log(orderDetails)
-
-        let utc = new Date().toJSON().slice(0, 10);
-        order.orderDate = utc;
-
-        this.services.setNewOrder(order).subscribe(data => {
-            this.services.setNewOrderDetails(data.orderId, orderDetails).subscribe(data => console.log(data))
-        });
-        
-        this.emptyCart();
     }
 
     deleteDish(dish: any){

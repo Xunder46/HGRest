@@ -28,7 +28,7 @@ export class CartService {
     }
 
     public deleteItems() {
-        localStorage.clear();
+        localStorage.removeItem("dishes");
         this.dishesInTheCart = [];
     }
 }

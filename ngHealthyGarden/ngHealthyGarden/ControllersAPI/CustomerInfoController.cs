@@ -53,7 +53,7 @@ namespace ngHealthyGarden.ControllersAPI
             try
             {
                 var result = await _repo.GetCustomerWithAddressByCustomerId(customerInfoId);
-                var mapped = _mapper.Map<IEnumerable<CustomerInfoModel>>(result);
+                var mapped = _mapper.Map<CustomerInfoModel>(result);
 
                 if (mapped == null)
                 {
@@ -83,6 +83,35 @@ namespace ngHealthyGarden.ControllersAPI
                     }
                 }
 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return BadRequest();
+        }
+
+        [Route("{customer}")]
+        public async Task<IHttpActionResult> Put(CustomerInfoModel customer)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var c = await _repo.GetCustomerWithAddressByCustomerId(customer.CustomerInfoId);
+                    if (c == null) return NotFound();
+
+                    _mapper.Map(customer, c);
+
+                    if (await _repo.SaveChangesAsync())
+                    {
+                        return Ok(_mapper.Map<CustomerInfoModel>(c));
+                    }
+                    else
+                    {
+                        return InternalServerError();
+                    }
+                }
             }
             catch (Exception ex)
             {

@@ -25,6 +25,10 @@
                             [attr.data-error]="Password.errors!=null?(Password.errors.required?'Required field!':'Minimum 6 characters needed'):''">Password</label>
                         <img src="../../../assets/Icons/eye.png" (click)="hide = !hide">
                     </div>
+                    <div class="input-field col s6">
+                        <input class="validate" type="tel" name="tel" #PhoneNumber="ngModel" [(ngModel)]="user.phoneNumber" required>
+                        <label data-error="Please enter a valid phone number">Phone number</label>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
