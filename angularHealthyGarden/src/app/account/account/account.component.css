@@ -1,0 +1,115 @@
+h1 {
+    color: tomato;
+    font-size: 35px;
+    font-weight: bold;
+    text-shadow: 2px 2px darkred;
+}
+
+/*#region -_-_-_-_CLASSES-_-_-_-_*/
+.basicInfoContainer{
+    border: dotted 2px darkorange;
+    overflow: hidden;
+    float: right;
+    margin-bottom: 10em;
+    position: fixed;
+    right: 1em;
+    top: 1em;
+}
+
+.historyContent{
+    margin-top: 20em;
+}
+
+.btnCntnr{
+    position: relative;
+    max-width: 50em;
+}
+
+.btn-warning{
+    background-color: tomato;
+    border-color: orangered;
+}
+.btn-warning:hover{
+    background-color: orangered;
+    border-color: orangered;
+}
+
+.menuBtn{
+    margin: 0.5em;;
+}
+
+.basicInfo{
+    font-weight: bold;
+    color: orangered;
+    font-style: oblique;
+    font-size: 20px;
+}
+.detailsTable{
+    width: 100%;;
+}
+.cell{
+    width: 40em;
+}
+
+table.orderTable {
+    border: 2px solid #A40920;
+    background-color: #EE9075;
+    width: 60%;
+    height: 100%;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  table.orderTable td, table.orderTable th {
+    border: 3px solid #AAAAAA;
+    padding: 8px 10px;
+  }
+  table.orderTable tbody td {
+    font-size: 13px;
+    font-weight: bold;
+    color: #9E2424;
+  }
+  table.orderTable tr:nth-child(even) {
+    background: #D0E4F5;
+  }
+  table.orderTable thead {
+    background: #A42C29;
+    background: -moz-linear-gradient(top, #bb615e 0%, #ad413e 66%, #A42C29 100%);
+    background: -webkit-linear-gradient(top, #bb615e 0%, #ad413e 66%, #A42C29 100%);
+    background: linear-gradient(to bottom, #bb615e 0%, #ad413e 66%, #A42C29 100%);
+    border-bottom: 2px solid #444444;
+  }
+  table.orderTable thead th {
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    border-left: 3px solid #D0E4F5;
+  }
+  table.orderTable thead th:first-child {
+    border-left: none;
+  }
+  
+  table.orderTable tfoot {
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #D0E4F5;
+    background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+    background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+    background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+    border-top: 2px solid #444444;
+  }
+  table.orderTable tfoot td {
+    font-size: 14px;
+  }
+  table.orderTable tfoot .links {
+    text-align: right;
+  }
+  table.orderTable tfoot .links a{
+    display: inline-block;
+    background: #1C6EA4;
+    color: #FFFFFF;
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+/*#endregion*/

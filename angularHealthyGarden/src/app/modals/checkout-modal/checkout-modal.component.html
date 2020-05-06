@@ -8,7 +8,7 @@
     <div class="modal-body">
         <mat-form-field>
             <mat-label>Order type</mat-label>
-            <mat-select [formControl]="orderTypeControl" required [(ngModel)]="chosenType">
+            <mat-select [formControl]="orderTypeControl" required [(ngModel)]="chosenType" (selectionChange)="calculateTime()">
                 <mat-option *ngFor="let type of orderTypes" [value]="type">
                     {{type.orderType1}}
                 </mat-option>
@@ -65,8 +65,8 @@
             <mat-error *ngIf="restaurantControl.hasError('required')">Please select the restaurant where you are picking up</mat-error>
         </mat-form-field>
         <div class="form-group" *ngIf="chosenRestaurant||customerAddress">
-            <mat-label for="address">What time?</mat-label>&nbsp;
-            <input type="datetime-local" matInput id="appt" [formControl]="time" class="form-control" name="time" [min]="minTime" max="22:00" [(ngModel)]="requestedTime" required>
+            <mat-label for="time">What time?(Default time is set to ASAP)</mat-label>&nbsp;
+            <input type="datetime-local" matInput id="time" [formControl]="time" class="form-control" name="time" [min]="minTime" max="22:00" [(ngModel)]="requestedTime" required>
             <mat-error *ngIf="time.hasError('required')">Please select time</mat-error>
         </div>
     </div>

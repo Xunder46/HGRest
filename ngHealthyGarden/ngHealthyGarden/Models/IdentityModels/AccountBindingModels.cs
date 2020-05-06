@@ -15,7 +15,7 @@ namespace ngHealthyGarden.Models.IdentityModels
 
         [Required]
         [Display(Name = "Username")]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         [Display(Name = "Role Name")]
         public string RoleName { get; set; }
@@ -43,6 +43,7 @@ namespace ngHealthyGarden.Models.IdentityModels
 
     public class ChangePasswordBindingModel
     {
+        public string Username { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]

@@ -369,6 +369,7 @@
     <Compile Include="ControllersAPI\SidesController.cs" />
     <Compile Include="ControllersAPI\SizeController.cs" />
     <Compile Include="ControllersAPI\AccountController.cs" />
+    <Compile Include="ControllersAPI\UsersController.cs" />
     <Compile Include="ControllersAPI\ValuesController.cs" />
     <Compile Include="ControllersAPI\ZipCodesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -473,6 +474,9 @@
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Size.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spDeleteItemDish_Result.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="spGetItemsRelatedToADish_Result.cs">

@@ -20,7 +20,13 @@ namespace ngHealthyGarden
             modelBuilder.Entity<Item>().ToTable("Items");
             modelBuilder.Entity<CustomerInfo>().ToTable("CustomerInfo");
 
-            modelBuilder.Entity<Item>().HasMany(d => d.Dishes).WithMany(i => i.Items);
+            modelBuilder.Entity<Dish>().HasMany(d => d.Items).WithMany(i => i.Dishes)
+                .Map(x=>
+                {
+                    x.MapLeftKey("DishId");
+                    x.MapRightKey("ItemId");
+                    x.ToTable("ItemDishes");
+                });
             modelBuilder.Entity<OrderDetail>().HasMany(d => d.Items).WithMany(i => i.OrderDetails)
                 .Map(m=> {
                     m.MapLeftKey("OrderDetailId");
@@ -63,6 +69,19 @@ namespace ngHealthyGarden
                 new SqlParameter("DishName", typeof(string));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<Item>("spGetItemsRelatedToADish @DishName", dishNameParameter);
+        }
+
+        public virtual ObjectResult<bool> spDeleteItemDish(int dishId, int itemId)
+        {
+            var dishIdParameter = dishId>0 ?
+                new SqlParameter("DishId", dishId) :
+                new SqlParameter("DishId", typeof(int));
+
+            var itemIdParameter = itemId>0 ?
+                new SqlParameter("ItemId", itemId) :
+                new SqlParameter("ItemId", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<bool>("spDeleteItemDish @DishId, @ItemId", dishIdParameter, itemIdParameter);
         }
     }
 }

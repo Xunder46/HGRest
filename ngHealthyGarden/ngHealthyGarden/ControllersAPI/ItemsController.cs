@@ -88,5 +88,51 @@ namespace ngHealthyGarden.ControllersAPI
             }
             return BadRequest();
         }
+
+        [Route("{dishId}")]
+        public async Task<IHttpActionResult> Post(int dishId, ItemModel[] itemsModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var items = _mapper.Map<Item[]>(itemsModel);
+
+                    _repo.AddItemsToADish(items, dishId);
+
+                    if (await _repo.SaveChangesAsync())
+                    {
+                        return Created("GetItem", dishId);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return BadRequest();
+        }
+
+        [Route("dish/{dishId}/item/{itemId}")]
+        public async Task<IHttpActionResult> Delete(int dishId, int itemId)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _repo.DeleteItemFromADish(itemId, dishId);
+
+                    if (_repo.SaveChanges())
+                    {
+                        return Ok();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return BadRequest();
+        }
     }
 }

@@ -34,13 +34,14 @@ namespace ngHealthyGarden.ControllersAPI
             try
             {
                 var result = await _repo.GetAllDishesAsync();
+                var mapped = _mapper.Map<IEnumerable<DishModel>>(result);
 
-                if (result == null)
+                if (mapped == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(result);
+                return Ok(mapped);
             }
             catch (Exception ex)
             {
@@ -67,17 +68,51 @@ namespace ngHealthyGarden.ControllersAPI
             }
         }
 
+        [Route("dish/{dishId}")]
+        public async Task<IHttpActionResult> Get(int dishId)
+        {
+            try
+            {
+                var result = await _repo.GetDishById(dishId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(_mapper.Map<DishModel>(result));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("dish")]
         public async Task<IHttpActionResult> Post(Dish dish)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repo.AddDish(dish);
-
-                    if (await _repo.SaveChangesAsync())
+                    var dishToUpdate = _repo.GetDishById(dish.DishId).Result;
+                    if (dishToUpdate != null)
                     {
-                        return Created("GetDishes", new { dishId = dish.DishId });
+                        dishToUpdate.DishName = dish.DishName;
+                        dishToUpdate.CategoryId = dish.CategoryId;
+                        dishToUpdate.Active = dish.Active;
+                        dishToUpdate.Price = dish.Price;
+                        if (_repo.SaveChanges())
+                        {
+                            return Ok(dishToUpdate);
+                        }
+                    }
+                    else
+                    {
+                        _repo.AddDish(dish);
+                        if (await _repo.SaveChangesAsync())
+                        {
+                            return Created("GetDishes", dish);
+                        }
                     }
                 }
 

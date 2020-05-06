@@ -9,6 +9,7 @@ namespace ngHealthyGarden.Data
 {
     public interface IHGRepository
     {
+        bool SaveChanges();
         Task<bool> SaveChangesAsync();
 
         #region =============DISHES=====================
@@ -27,7 +28,9 @@ namespace ngHealthyGarden.Data
 
         #region =============ITEMS======================
         void AddItem(Item item);
+        void AddItemsToADish(Item[] items, int dishId);
         void DeleteItem(Item item);
+        void DeleteItemFromADish(int itemId, int dishId);
         Task<Item[]> GetAllItemsAsync();
         Task<Item[]> GetItemsByItemCategoryIdAsync(int itemCategoryId);
         Item[] GetItemsByDishNameAsync(string dishName);
@@ -52,6 +55,7 @@ namespace ngHealthyGarden.Data
         void DeleteZipCode(ZipCode zipCode);
         Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId);
         Task<ZipCode> GetRestaurantByZipCodeAsync(string zipCode);
+        Task<Dish> GetDishById(int dishId);
         Task<ZipCode[]> GetAllZipCodesAsync();
         Task<ZipCode> GetZipCodeById(int zipCodeId);
         #endregion
@@ -67,7 +71,7 @@ namespace ngHealthyGarden.Data
         void AddOrderDetail(OrderDetail[] ods, int orderId);
         void DeleteOrderAndRelatedOrderDetails(OrderDetail od);
         Task<OrderDetail[]> GetAllOrdersWithDetailsAsync();
-        Task<OrderDetail[]> GetOrderDetailsByOrderId(int orderId);
+        Task<Order> GetOrderDetailsByOrderId(int orderId);
         #endregion
 
         #region =============OPTIONS=====================
@@ -89,6 +93,8 @@ namespace ngHealthyGarden.Data
         void DeleteCustomer(CustomerInfo customerInfo);
         Task<CustomerInfo[]> GetAllCustomersAsync();
         Task<CustomerInfo> GetCustomerWithAddressByCustomerId(int customerId);
+
+        Task<OrderDetail[]> GetOrderedDishesByCustomerId(int customerId);
         #endregion
 
         #region =============ADDRESS=====================

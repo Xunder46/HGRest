@@ -2,6 +2,6 @@
     dishId: number;
     dishName: string;
     price: number;
-    quantity: number;
-    comments: string;
+    categoryId: number;
+    active: boolean;
 }

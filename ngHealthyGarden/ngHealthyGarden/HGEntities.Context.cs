@@ -51,5 +51,18 @@ namespace ngHealthyGarden
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetItemsRelatedToADish_Result>("spGetItemsRelatedToADish", dishNameParameter);
         }
+    
+        public virtual ObjectResult<spDeleteItemDish_Result> spDeleteItemDish(Nullable<int> dishId, Nullable<int> itemId)
+        {
+            var dishIdParameter = dishId.HasValue ?
+                new ObjectParameter("DishId", dishId) :
+                new ObjectParameter("DishId", typeof(int));
+    
+            var itemIdParameter = itemId.HasValue ?
+                new ObjectParameter("ItemId", itemId) :
+                new ObjectParameter("ItemId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spDeleteItemDish_Result>("spDeleteItemDish", dishIdParameter, itemIdParameter);
+        }
     }
 }

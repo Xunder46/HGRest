@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-log-in',
@@ -17,6 +18,7 @@ export class LogInComponent implements OnInit {
   user: any;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   response: HttpErrorResponse;
+  userInfo: User;
 
   @Output() messages: EventEmitter<string[]> = new EventEmitter();
 
@@ -24,6 +26,16 @@ export class LogInComponent implements OnInit {
 
   ngOnInit(): void {
     this.resetForm();
+    if (localStorage.getItem("user")) {
+      this.services.getUserInfo().subscribe(data => {
+        if (data&&data.roleName == 'Manager') {
+          this.router.navigate(['/manager']);
+        }
+        else {
+          this.router.navigate(['/account']);
+        }
+      })
+    }
   }
 
   resetForm(form?: NgForm) {
@@ -39,7 +51,7 @@ export class LogInComponent implements OnInit {
     this.services.login(this.user.username, this.user.password).pipe(
       retry(0),
       catchError(this.handleError)
-    ).subscribe((data:any) => {
+    ).subscribe((data: any) => {
       if (data) {
         let token = data.access_token;
         let now = new Date().getTime();
@@ -48,9 +60,24 @@ export class LogInComponent implements OnInit {
           logInTime: now
         }
         localStorage.setItem("user", JSON.stringify(user));
-        this.router.navigate(['/menu']);
       }
-    })
+    },
+      (err) => {
+        console.log(err);
+      },
+      () => {
+        if (localStorage.getItem("user")) {
+          this.services.getUserInfo().subscribe(data => {
+            this.userInfo = data;
+            if (this.userInfo.roleName == 'Manager') {
+              this.router.navigate(['/manager']);
+            }
+            else {
+              this.router.navigate(['/account']);
+            }
+          })
+        }
+      })
     this.resetForm(form);
   }
 

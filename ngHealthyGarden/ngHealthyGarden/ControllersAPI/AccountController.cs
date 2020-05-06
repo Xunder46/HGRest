@@ -101,7 +101,7 @@ namespace ngHealthyGarden.ControllersAPI
 
             var user = new ApplicationUser()
             {
-                UserName = createUserModel.Username,
+                UserName = createUserModel.UserName,
                 Email = createUserModel.Email,
                 CustomerInfoId = createUserModel.CustomerInfoId,
                 JoinDate = DateTime.Now.Date,
@@ -146,9 +146,16 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ModelState);
             }
-            
+
             var u = AppUserManager.FindByName(updateUserModel.Username);
-            u.CustomerInfoId = updateUserModel.CustomerInfoId;
+            if (updateUserModel.CustomerInfoId > 0)
+            {
+                u.CustomerInfoId = updateUserModel.CustomerInfoId;
+            }
+            else if (updateUserModel.PhoneNumber != null)
+            {
+                u.PhoneNumber = updateUserModel.PhoneNumber;
+            }
 
             IdentityResult updateUserResult = await AppUserManager.UpdateAsync(u);
             if (updateUserResult.Succeeded)
@@ -188,15 +195,15 @@ namespace ngHealthyGarden.ControllersAPI
         }
 
         [Route("ChangePassword")]
-        [Authorize]
+        //[Authorize]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            IdentityResult result = await AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            var user = await AppUserManager.FindByNameAsync(model.Username);
+            IdentityResult result = await AppUserManager.ChangePasswordAsync(user.Id, model.OldPassword, model.NewPassword);
 
             if (!result.Succeeded)
             {
@@ -280,9 +287,10 @@ namespace ngHealthyGarden.ControllersAPI
             ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
             IEnumerable<Claim> claims = principal.Claims;
             CreateUserBindingModel user = new CreateUserBindingModel();
-            user.Username = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+            user.UserName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
             user.Email = claims.FirstOrDefault(c => c.Type == "Email")?.Value;
             user.RoleName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            user.PhoneNumber = claims.FirstOrDefault(c => c.Type == "PhoneNumber").Value;
             var id = 0;
             int.TryParse(claims.FirstOrDefault(c => c.Type == "CustomerInfoId")?.Value, out id);
             user.CustomerInfoId = id;

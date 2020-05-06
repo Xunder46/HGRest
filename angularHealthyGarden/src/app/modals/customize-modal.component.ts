@@ -9,6 +9,7 @@ import { FormControl, Validators, NgForm } from '@angular/forms';
 import { Item } from '../models/Item';
 import { DishOption } from '../models/DishOption';
 import { Size } from '../models/Size';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'customize-modal',
@@ -23,6 +24,7 @@ export class CustomizeModal implements OnInit {
   options: DishOption[];
   comments: string;
   additionalPrice: number = 0.0;
+  quantity: number = 1;
 
   //controls
   sideControl = new FormControl('', Validators.required);
@@ -45,13 +47,13 @@ export class CustomizeModal implements OnInit {
   modifiedDishIngredients: Item[] = [];
   removedIngredients: Item[] = [];
 
-  constructor(private modalService: NgbModal, private cart: CartService, private services: WebServices) { }
+  constructor(private modalService: NgbModal, private cart: CartService, private services: WebServices, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.services.getOptionsByDishId(this.dish.dishId).subscribe(options => {
       this.options = options;
     })
-    this.dish.quantity = 1;
+    this.quantity = 1;
   }
 
   open(content) {
@@ -69,31 +71,39 @@ export class CustomizeModal implements OnInit {
       chosenSide: this.chosenSide || new Side(),
       additionalIngredients: this.modifiedDishIngredients,
       removedIngredients: this.removedIngredients,
-      comments: this.dish.comments
+      comments: this.comments,
+      quantity: this.quantity
     }
-    console.log(dish)
+    debugger
     this.cart.addToCart(dish);
     this.modalService.dismissAll();
+    this.toastr.success("You have successfully added dish to your cart!", "", {
+      closeButton: true,
+      progressBar: false,
+      positionClass: "toast-top-full-width",
+      timeOut: 2000,
+      extendedTimeOut: 1000
+    });
   }
 
   toggleDish(ingredient: Item) {
-    if(!this.removedIngredients.includes(ingredient)){
+    if (!this.removedIngredients.includes(ingredient)) {
       this.removedIngredients.push(ingredient);
     }
-    else{
+    else {
       let rIndex = this.removedIngredients.indexOf(ingredient)
-      this.removedIngredients.splice(rIndex,1);
+      this.removedIngredients.splice(rIndex, 1);
     }
   }
 
-  toggleAll(ingredient: Item){
+  toggleAll(ingredient: Item) {
     this.additionalPrice = 0;
 
-    if(this.modifiedDishIngredients.includes(this.allIngredients.find(a=>a==ingredient))){
+    if (this.modifiedDishIngredients.includes(this.allIngredients.find(a => a == ingredient))) {
       let mIndex = this.modifiedDishIngredients.indexOf(ingredient);
       this.modifiedDishIngredients.splice(mIndex, 1);
     }
-    else{
+    else {
       this.modifiedDishIngredients.push(ingredient);
     }
 

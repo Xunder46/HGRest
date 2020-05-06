@@ -3,7 +3,7 @@ img {
     border-radius: 25px;
     padding: 0 !important;
     margin: auto;
-    transition: 0.6s cubic-bezier(.52,.32,.39,1.36);
+    transition: 0.4s cubic-bezier(.52,.32,.39,1.36);
     z-index: 200;
 }
 
@@ -32,9 +32,161 @@ input[type="number"] {
     border-radius: 2mm;
     width: 4em;
 }
+
+td, th{
+    font-size: 20px;
+}
 /*#endregion*/
 
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
+.categoryButton{
+    margin: 1em;
+    font-size: 20px;
+    height: 4em;
+    width: 10em;
+    text-align: center;
+}
+
+.addNewButton{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: -8em;
+    top: -4em;
+    margin-left: 20em;
+}
+
+.ingredients{
+    margin-bottom: 10em;
+}
+
+.checkbox-container {
+    display: block;
+    float: left;
+    min-width: 15%;
+    box-sizing: border-box;
+    text-align:center;
+    padding: 40px 0px;
+    margin-left: 1em;
+}
+.checkbox-label {
+    display: block;
+    position: relative;
+    margin: auto;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 24px;
+    height: 24px;
+    width: 24px;
+    clear: both;
+}
+.input-title {
+    clear: both;
+    padding: 22px 0px 0px 0px;
+    font-size: 16px;
+    color: black;
+    font-weight: 300;
+}
+.checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.checkbox-label .checkbox-custom {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border-radius: 5px;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    border: 2px solid orangered;
+}
+.checkbox-label input:checked ~ .checkbox-custom {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    -webkit-transform: rotate(0deg) scale(1);
+    -ms-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+    opacity:1;
+    border: 2px solid orangered;
+}
+.checkbox-label .checkbox-custom::after {
+    position: absolute;
+    content: "";
+    left: 12px;
+    top: 12px;
+    height: 0px;
+    width: 0px;
+    border-radius: 5px;
+    border: solid orangered;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(0deg) scale(0);
+    -ms-transform: rotate(0deg) scale(0);
+    transform: rotate(0deg) scale(0);
+    opacity:1;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
+
+
+.checkbox-label input:checked ~ .checkbox-custom::after {
+  -webkit-transform: rotate(45deg) scale(1);
+  -ms-transform: rotate(45deg) scale(1);
+  transform: rotate(45deg) scale(1);
+  opacity:1;
+  left: 8px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid orangered;
+  border-width: 0 2px 2px 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+.checkbox-label .checkbox-custom::before {
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 10px;
+    width: 0px;
+    height: 0px;
+    border-radius: 5px;
+    border: 2px solid orangered;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);    
+}
+.checkbox-label input:checked ~ .checkbox-custom::before {
+    left: -3px;
+    top: -3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    -webkit-transform: scale(3);
+    -ms-transform: scale(3);
+    transform: scale(3);
+    opacity:0;
+    z-index: 999;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
+
+.addNewButton:hover ~ .addNewText{
+    animation: slideAside 0.5s ease-in forwards;
+}
+
 .mainContainer {
     width: 100%;
     padding: 5% 10% 0 10%;
@@ -139,6 +291,27 @@ input[type="number"] {
 
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes slideAside{
+    0%{
+        width: 0px;
+        left: 13em;
+    }
+    5%{
+        width: 90px;
+        left: 12em;
+    }
+    50%{
+        width: 90px;
+        left: 9em;
+        top: -3em;
+    }
+    100%{
+        width: 90px;
+        left: 5.8em;
+        top: -3em;
     }
 }
 /*#endregion*/

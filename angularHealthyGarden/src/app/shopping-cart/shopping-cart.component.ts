@@ -32,6 +32,7 @@ export class ShoppingCartComponent implements OnInit {
         else {
             this.dishesFromLocalStorage = JSON.parse(localStorage.getItem("dishes"));
             this.cartIsEmpty = false;
+            console.log(this.dishesFromLocalStorage)
         }
         this.buildShoppingCartTotal();
     }
@@ -50,10 +51,17 @@ export class ShoppingCartComponent implements OnInit {
     buildShoppingCartTotal() {
         this.subtotal = 0;
         for (var i = 0; i < this.dishesFromLocalStorage.length; i++) {
-            this.subtotal += this.dishesFromLocalStorage[i].dish.price * this.dishesFromLocalStorage[i].dish.quantity;
+            if(this.dishesFromLocalStorage[i].chosenSize.additionalPrice){
+                debugger
+                this.subtotal += (this.dishesFromLocalStorage[i].dish.price + this.dishesFromLocalStorage[i].chosenSize.additionalPrice) 
+                * this.dishesFromLocalStorage[i].quantity;
+            }
+            else{
+                this.subtotal += this.dishesFromLocalStorage[i].dish.price * this.dishesFromLocalStorage[i].quantity;
+            }
             if (this.dishesFromLocalStorage[i].additionalIngredients) {
                 for (var j = 0; j < this.dishesFromLocalStorage[i].additionalIngredients.length; j++) {
-                    this.subtotal += this.dishesFromLocalStorage[i].additionalIngredients[j].price;
+                    this.subtotal += this.dishesFromLocalStorage[i].additionalIngredients[j].price * this.dishesFromLocalStorage[i].quantity;
                 }
             }
         }
@@ -65,5 +73,8 @@ export class ShoppingCartComponent implements OnInit {
         let dishToRemove = this.dishesFromLocalStorage.indexOf(dish);
         this.dishesFromLocalStorage.splice(dishToRemove, 1);
         localStorage.setItem("dishes", JSON.stringify(this.dishesFromLocalStorage));
+        if(!this.dishesFromLocalStorage.length){
+            this.cartIsEmpty = true;
+        }
     }
 }

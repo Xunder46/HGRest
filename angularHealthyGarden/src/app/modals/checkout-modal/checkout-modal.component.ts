@@ -12,6 +12,8 @@ import { OrderType } from 'src/app/models/OrderType';
 import { Restaurant } from 'src/app/models/Restaurant';
 import { User } from 'src/app/models/User';
 import { AddressInfo } from 'src/app/models/Address';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'checkout-modal',
@@ -37,7 +39,7 @@ export class CheckoutModalComponent implements OnInit {
   orderTypes: OrderType[];
   restaurants: Restaurant[];
   zipCodes: ZipCode[];
-  minTime = new Date().getTime() + 2700000
+  minTime = new Date();
 
   chosenType: OrderType;
   chosenRestaurant: Restaurant;
@@ -51,7 +53,8 @@ export class CheckoutModalComponent implements OnInit {
   user: User;
   customer: CustomerInfo;
 
-  constructor(private _cart: CartService, private modalService: NgbModal, private services: WebServices) { }
+  constructor(private _cart: CartService, private modalService: NgbModal, private services: WebServices
+    , private route: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.services.getZipCodes().subscribe(data => {
@@ -75,11 +78,42 @@ export class CheckoutModalComponent implements OnInit {
     }
   }
 
+  calculateTime(){
+    debugger
+    let hours = new Date().getHours();
+    let minutes = new Date().getMinutes();
+    if(this.chosenType.orderType1=="Delivery"){
+      if((minutes+45)>=60){
+        hours = hours+1;
+        minutes = minutes-60;
+      }
+      this.requestedTime = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + 
+      ('0' + new Date().getDate()).slice(-2) + 'T' + 
+      hours + ":" + (minutes+45);
+    }
+    else{
+      if((minutes+20)>=60){
+        hours = hours+1;
+        minutes = minutes-60;
+      }
+      this.requestedTime = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + 
+      ('0' + new Date().getDate()).slice(-2) + 'T' + 
+      hours + ":" + (minutes+20);
+    }
+  }
+
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'checkout-modal' }).result;
   }
 
   emptyCart() {
+    this.toastr.success("You have successfully placed your order!","",{
+      closeButton: true,
+      progressBar: false,
+      positionClass: "toast-top-full-width",
+      timeOut: 3000,
+      extendedTimeOut: 2000
+    });
     this._cart.deleteItems();
     this.cartIsEmptyChange.emit(true);
   }
@@ -108,13 +142,13 @@ export class CheckoutModalComponent implements OnInit {
       orderDetail.sizeId = this.dishesFromLocalStorage[i].chosenSize.sizeId || null;
       orderDetail.orderTypeId = this.chosenType.orderTypeId;
       orderDetail.price = this.dishesFromLocalStorage[i].dish.price;
-      orderDetail.quantity = this.dishesFromLocalStorage[i].dish.quantity;
-      if(this.chosenType.orderType1 == "Delivery"){
-        this.services.getRestaurantByZipCode(this.chosenZip.zipCode1).subscribe(data=>{
+      orderDetail.quantity = this.dishesFromLocalStorage[i].quantity;
+      if (this.chosenType.orderType1 == "Delivery") {
+        this.services.getRestaurantByZipCode(this.chosenZip.zipCode1).subscribe(data => {
           orderDetail.restaurantId = data.restaurantId;
         })
       }
-      else{
+      else {
         orderDetail.restaurantId = this.chosenRestaurant?.restaurantInfoId;
         console.log(this.chosenRestaurant)
       }
@@ -145,58 +179,67 @@ export class CheckoutModalComponent implements OnInit {
     })
   }
 
-  sendOrder(){
+  sendOrder() {
     let customerInfo = new CustomerInfo();
     customerInfo.firstName = this.customerFirstName;
     customerInfo.lastName = this.customerLastName;
-
     this.services.getUserByPhoneNumber(this.customerPhoneNumber).subscribe(
       (data) => {
-      if (data) {
-        if (data.customerInfoId) {
-          //create order
-          this.manageOrderDetails(data.customerInfoId);
-          if (this.chosenType.orderType1 == "Delivery") {
-            //create address info
-            this.manageCustomerAddress(data.customerInfoId);
+        if (data) {
+          if (data.customerInfoId) {
+            //create order
+            this.manageOrderDetails(data.customerInfoId);
+            if (this.chosenType.orderType1 == "Delivery") {
+              //create address info
+              this.manageCustomerAddress(data.customerInfoId);
+            }
+          }
+          else {
+            //create customer info
+            this.services.createCustomerDetails(customerInfo).subscribe(cd => {
+              //create order
+              this.manageOrderDetails(cd.customerInfoId);
+              //update user
+              let user = new User();
+              user.customerInfoId = cd.customerInfoId;
+              user.email = data.email;
+              user.userName = data.userName;
+              user.joinDate = data.joinDate;
+              user.phoneNumber = data.phoneNumber;
+              this.services.updateUser(user).subscribe(data => data);
+              this.manageCustomerAddress(user.customerInfoId);
+              this.toastr.info("Please, log in again", "We have updated your personal info", {
+                closeButton: true,
+                progressBar: false,
+                positionClass: "toast-top-full-width",
+                timeOut: 3000,
+                extendedTimeOut: 2000
+              });
+              localStorage.removeItem("user");
+              this.route.navigate(['login']);
+            });
           }
         }
         else {
           //create customer info
-          this.services.createCustomerDetails(customerInfo).subscribe(cd => {
+          this.services.createCustomerDetails(customerInfo).subscribe(data => {
             //create order
-            this.manageOrderDetails(cd.customerInfoId);
-            //update user
-            let user = new User();
-            user.customerInfoId = cd.customerInfoId;
-            user.email = data.email;
-            user.userName = data.userName;
-            user.joinDate = data.joinDate;
-            user.phoneNumber = data.phoneNumber;
-            this.services.updateUser(user).subscribe(data => data);
-            this.manageCustomerAddress(user.customerInfoId);
-          });
+            this.manageOrderDetails(data.customerInfoId);
+            if (this.chosenType.orderType1 == "Delivery") {
+              //create address info
+              this.manageCustomerAddress(data.customerInfoId)
+            }
+          })
+
         }
-      }
-      else {
-        //create customer info
-        this.services.createCustomerDetails(customerInfo).subscribe(data => {
-          //create order
-          this.manageOrderDetails(data.customerInfoId);
-          if (this.chosenType.orderType1 == "Delivery") {
-            //create address info
-            this.manageCustomerAddress(data.customerInfoId)
-          }
-        })
-      }
-    },
-    (err)=>{
-      console.log(err);
-    },
-    ()=>{
-      this.emptyCart();
-      this.modalService.dismissAll();
-    })
+      },
+      (err) => {
+        console.log(err);
+      },
+      () => {
+        this.emptyCart();
+        this.modalService.dismissAll();
+      })
   }
 
   findCustomerInfo() {

@@ -13,6 +13,7 @@ import { LogInComponent } from './user/log-in/log-in.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { AccountComponent } from './account/account/account.component';
 import { AuthGuard } from './services/auth-guard';
+import { RoleGuard } from './services/roel-guard';
 
 const routes: Routes = [
     { path: '', component: WelcomeComponent },
@@ -26,7 +27,7 @@ const routes: Routes = [
         children: [{path: '', component: SignUpComponent}]
     },
     { path: 'shoppingcart', component: ShoppingCartComponent },
-    { path: 'manager', component: ManagerOfficeComponent},
+    { path: 'manager', canActivate: [RoleGuard], component: ManagerOfficeComponent},
     { path: 'menu', component: MenuComponent },
     { path: ':category', component: DishesComponent }
 ];

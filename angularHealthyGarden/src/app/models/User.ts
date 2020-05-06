@@ -8,4 +8,5 @@ export class User{
     phoneNumber: string;
     customerInfoId: number;
     joinDate: Date;
+    roleName: string;
 }

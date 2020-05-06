@@ -46,7 +46,9 @@
             </a>
         </div>
         <div class="item buttonMngmntContainer">
-            <a href="/login" class="btn button buttonMngmnt"><span>Log in</span></a>
+            <a href="/login" class="btn button buttonMngmnt" *ngIf="!user"><span>Log in</span></a>
+            <a href="/account" class="btn button buttonMngmnt" *ngIf="userInfo&&userInfo.roleName=='Customer'"><span>Account</span></a>
+            <a href="/manager" class="btn button buttonMngmnt" *ngIf="userInfo&&userInfo.roleName=='Manager'"><span>Management</span></a>
         </div>
     </div>
 </div>

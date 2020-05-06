@@ -75,7 +75,7 @@
 
     <div class="form-group">
       <mat-label>Quantity</mat-label>&nbsp;
-      <input type="number" class="form-control" matInput [formControl]="quantityControl" min="1" [(ngModel)]="dish.quantity">
+      <input type="number" class="form-control" matInput [formControl]="quantityControl" min="1" [(ngModel)]="quantity">
       <mat-error *ngIf="quantityControl.hasError('required')">Please enter quantity</mat-error>
     </div>
 
@@ -83,7 +83,7 @@
       <mat-label for="additionalNotes">Additional notes</mat-label>
       <div class="input-group">
         <textarea id="additionalNotes" class="form-control" name="message" rows="8"
-          [(ngModel)]="dish.comments"></textarea>
+          [(ngModel)]="comments"></textarea>
       </div>
     </div>
   </div>
@@ -92,7 +92,7 @@
     <button type="button" class="btn btn-outline-dark" [disabled]="(sides.length > 0?sideControl.untouched:null)
                                                                    ||(options.length > 0?optionsControl.untouched:null)
                                                                    ||(sizes.length > 0?sizeControl.untouched:null)
-                                                                   || dish.quantity<=0" (click)="addToCart(dish)">Add to cart</button>
+                                                                   ||quantity<=0" (click)="addToCart(dish)">Add to cart</button>
   </div>
 
 </ng-template>

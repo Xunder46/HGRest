@@ -34,13 +34,14 @@ namespace ngHealthyGarden.ControllersAPI
             try
             {
                 var result = await _repo.GetOrderDetailsByOrderId(orderId);
+                var mapped = _mapper.Map<OrderModel>(result);
 
-                if (result == null)
+                if (mapped == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(result);
+                return Ok(mapped);
             }
             catch (Exception ex)
             {

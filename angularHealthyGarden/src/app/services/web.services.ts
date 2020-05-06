@@ -15,6 +15,7 @@ import { CustomerInfo } from '../models/CustomerInfo';
 import { OrderType } from '../models/OrderType';
 import { Restaurant } from '../models/Restaurant';
 import { AddressInfo } from '../models/Address';
+import { Dish } from '../models/Dish';
 
 @Injectable({
     providedIn: "root"
@@ -35,11 +36,16 @@ export class WebServices {
 
     //#region ITEMS 
     getAllItems() {
-        return this.http.get<Item[]>(this.baseUrl + 'items/')
+        return this.http.get<Item[]>(this.baseUrl + 'items')
     }
-
     getItemsByDishName(dishName: string) {
         return this.http.get<Item[]>(this.baseUrl + 'items/' + dishName)
+    }
+    setIngredients(dishId: number, items: Item[]) {
+        return this.http.post<Item[]>(this.baseUrl + 'items/' + dishId, items);
+    }
+    deleteIngredients(dishId: number, itemId:number){
+        return this.http.delete<any>(this.baseUrl + 'items/dish/' + dishId +"/item/" + itemId)
     }
     //#endregion
 
@@ -75,6 +81,9 @@ export class WebServices {
     getOrderTypes(){
         return this.http.get<OrderType[]>(this.baseUrl + "ordertypes");
     }
+    getOrderDetailsByOrderId(orderId: number){
+        return this.http.get<Order>(this.baseUrl + "orders/" + orderId);
+    }
     //#endregion
 
     //#region COMMENTS 
@@ -106,6 +115,12 @@ export class WebServices {
             'Authorization': 'Bearer '+ token,
             'Content-Type':'application/json'
         })})
+    }
+    getOrderedDishesByCustomerId(customerId: number){
+        return this.http.get<OrderDetails[]>(this.baseUrl + "users/ordereddishes/" + customerId);
+    }
+    changePassword(passwordForm: any){
+        return this.http.post<any>(this.baseUrl + "account/changepassword", passwordForm);
     }
     //#endregion
 
@@ -151,4 +166,15 @@ export class WebServices {
     }
     //#endregion
 
+    //#region DISHES
+    getDishById(dishId: number){
+        return this.http.get<Dish>(this.baseUrl+"dishes/dish/"+ dishId);
+    }
+    getAllDishes(){
+        return this.http.get<Dish[]>(this.baseUrl+"dishes");
+    }
+    addDish(dish: Dish){
+        return this.http.post<Dish>(this.baseUrl+"dishes/dish", dish);
+    }
+    //#endregion
 }

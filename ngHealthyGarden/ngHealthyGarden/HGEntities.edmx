@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Pablo's.dbo.AddedIngredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AddedIngredients">
@@ -55,6 +55,7 @@ warning 6002: The table/view 'Pablo's.dbo.AddedIngredients' does not have a prim
           <Property Name="DishName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="5" Scale="2" />
           <Property Name="CategoryId" Type="int" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="ItemCategories">
           <Key>
@@ -103,9 +104,10 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="CustomerInfoId" Type="int" Nullable="false" />
           <Property Name="OrderTypeId" Type="int" Nullable="false" />
-          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" />
           <Property Name="CommentId" Type="int" />
           <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="RequestedTime" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -214,20 +216,10 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Dishes_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Dishes" Type="Self.Dishes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryId" />
-            </Principal>
-            <Dependent Role="Dishes">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DishItems_Dishes">
-          <End Role="Dishes" Type="Self.Dishes" Multiplicity="1" />
+          <End Role="Dishes" Type="Self.Dishes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ItemDishes" Type="Self.ItemDishes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Dishes">
@@ -239,7 +231,9 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DishItems_Items">
-          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ItemDishes" Type="Self.ItemDishes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Items">
@@ -271,102 +265,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             </Principal>
             <Dependent Role="Options">
               <PropertyRef Name="DishId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Comments">
-          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Comments">
-              <PropertyRef Name="CommentId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="CommentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_CustomerInfo">
-          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomerInfo">
-              <PropertyRef Name="CustomerInfoId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="CustomerInfoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Dishes">
-          <End Role="Dishes" Type="Self.Dishes" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dishes">
-              <PropertyRef Name="DishId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="DishId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Options">
-          <End Role="Options" Type="Self.Options" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Options">
-              <PropertyRef Name="OptionId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OptionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_OrderTypes">
-          <End Role="OrderTypes" Type="Self.OrderTypes" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderTypes">
-              <PropertyRef Name="OrderTypeId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OrderTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Sides">
-          <End Role="Sides" Type="Self.Sides" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sides">
-              <PropertyRef Name="SideId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="SideId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Sizes">
-          <End Role="Sizes" Type="Self.Sizes" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sizes">
-              <PropertyRef Name="SizeId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="SizeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -418,6 +316,10 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="spDeleteItemDish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DishId" Type="int" Mode="In" />
+          <Parameter Name="ItemId" Type="int" Mode="In" />
+        </Function>
         <Function Name="spGetItemsRelatedToADish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DishName" Type="nvarchar" Mode="In" />
         </Function>
@@ -471,10 +373,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <End Role="CustomerInfo" EntitySet="CustomerInfo" />
             <End Role="AddressInfo" EntitySet="AddressInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK_Dishes_Categories" Association="Self.FK_Dishes_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Dishes" EntitySet="Dishes" />
-          </AssociationSet>
           <AssociationSet Name="FK_DishItems_Dishes" Association="Self.FK_DishItems_Dishes">
             <End Role="Dishes" EntitySet="Dishes" />
             <End Role="ItemDishes" EntitySet="ItemDishes" />
@@ -490,38 +388,6 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <AssociationSet Name="FK_Options_Dishes" Association="Self.FK_Options_Dishes">
             <End Role="Dishes" EntitySet="Dishes" />
             <End Role="Options" EntitySet="Options" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Comments" Association="Self.FK_OrderDetails_Comments">
-            <End Role="Comments" EntitySet="Comments" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_CustomerInfo" Association="Self.FK_OrderDetails_CustomerInfo">
-            <End Role="CustomerInfo" EntitySet="CustomerInfo" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Dishes" Association="Self.FK_OrderDetails_Dishes">
-            <End Role="Dishes" EntitySet="Dishes" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Options" Association="Self.FK_OrderDetails_Options">
-            <End Role="Options" EntitySet="Options" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_OrderTypes" Association="Self.FK_OrderDetails_OrderTypes">
-            <End Role="OrderTypes" EntitySet="OrderTypes" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Sides" Association="Self.FK_OrderDetails_Sides">
-            <End Role="Sides" EntitySet="Sides" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Sizes" Association="Self.FK_OrderDetails_Sizes">
-            <End Role="Sizes" EntitySet="Sizes" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_RemovedIngredients_Items" Association="Self.FK_RemovedIngredients_Items">
             <End Role="Items" EntitySet="Items" />
@@ -540,8 +406,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <End Role="ZipCodes" EntitySet="ZipCodes" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -596,6 +461,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <NavigationProperty Name="Options" Relationship="Self.FK_Options_Dishes" FromRole="Dishes" ToRole="Options" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Dishes" FromRole="Dishes" ToRole="OrderDetails" />
           <NavigationProperty Name="Items" Relationship="Self.ItemDishes" FromRole="Dishes" ToRole="Items" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="ItemCategory">
           <Key>
@@ -641,7 +507,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="CustomerInfoId" Type="Int32" Nullable="false" />
           <Property Name="OrderTypeId" Type="Int32" Nullable="false" />
-          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <Property Name="RestaurantId" Type="Int32" />
           <Property Name="CommentId" Type="Int32" />
           <Property Name="OrderId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comment" Relationship="Self.FK_OrderDetails_Comments" FromRole="OrderDetails" ToRole="Comments" />
@@ -654,6 +520,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <NavigationProperty Name="Size" Relationship="Self.FK_OrderDetails_Sizes" FromRole="OrderDetails" ToRole="Sizes" />
           <NavigationProperty Name="Items" Relationship="Self.AddedIngredients" FromRole="OrderDetails" ToRole="Items" />
           <NavigationProperty Name="Items1" Relationship="Self.RemovedIngredients" FromRole="OrderDetails" ToRole="Items" />
+          <Property Name="RequestedTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -993,7 +860,11 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <FunctionImport Name="spGetItemsRelatedToADish" ReturnType="Collection(Model.spGetItemsRelatedToADish_Result)">
-            <Parameter Name="DishName" Mode="In" Type="String" />
+          <Parameter Name="DishName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spDeleteItemDish" ReturnType="Collection(Model.spDeleteItemDish_Result)">
+            <Parameter Name="DishId" Mode="In" Type="Int32" />
+            <Parameter Name="ItemId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="spGetItemsRelatedToADish_Result">
@@ -1002,6 +873,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Type="Int32" Name="ItemCategoryId" Nullable="false" />
           <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
         </ComplexType>
+        <ComplexType Name="spDeleteItemDish_Result" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1047,6 +919,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySetMapping Name="Dishes">
             <EntityTypeMapping TypeName="Model.Dish">
               <MappingFragment StoreEntitySet="Dishes">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="DishId" ColumnName="DishId" />
                 <ScalarProperty Name="DishName" ColumnName="DishName" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -1084,6 +957,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySetMapping Name="OrderDetails">
             <EntityTypeMapping TypeName="Model.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="RequestedTime" ColumnName="RequestedTime" />
                 <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
                 <ScalarProperty Name="DishId" ColumnName="DishId" />
                 <ScalarProperty Name="SideId" ColumnName="SideId" />
@@ -1186,6 +1060,11 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
                 <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
               </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spDeleteItemDish" FunctionName="Model.Store.spDeleteItemDish" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.spDeleteItemDish_Result" />
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

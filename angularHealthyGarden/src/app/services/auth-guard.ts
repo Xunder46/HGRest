@@ -5,8 +5,6 @@ import { JsonPipe } from '@angular/common';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    base_url: string;
-
     constructor(private router: Router) { }
 
     canActivate() {

@@ -12,14 +12,21 @@ namespace ngHealthyGarden.Data
     {
         private readonly HGDbContext _context;
         private readonly ApplicationDbContext _app;
+        private readonly Entities _entities;
         public HGRepository(HGDbContext context, ApplicationDbContext app)
         {
             _context = context;
             _app = app;
         }
 
-        public async Task<bool> SaveChangesAsync() {
-            return (await _context.SaveChangesAsync())>0;
+        public bool SaveChanges()
+        {
+            return _context.SaveChanges() >= 0;
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync()) > 0;
         }
 
         #region =============DISHES=====================
@@ -33,9 +40,7 @@ namespace ngHealthyGarden.Data
         }
         public async Task<Dish[]> GetAllDishesAsync()
         {
-            IQueryable<Dish> query = _context.Dishes;
-
-            query = query.OrderBy(c => c.DishName);
+            IQueryable<Dish> query = _context.Dishes.OrderBy(c => c.DishName);
 
             return await query.ToArrayAsync();
         }
@@ -46,6 +51,10 @@ namespace ngHealthyGarden.Data
             query = query.Where(c => c.DishName == dishName);
 
             return await query.FirstOrDefaultAsync();
+        }
+        public Task<Dish> GetDishById(int dishId)
+        {
+            return _context.Dishes.FirstOrDefaultAsync(d => d.DishId == dishId);
         }
         #endregion
 
@@ -98,7 +107,21 @@ namespace ngHealthyGarden.Data
         public void AddItem(Item item)
         {
             var query = _context.Items.Add(item);
-
+        }
+        public void AddItemsToADish(Item[] items, int dishId)
+        {
+            var dish = _context.Dishes.Where(d => d.DishId == dishId).FirstOrDefault();
+            foreach (var item in items)
+            {
+                _context.Entry(item).State = EntityState.Unchanged;
+                _context.Entry(dish).State = EntityState.Unchanged;
+                dish.Items.Add(item);
+                item.Dishes.Add(dish);
+            }
+        }
+        public void DeleteItemFromADish(int itemId, int dishId)
+        {
+            _context.spDeleteItemDish(dishId, itemId);
         }
         public void DeleteItem(Item item)
         {
@@ -167,9 +190,9 @@ namespace ngHealthyGarden.Data
         }
         public async Task<ZipCode> GetRestaurantByZipCodeAsync(string zipCode)
         {
-            return await _context.ZipCodes.Where(z=>z.ZipCode1==zipCode)
-                .Include(z=>z.RestaurantInfo)
-                .Include(z=>z.AddressInfoes).FirstOrDefaultAsync();
+            return await _context.ZipCodes.Where(z => z.ZipCode1 == zipCode)
+                .Include(z => z.RestaurantInfo)
+                .Include(z => z.AddressInfoes).FirstOrDefaultAsync();
         }
         public async Task<ZipCode[]> GetAllZipCodesAsync()
         {
@@ -212,16 +235,12 @@ namespace ngHealthyGarden.Data
                 query.CommentId = od.CommentId;
             }
         }
-        public async Task<OrderDetail[]> GetOrderDetailsByOrderId(int orderId)
+        public async Task<Order> GetOrderDetailsByOrderId(int orderId)
         {
-            IQueryable<OrderDetail> query = _context.OrderDetails.Where(s => s.OrderId == orderId)
-                .Include(d => d.Order).Include(d => d.CustomerInfo)
-                .Include(d => d.Dish).Include(d=>d.Comment)
-                .Include(d=>d.Items).Include(d=>d.Items1)//Items = RemovedIngredients, Items1 = AddedIngredients. Didn't change in order to not mess up EF.
-                .Include(d=>d.Option).Include(d=>d.OrderType)
-                .Include(d=>d.Side).Include(d=>d.Size);
+            IQueryable<Order> query = _context.Orders.Where(s => s.OrderId == orderId)
+                .Include(d => d.OrderDetails).Distinct();
 
-            return await query.ToArrayAsync();
+            return await query.FirstOrDefaultAsync();
         }
         public void DeleteOrderAndRelatedOrderDetails(OrderDetail od)
         {
@@ -234,7 +253,7 @@ namespace ngHealthyGarden.Data
         }
         public async Task<OrderDetail[]> GetAllOrdersWithDetailsAsync()
         {
-            return await _context.OrderDetails.Select(o=>o)
+            return await _context.OrderDetails.Select(o => o)
                 .Include(o => o.Comment).Include(o => o.Items)
                 .Include(o => o.CustomerInfo).Include(o => o.Option)
                 .Include(o => o.Dish).Include(o => o.Order)
@@ -301,8 +320,14 @@ namespace ngHealthyGarden.Data
         {
             IQueryable<CustomerInfo> query = _context.CustomerInfo
                 .Where(c => c.CustomerInfoId == customerId)
-                .Include(c=>c.AddressInfoes);
+                .Include(c => c.AddressInfoes);
             return await query.FirstOrDefaultAsync();
+        }
+        public async Task<OrderDetail[]> GetOrderedDishesByCustomerId(int customerId)
+        {
+            var query = _context.OrderDetails.Where(d => d.CustomerInfoId == customerId);
+
+            return await query.ToArrayAsync();
         }
         #endregion
 

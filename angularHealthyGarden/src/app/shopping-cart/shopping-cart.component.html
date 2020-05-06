@@ -17,13 +17,15 @@
                     <td><img class="image" src="../../assets/Dishes/{{dish.dish.dishName}}.jpg" /></td>
                     <td>
                         {{dish.dish.dishName|split}}
-                        <h4>{{dish.dish.comments}}</h4>
+                        <h4>{{dish.comments}}</h4>
                     </td>
                     <td>
-                        <input type="number" min="1" matInput [(ngModel)]="dish.dish.quantity" (click)="refreshPrice(dish)" class="form-control">
+                        <input type="number" min="1" matInput [(ngModel)]="dish.quantity" (click)="refreshPrice(dish)" class="form-control">
                     </td>
-                    <td>{{dish.dish.price|currency}}</td>
-                    <td>{{dish.dish.price * dish.dish.quantity |currency}}</td>
+                    <td *ngIf="dish.chosenSize.additionalPrice">{{dish.dish.price + dish.chosenSize.additionalPrice|currency}}</td>
+                    <td *ngIf="!dish.chosenSize.additionalPrice">{{dish.dish.price|currency}}</td>
+                    <td *ngIf="dish.chosenSize.additionalPrice">{{(dish.dish.price + dish.chosenSize.additionalPrice) * dish.quantity |currency}}</td>
+                    <td *ngIf="!dish.chosenSize.additionalPrice">{{dish.dish.price * dish.quantity |currency}}</td>
                     <td>
                         <div (click)="deleteDish(dish)" class="btn cancelButton" alt="delete" title="Delete this dish">Delete</div>
                         <img src="./../../assets/Icons/cancel.png" class="btn cancelIcon">

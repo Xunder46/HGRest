@@ -30,7 +30,7 @@ namespace ngHealthyGarden
         public decimal Price { get; set; }
         public int CustomerInfoId { get; set; }
         public int OrderTypeId { get; set; }
-        public int? RestaurantId { get; set; }
+        public Nullable<int> RestaurantId { get; set; }
         public Nullable<int> CommentId { get; set; }
         public int OrderId { get; set; }
         public string RequestedTime { get; set; }

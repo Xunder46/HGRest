@@ -21,8 +21,8 @@ export class NavigationComponent {
             this.dishesCount = 0;
             if (this._cart.getItems()) {
                 this.dishesInTheCart = this._cart.getItems();
-                 _cart.getItems().forEach(a=>{
-                    this.dishesCount = this.dishesCount + a.dish.quantity;
+                _cart.getItems().forEach(a => {
+                    this.dishesCount = this.dishesCount + a.quantity;
                 })
             }
             else {
@@ -31,17 +31,11 @@ export class NavigationComponent {
         }, 500)
     }
 
-    isLoggedIn(){
+    isLoggedIn() {
         let user = JSON.parse(localStorage.getItem('user'));
-        var now = new Date();
         if (user) {
-            if((now.getTime()-user.logInTime)<21600000){
-                this.token = user.token;
-                return this.token ? true : false;
-            }
-            else{
-                localStorage.removeItem("user");
-            }
+            this.token = user.token;
+            return this.token ? true : false;
         }
     }
 }

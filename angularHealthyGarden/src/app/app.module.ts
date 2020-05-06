@@ -28,6 +28,11 @@ import { AccountComponent } from './account/account/account.component';
 import { AuthGuard } from './services/auth-guard';
 import { CheckoutModalComponent } from './modals/checkout-modal/checkout-modal.component';
 import { OnlynumberDirective } from './directives/only-numbers.directive';
+import { ToastrModule } from 'ngx-toastr';
+import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component';
+import { RoleGuard } from './services/roel-guard';
+import { DishModalComponent } from './modals/dish-modal/dish-modal.component';
+import { ItemModalComponent } from './modals/item-modal/item-modal.component';
 
 @NgModule({
     imports: [
@@ -41,11 +46,13 @@ import { OnlynumberDirective } from './directives/only-numbers.directive';
         AppRoutingModule,
         RouterModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        ToastrModule.forRoot()
     ],
     providers: [
         WebServices,
         AuthGuard,
+        RoleGuard,
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
@@ -64,7 +71,10 @@ import { OnlynumberDirective } from './directives/only-numbers.directive';
         LogInComponent,
         AccountComponent,
         CheckoutModalComponent,
-        OnlynumberDirective
+        OnlynumberDirective,
+        ChangePasswordModalComponent,
+        DishModalComponent,
+        ItemModalComponent
     ],
     bootstrap: [
         AppComponent

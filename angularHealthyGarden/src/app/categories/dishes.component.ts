@@ -57,8 +57,8 @@ export class DishesComponent implements OnInit {
             this.category = data;
             this.dishes = data.dishes.filter(
                 (thing, i, arr) => arr.findIndex(t => t.dishName === thing.dishName) === i
-            )
-
+            ).filter(d=>d.active==true);
+            console.log(this.dishes)
             //GETTING INGREDIENTS FOR EACH DISH
             for (let i = 0; i < this.dishes.length; i++) {
                 this.services.getItemsByDishName(this.dishes[i].dishName).subscribe(items => {

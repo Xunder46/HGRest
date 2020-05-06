@@ -1,4 +1,4 @@
-<ng-template let-modal #content>
+<ng-template let-modal #items>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Manage items</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
@@ -6,37 +6,78 @@
         </button>
     </div>
     <div class="modal-body">
-        <form>
-            <table class="table table-striped" *ngIf="flag=='sides'">
+        <div class="form-group">
+            <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="hidden"></th>
                         <th>Name</th>
-                        <th>Category</th>
                         <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let side of sides">
-                        <td class="hidden"></td>
-                        <td>{{side.description}}</td>
-                        <td>{{side.categoryId}}</td>
-                        <td>{{side.price}}</td>
-                        <td><button class="btn btn-success" (click)="deleteUser(side)"> Delete</button>
-                            <button class="btn btn-success" (click)="editUser(side)" style="margin-left: 20px;">
-                                Edit
-                            </button>
+                    <tr *ngFor="let ingredient of ingredients; let i = index">
+                        <td>{{ingredient.description|split}}</td>
+                        <td>{{ingredient.price}}</td>
+                        <td>
+                            <item-modal [item]="ingredient"></item-modal>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </form>
+        </div>
     </div>
-
+    <div class="modal-footer">
+        <button class="btn btn-success" (click)="save()">Save</button>
+    </div>
+    {{dishes}}
 </ng-template>
 
-<div class="btn btn-success" (click)="open(content, 'dishes')">Dishes</div>
+<ng-template let-modal #dishes>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Manage dishes</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <h4><b>NOTE:</b> Uncheck a dish if you don't want it to appear in the menu</h4><br>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Active</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dish of allDishes; let i = index">
+                        <td>
+                            <div class="checkbox-container">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="myCheckBox" (click)="toggleDish(dish)"
+                                        [(ngModel)]="dish.active">
+                                    <span class="checkbox-custom rectangular"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>{{dish.dishName|split}}</td>
+                        <td>{{dish.price}}</td>
+                        <td>
+                            <dish-modal [dish]="dish"></dish-modal>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" (click)="save()">Save</button>
+    </div>
+</ng-template>
 
-<div class="btn btn-success" (click)="open(content, 'items')">Items</div>
+<div class="btn btn-info categoryButton" (click)="open(dishes, 'dishes')">Dishes</div>
 
-<div class="btn btn-success" (click)="open(content, 'sides')">Sides</div>
+<div class="btn btn-info categoryButton" (click)="open(items, 'items')">Ingredients</div>
+
+<div class="btn btn-info categoryButton" (click)="open(sides, 'sides')">Sides</div>
