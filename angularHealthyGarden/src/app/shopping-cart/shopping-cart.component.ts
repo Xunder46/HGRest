@@ -32,7 +32,6 @@ export class ShoppingCartComponent implements OnInit {
         else {
             this.dishesFromLocalStorage = JSON.parse(localStorage.getItem("dishes"));
             this.cartIsEmpty = false;
-            console.log(this.dishesFromLocalStorage)
         }
         this.buildShoppingCartTotal();
     }
@@ -52,7 +51,6 @@ export class ShoppingCartComponent implements OnInit {
         this.subtotal = 0;
         for (var i = 0; i < this.dishesFromLocalStorage.length; i++) {
             if(this.dishesFromLocalStorage[i].chosenSize.additionalPrice){
-                debugger
                 this.subtotal += (this.dishesFromLocalStorage[i].dish.price + this.dishesFromLocalStorage[i].chosenSize.additionalPrice) 
                 * this.dishesFromLocalStorage[i].quantity;
             }

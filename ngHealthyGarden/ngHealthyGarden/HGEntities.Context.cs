@@ -42,6 +42,8 @@ namespace ngHealthyGarden
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
+        public virtual DbSet<OrderComment> OrderComments { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
     
         public virtual ObjectResult<spGetItemsRelatedToADish_Result> spGetItemsRelatedToADish(string dishName)
         {

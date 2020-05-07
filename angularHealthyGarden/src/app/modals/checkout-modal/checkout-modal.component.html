@@ -69,6 +69,11 @@
             <input type="datetime-local" matInput id="time" [formControl]="time" class="form-control" name="time" [min]="minTime" max="22:00" [(ngModel)]="requestedTime" required>
             <mat-error *ngIf="time.hasError('required')">Please select time</mat-error>
         </div>
+        <div class="form-group" *ngIf="!time.hasError('required')">
+            <mat-label for="additionalNotes">Order comments</mat-label>
+              <textarea id="additionalNotes" class="form-control" name="message" rows="8"
+                [(ngModel)]="orderComment.orderComment1"></textarea>
+          </div>
     </div>
     <div class="modal-footer">
         <button *ngIf="chosenType&&chosenType.orderType1=='Delivery'" type="button" class="btn btn-outline-dark" (click)="sendOrder()" [disabled]="phoneNumber.hasError('required')

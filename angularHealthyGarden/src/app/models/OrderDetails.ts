@@ -1,4 +1,5 @@
 import { Item } from './Item';
+import { Dish } from './Dish';
 
 export class OrderDetails {
     orderDetailId: number;
@@ -16,4 +17,5 @@ export class OrderDetails {
     items: Item[];
     items1: Item[];
     requestedTime: string;
+    dish: Dish;
 }

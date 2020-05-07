@@ -84,7 +84,6 @@ export class ManagementModal implements OnInit {
         else {
             this.sidesToUpdate.splice(this.sidesToUpdate.indexOf(side), 1);
         }
-        console.log(this.sidesToUpdate)
     }
 
     toggleCategory(category: Category) {

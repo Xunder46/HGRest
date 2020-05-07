@@ -11,19 +11,10 @@ namespace ngHealthyGarden
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
-
-    //[DataContract(IsReference = true)]
-    public partial class AddressInfo
-    {
-        public int AddressInfoId { get; set; }
-        public string Street { get; set; }
-        public string Apartment { get; set; }
-        public int ZipCodeId { get; set; }
-        public Nullable<int> CustomerInfoId { get; set; }
     
-        public virtual ZipCode ZipCode { get; set; }
-        [IgnoreDataMember]
-        public virtual CustomerInfo CustomerInfo { get; set; }
+    public partial class Role
+    {
+        public string RoleId { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace ngHealthyGarden.Models
         public string Street { get; set; }
         public string Apartment { get; set; }
         public int ZipCodeId { get; set; }
-        [IgnoreDataMember]
         public int? CustomerInfoId { get; set; }
     }
 }

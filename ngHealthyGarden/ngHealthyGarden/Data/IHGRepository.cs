@@ -57,7 +57,6 @@ namespace ngHealthyGarden.Data
         void AddZipCode(ZipCode zipCode);
         void DeleteZipCode(ZipCode zipCode);
         Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId);
-        Task<ZipCode> GetRestaurantByZipCodeAsync(string zipCode);
         Task<Dish> GetDishById(int dishId);
         Task<ZipCode[]> GetAllZipCodesAsync();
         Task<ZipCode> GetZipCodeById(int zipCodeId);
@@ -67,6 +66,7 @@ namespace ngHealthyGarden.Data
         void AddRestaurantInfo(RestaurantInfo restaurantInfo);
         void DeleteRestaurantInfo(RestaurantInfo restaurantInfo);
         Task<RestaurantInfo[]> GetRestaurantsAsync();
+        Task<RestaurantInfo> GetRestaurantById(int restaurantId);
         #endregion
 
         #region =============ORDERS=====================
@@ -82,6 +82,10 @@ namespace ngHealthyGarden.Data
         void DeleteOption(Option option);
         Task<Option[]> GetAllOptionsAsync();
         Task<Option[]> GetOptionByDishId(int dishId);
+        #endregion
+
+        #region =============ORDERCOMMENTS=================
+        void AddOrderComment(OrderComment comment);
         #endregion
 
         #region =============COMMENTS=====================

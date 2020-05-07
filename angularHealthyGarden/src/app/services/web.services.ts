@@ -17,6 +17,7 @@ import { Restaurant } from '../models/Restaurant';
 import { AddressInfo } from '../models/Address';
 import { Dish } from '../models/Dish';
 import { ItemCategory } from '../models/ItemCategory';
+import { OrderComment } from '../models/OrderComment';
 
 @Injectable({
     providedIn: "root"
@@ -101,6 +102,12 @@ export class WebServices {
     }
     //#endregion
 
+    //#region ORDERCOMMENTS
+    addOrderComment(comment: OrderComment){
+        return this.http.post<OrderComment>(this.baseUrl+'ordercomments', comment)
+    }
+    //#endregion
+
     //#region COMMENTS 
     addComment(comment: Comment) {
         return this.http.post<Comment>(this.baseUrl + "comments", comment);
@@ -152,8 +159,8 @@ export class WebServices {
     getAllRestaurants(){
         return this.http.get<Restaurant[]>(this.baseUrl+"restaurants");
     }
-    getRestaurantByZipCode(zipCode: string){
-        return this.http.get<ZipCode>(this.baseUrl + "restaurants/" + zipCode);
+    getRestaurantById(restaurantId: number){
+        return this.http.get<Restaurant>(this.baseUrl + "restaurants/" + restaurantId);
     }
     //#endregion
 

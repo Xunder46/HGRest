@@ -364,6 +364,7 @@
     <Compile Include="ControllersAPI\ItemCategoryController.cs" />
     <Compile Include="ControllersAPI\ItemsController.cs" />
     <Compile Include="ControllersAPI\OptionsController.cs" />
+    <Compile Include="ControllersAPI\OrderCommentController.cs" />
     <Compile Include="ControllersAPI\OrdersController.cs" />
     <Compile Include="ControllersAPI\OrderTypeController.cs" />
     <Compile Include="ControllersAPI\RestaurantController.cs" />
@@ -400,6 +401,11 @@
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="HGEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HGEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="HGEntities1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HGEntities.edmx</DependentUpon>
@@ -459,6 +465,9 @@
     <Compile Include="Order.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderComment.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrderDetail.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
@@ -472,6 +481,9 @@
       <DependentUpon>HGEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>HGEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Side.cs">
       <DependentUpon>HGEntities.tt</DependentUpon>
@@ -536,7 +548,7 @@
     <Content Include="fonts\Battambang-Regular.ttf" />
     <EntityDeploy Include="HGEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HGEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>HGEntities1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="HGEntities.edmx.diagram">
       <DependentUpon>HGEntities.edmx</DependentUpon>

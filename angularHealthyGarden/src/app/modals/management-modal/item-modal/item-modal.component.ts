@@ -39,9 +39,8 @@ export class ItemModalComponent implements OnInit {
   }
 
   saveItem(item:Item){
-    debugger
     item.itemCategoryId = this.itemCategory.itemCategoryId;
-    this.services.addItem(item).subscribe(data=>console.log(data));
+    this.services.addItem(item).subscribe(data=>data);
     this.modalService.dismissAll();
   }
 }

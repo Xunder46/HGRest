@@ -14,6 +14,7 @@ import { User } from 'src/app/models/User';
 import { AddressInfo } from 'src/app/models/Address';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { OrderComment } from 'src/app/models/OrderComment';
 
 @Component({
   selector: 'checkout-modal',
@@ -52,6 +53,7 @@ export class CheckoutModalComponent implements OnInit {
   customerPhoneNumber: string;
   user: User;
   customer: CustomerInfo;
+  orderComment:OrderComment = new OrderComment();
 
   constructor(private _cart: CartService, private modalService: NgbModal, private services: WebServices
     , private route: Router, private toastr: ToastrService) { }
@@ -130,7 +132,6 @@ export class CheckoutModalComponent implements OnInit {
         dishComment.comments = this.dishesFromLocalStorage[i].comments;
         this.services.addComment(dishComment).subscribe(data => {
           orderDetail.commentId = data.commentId;
-          debugger
         });
       }
       else {
@@ -147,23 +148,30 @@ export class CheckoutModalComponent implements OnInit {
       orderDetail.price = this.dishesFromLocalStorage[i].dish.price;
       orderDetail.quantity = this.dishesFromLocalStorage[i].quantity;
       if (this.chosenType.orderType1 == "Delivery") {
-        this.services.getRestaurantByZipCode(this.chosenZip.zipCode1).subscribe(data => {
-          orderDetail.restaurantId = data.restaurantId;
-        })
+        orderDetail.restaurantId = this.chosenZip.restaurantId;
       }
       else {
         orderDetail.restaurantId = this.chosenRestaurant?.restaurantInfoId;
-        console.log(this.chosenRestaurant)
       }
       orderDetail.requestedTime = this.requestedTime;
       orderDetails.push(orderDetail);
     }
-    debugger
     let utc = new Date().toJSON().slice(0, 10);
     order.orderDate = utc;
-    this.services.setNewOrder(order).subscribe(data => {
-      this.services.setNewOrderDetails(data.orderId, orderDetails).subscribe(data => data);
-    });
+
+    if(this.orderComment.orderComment1){
+      this.services.addOrderComment(this.orderComment).subscribe(oc=>{
+        order.orderCommentId = oc.orderCommentId;
+        this.services.setNewOrder(order).subscribe(order => {
+          this.services.setNewOrderDetails(order.orderId, orderDetails).subscribe(od => od);
+        });
+      })
+    }
+    else{
+      this.services.setNewOrder(order).subscribe(order => {
+        this.services.setNewOrderDetails(order.orderId, orderDetails).subscribe(od => od);
+      });
+    }
   }
 
   manageCustomerAddress(customerInfoId: number) {
@@ -237,7 +245,6 @@ export class CheckoutModalComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
       },
       () => {
         this.emptyCart();
@@ -247,13 +254,10 @@ export class CheckoutModalComponent implements OnInit {
 
   findCustomerInfo() {
     if (this.phoneNumber.value.length == 10) {
-      debugger
       this.services.getUserByPhoneNumber(this.customerPhoneNumber).subscribe(data => {
         if (data) {
           if (data.customerInfoId) {
-            this.services.getAllCusttomerInfo(data.customerInfoId).subscribe(customer => {
-              this.populateFields(customer);
-            });
+            this.populateFields(this.customer);
           }
           else {
             this.clearFields()

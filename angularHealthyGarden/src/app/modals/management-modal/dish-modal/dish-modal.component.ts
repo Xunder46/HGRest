@@ -49,7 +49,6 @@ export class DishModalComponent implements OnInit, OnChanges {
           }
         }
         this.allIngredients = all;
-        console.log(this.dishIngredients, this.allIngredients)
       });
     });
     this.services.getCategories().subscribe(data=>{

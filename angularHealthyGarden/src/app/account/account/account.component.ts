@@ -5,6 +5,7 @@ import { WebServices } from 'src/app/services/web.services';
 import { OrderDetails } from 'src/app/models/OrderDetails';
 import { Dish } from 'src/app/models/Dish';
 import { Order } from 'src/app/models/Order';
+import { CustomerInfo } from 'src/app/models/CustomerInfo';
 
 @Component({
   selector: 'app-account',
@@ -20,6 +21,7 @@ export class AccountComponent implements OnInit {
   orderTotal: number[] = [];
   tax = 0.0625;
   orderIds: number[] = [];
+  customer: CustomerInfo = new CustomerInfo();
 
   //output props
   username: string;
@@ -28,30 +30,32 @@ export class AccountComponent implements OnInit {
   constructor(private route: Router, private services: WebServices) { }
 
   ngOnInit(): void {
+    this.customer.addressInfoes = [];
     this.services.getUserInfo().subscribe(data => {
+      this.services.getAllCusttomerInfo(data.customerInfoId).subscribe(customer => {
+        this.customer = customer;
+      });
       this.user = data;
       this.username = data.userName;
       this.phonenumber = data.phoneNumber;
       this.services.getOrderedDishesByCustomerId(data.customerInfoId).subscribe(details => {
-        for (let i = 0; i < details.length; i++) {
-          if (this.orderIds.indexOf(details[i].orderId) < 0) {
-            this.orderIds.push(details[i].orderId);
-            this.orderDetails.push(details[i]);
-            this.services.getOrderDetailsByOrderId(details[i].orderId).subscribe(o => {
+        details.filter((thing, i, arr) => arr.findIndex(t => t.orderId === thing.orderId) === i)
+        details.forEach(detail=>{
+          if (this.orderIds.indexOf(detail.orderId) < 0) {
+            this.services.getOrderDetailsByOrderId(detail.orderId).subscribe(o => {
               this.orders.push(o);
-              this.dishes[o.orderId] = [];
-              o.orderDetails.forEach(od=>{
-                this.services.getDishById(od.dishId).subscribe(d=>{
-                  this.dishes[o.orderId].push(d);
-                })
-              })
             });
+            this.dishes[detail.orderId] = [];
+            this.orderIds.push(detail.orderId);
           }
-          this.totalAmountSpent += details[i].price * details[i].quantity;
-          for (let j = 0; j < details[i].items.length; j++) {
-            this.totalAmountSpent += details[i].items[j].price;
+          this.orderDetails.push(detail);
+          this.dishes[detail.orderId].push(detail.dish);
+          
+          this.totalAmountSpent += detail.price * detail.quantity;
+          for (let j = 0; j < detail.items.length; j++) {
+            this.totalAmountSpent += detail.items[j].price;
           }
-        }
+        })
         this.totalAmountSpent = this.totalAmountSpent * this.tax + this.totalAmountSpent;
       })
     })

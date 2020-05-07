@@ -27,5 +27,6 @@ namespace ngHealthyGarden.Models
         public virtual ICollection<ItemModel> Items { get; set; }
         public virtual ICollection<ItemModel> Items1 { get; set; }
         public string RequestedTime { get; set; }
+        public virtual DishModel Dish { get; set; }
     }
 }

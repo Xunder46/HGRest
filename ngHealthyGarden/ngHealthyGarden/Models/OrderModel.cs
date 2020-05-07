@@ -9,6 +9,7 @@ namespace ngHealthyGarden.Models
     {
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
+        public int OrderCommentId { get; set; }
         public virtual ICollection<OrderDetailModel> OrderDetails { get; set; }
     }
 }

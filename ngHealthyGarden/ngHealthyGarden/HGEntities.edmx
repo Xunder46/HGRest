@@ -31,6 +31,7 @@ warning 6002: The table/view 'Pablo's.dbo.AddedIngredients' does not have a prim
           </Key>
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="20" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -91,6 +92,13 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DishId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="OrderComments">
+          <Key>
+            <PropertyRef Name="OrderCommentId" />
+          </Key>
+          <Property Name="OrderCommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderComment" Type="nvarchar" MaxLength="999" />
+        </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
             <PropertyRef Name="OrderDetailId" />
@@ -115,6 +123,7 @@ warning 6002: The table/view 'Pablo's.dbo.ItemDishes' does not have a primary ke
           </Key>
           <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderDate" Type="datetime" />
+          <Property Name="OrderCommentId" Type="int" />
         </EntityType>
         <EntityType Name="OrderTypes">
           <Key>
@@ -141,6 +150,13 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="Location" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
         <EntityType Name="Sides">
           <Key>
             <PropertyRef Name="SideId" />
@@ -149,6 +165,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="money" />
           <Property Name="CategoryId" Type="int" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Sizes">
           <Key>
@@ -268,6 +285,18 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Role="OrderComments" Type="Self.OrderComments" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderComments">
+              <PropertyRef Name="OrderCommentId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="OrderCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RemovedIngredients_Items">
           <End Role="Items" Type="Self.Items" Multiplicity="1" />
           <End Role="RemovedIngredients" Type="Self.RemovedIngredients" Multiplicity="*" />
@@ -332,10 +361,12 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySet Name="ItemCategories" EntityType="Self.ItemCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Options" EntityType="Self.Options" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderComments" EntityType="Self.OrderComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTypes" EntityType="Self.OrderTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RestaurantInfo" EntityType="Self.RestaurantInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sides" EntityType="Self.Sides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZipCodes" EntityType="Self.ZipCodes" Schema="dbo" store:Type="Tables" />
@@ -389,6 +420,10 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <End Role="Dishes" EntitySet="Dishes" />
             <End Role="Options" EntitySet="Options" />
           </AssociationSet>
+          <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
+            <End Role="OrderComments" EntitySet="OrderComments" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
           <AssociationSet Name="FK_RemovedIngredients_Items" Association="Self.FK_RemovedIngredients_Items">
             <End Role="Items" EntitySet="Items" />
             <End Role="RemovedIngredients" EntitySet="RemovedIngredients" />
@@ -430,6 +465,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Dishes" Relationship="Self.FK_Dishes_Categories" FromRole="Categories" ToRole="Dishes" />
           <NavigationProperty Name="Sides" Relationship="Self.FK_Sides_Categories" FromRole="Categories" ToRole="Sides" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -529,6 +565,8 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
+          <Property Name="OrderCommentId" Type="Int32" />
+          <NavigationProperty Name="OrderComment" Relationship="Model.FK_Orders_Orders" FromRole="Order" ToRole="OrderComment" />
         </EntityType>
         <EntityType Name="OrderType">
           <Key>
@@ -557,6 +595,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Name="CategoryId" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Sides_Categories" FromRole="Sides" ToRole="Categories" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Sides" FromRole="Sides" ToRole="OrderDetails" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -866,6 +905,12 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
             <Parameter Name="DishId" Mode="In" Type="Int32" />
             <Parameter Name="ItemId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="OrderComments" EntityType="Model.OrderComment" />
+          <EntitySet Name="Roles" EntityType="Model.Role" />
+          <AssociationSet Name="FK_Orders_Orders" Association="Model.FK_Orders_Orders">
+            <End Role="OrderComment" EntitySet="OrderComments" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="spGetItemsRelatedToADish_Result">
           <Property Type="Int32" Name="ItemId" Nullable="false" />
@@ -874,6 +919,33 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
         </ComplexType>
         <ComplexType Name="spDeleteItemDish_Result" />
+        <EntityType Name="OrderComment">
+          <Key>
+            <PropertyRef Name="OrderCommentId" />
+          </Key>
+          <Property Name="OrderCommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderComment1" Type="String" MaxLength="999" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Model.FK_Orders_Orders" FromRole="OrderComment" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Orders_Orders">
+          <End Type="Model.OrderComment" Role="OrderComment" Multiplicity="0..1" />
+          <End Type="Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderComment">
+              <PropertyRef Name="OrderCommentId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -894,6 +966,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Model.Category">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
@@ -976,6 +1049,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="Model.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderCommentId" ColumnName="OrderCommentId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
               </MappingFragment>
@@ -1001,6 +1075,7 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
           <EntitySetMapping Name="Sides">
             <EntityTypeMapping TypeName="Model.Side">
               <MappingFragment StoreEntitySet="Sides">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="SideId" ColumnName="SideId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -1067,6 +1142,22 @@ warning 6002: The table/view 'Pablo's.dbo.RemovedIngredients' does not have a pr
               <ComplexTypeMapping TypeName="Model.spDeleteItemDish_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="OrderComments">
+            <EntityTypeMapping TypeName="Model.OrderComment">
+              <MappingFragment StoreEntitySet="OrderComments">
+                <ScalarProperty Name="OrderComment1" ColumnName="OrderComment" />
+                <ScalarProperty Name="OrderCommentId" ColumnName="OrderCommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Model.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

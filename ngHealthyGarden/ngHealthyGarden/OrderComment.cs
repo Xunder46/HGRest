@@ -11,21 +11,21 @@ namespace ngHealthyGarden
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Order
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    public partial class OrderComment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public OrderComment()
         {
-            this.OrderDetails = new HashSet<OrderDetail>();
+            this.Orders = new HashSet<Order>();
         }
     
-        public int OrderId { get; set; }
-        public Nullable<System.DateTime> OrderDate { get; set; }
-        public Nullable<int> OrderCommentId { get; set; }
+        public int OrderCommentId { get; set; }
+        [Column("OrderComment")]
+        public string OrderComment1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual OrderComment OrderComment { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

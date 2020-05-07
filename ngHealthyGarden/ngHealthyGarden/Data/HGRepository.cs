@@ -199,12 +199,6 @@ namespace ngHealthyGarden.Data
         {
             _context.ZipCodes.Remove(zipCode);
         }
-        public async Task<ZipCode> GetRestaurantByZipCodeAsync(string zipCode)
-        {
-            return await _context.ZipCodes.Where(z => z.ZipCode1 == zipCode)
-                .Include(z => z.RestaurantInfo)
-                .Include(z => z.AddressInfoes).FirstOrDefaultAsync();
-        }
         public async Task<ZipCode[]> GetAllZipCodesAsync()
         {
             return await _context.ZipCodes.OrderBy(z => z.ZipCode1).ToArrayAsync();
@@ -220,6 +214,10 @@ namespace ngHealthyGarden.Data
         public async Task<RestaurantInfo[]> GetRestaurantsAsync()
         {
             return await _context.RestaurantInfo.Select(c => c).ToArrayAsync();
+        }
+        public async Task<RestaurantInfo> GetRestaurantById(int restaurantId)
+        {
+            return await _context.RestaurantInfo.FirstOrDefaultAsync(r=>r.RestaurantInfoId == restaurantId);
         }
         public void AddRestaurantInfo(RestaurantInfo restaurantInfo)
         {
@@ -270,6 +268,13 @@ namespace ngHealthyGarden.Data
                 .Include(o => o.Dish).Include(o => o.Order)
                 .Include(o => o.OrderType).Include(o => o.Side)
                 .Include(o => o.Size).ToArrayAsync();
+        }
+        #endregion
+
+        #region =============ORDERCOMMENTS=================
+        public void AddOrderComment(OrderComment comment)
+        {
+            _context.OrderComments.Add(comment);
         }
         #endregion
 
@@ -336,7 +341,8 @@ namespace ngHealthyGarden.Data
         }
         public async Task<OrderDetail[]> GetOrderedDishesByCustomerId(int customerId)
         {
-            var query = _context.OrderDetails.Where(d => d.CustomerInfoId == customerId);
+            var query = _context.OrderDetails.Where(d => d.CustomerInfoId == customerId)
+                .Include(c=>c.Dish);
 
             return await query.ToArrayAsync();
         }

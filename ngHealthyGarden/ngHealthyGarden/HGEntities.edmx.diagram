@@ -38,6 +38,9 @@
         <AssociationConnector Association="Model.AddedIngredients" ManuallyRouted="false" />
         <AssociationConnector Association="Model.ItemDishes" ManuallyRouted="false" />
         <AssociationConnector Association="Model.RemovedIngredients" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.OrderComment" Width="1.5" PointX="3" PointY="15.625" />
+        <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="7.375" PointY="10.75" />
+        <AssociationConnector Association="Model.FK_Orders_Orders" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

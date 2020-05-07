@@ -52,7 +52,6 @@ export class ChangePasswordModalComponent implements OnInit {
     this.services.changePassword(passwordForm).subscribe((data)=>
     data,
     (err) => {
-      console.log(err);
       this.toastr.warning("Something went wromg", "Error!",{
         closeButton: true,
         progressBar: false,
@@ -81,7 +80,6 @@ export class ChangePasswordModalComponent implements OnInit {
     this.services.updateUser(user).subscribe((data)=>
     data,
     (err) => {
-      console.log(err);
       this.toastr.warning("Something went wromg", "Error!",{
         closeButton: true,
         progressBar: false,

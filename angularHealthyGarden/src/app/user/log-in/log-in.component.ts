@@ -63,7 +63,6 @@ export class LogInComponent implements OnInit {
       }
     },
       (err) => {
-        console.log(err);
       },
       () => {
         if (localStorage.getItem("user")) {

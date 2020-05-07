@@ -43,13 +43,13 @@ namespace ngHealthyGarden.ControllersAPI
 
         }
 
-        [Route("{zipcode}")]
-        public async Task<IHttpActionResult> Get(string zipCode)
+        [Route("{restaurantId}")]
+        public async Task<IHttpActionResult> Get(int restaurantId)
         {
             try
             {
-                var result = await _repo.GetRestaurantByZipCodeAsync(zipCode);
-                var mapped = _mapper.Map<ZipCodeModel>(result);
+                var result = await _repo.GetRestaurantById(restaurantId);
+                var mapped = _mapper.Map<RestaurantInfoModel>(result);
 
                 if (mapped != null)
                 {
