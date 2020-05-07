@@ -12,7 +12,7 @@ using System.Web.Http;
 namespace ngHealthyGarden.ControllersAPI
 {
     [RoutePrefix("api/items")]
-    public class ItemsController : ApiController
+    public class ItemsController : BaseApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
@@ -45,7 +45,7 @@ namespace ngHealthyGarden.ControllersAPI
 
         }
 
-        [Route("{dishName}", Name ="GetItem")]
+        [Route("{dishName}", Name ="GetItems")]
         public async Task<IHttpActionResult> Get(string dishName)
         {
             try
@@ -64,20 +64,31 @@ namespace ngHealthyGarden.ControllersAPI
         }
 
         [Route()]
-        public async Task<IHttpActionResult> Post(ItemModel i)
+        public async Task<IHttpActionResult> Post(ItemModel item)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var item = _mapper.Map<Item>(i);
-
-                    _repo.AddItem(item);
-
-                    if (await _repo.SaveChangesAsync())
+                    var itemToUpdate = _repo.GetItemsByIdAsync(item.ItemId).Result;
+                    if (itemToUpdate != null)
                     {
-                        var newOrderModel = _mapper.Map<ItemModel>(item);
-                        return Created("GetItem", new { itemId = newOrderModel.ItemId });
+                        itemToUpdate.Description = item.Description;
+                        itemToUpdate.ItemCategoryId = item.ItemCategoryId;
+                        itemToUpdate.Price = item.Price;
+                        if (_repo.SaveChanges())
+                        {
+                            return Ok(itemToUpdate);
+                        }
+                    }
+                    else
+                    {
+                       var mapped = _mapper.Map<Item>(item);
+                        _repo.AddItem(mapped);
+                        if (await _repo.SaveChangesAsync())
+                        {
+                            return Created("GetItems", mapped);
+                        }
                     }
                 }
 
@@ -102,7 +113,7 @@ namespace ngHealthyGarden.ControllersAPI
 
                     if (await _repo.SaveChangesAsync())
                     {
-                        return Created("GetItem", dishId);
+                        return Created("GetItems", dishId);
                     }
                 }
             }

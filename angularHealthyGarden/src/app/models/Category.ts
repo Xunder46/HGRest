@@ -4,4 +4,5 @@ export class Category {
     categoryId: number;
     description: string;
     dishes: Dish[];
+    active: boolean;
 }

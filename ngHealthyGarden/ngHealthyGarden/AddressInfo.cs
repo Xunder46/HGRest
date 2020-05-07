@@ -11,7 +11,9 @@ namespace ngHealthyGarden
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract(IsReference = true)]
     public partial class AddressInfo
     {
         public int AddressInfoId { get; set; }
@@ -21,6 +23,7 @@ namespace ngHealthyGarden
         public Nullable<int> CustomerInfoId { get; set; }
     
         public virtual ZipCode ZipCode { get; set; }
+        [IgnoreDataMember]
         public virtual CustomerInfo CustomerInfo { get; set; }
     }
 }

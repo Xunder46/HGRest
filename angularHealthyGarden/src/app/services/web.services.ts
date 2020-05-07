@@ -16,6 +16,7 @@ import { OrderType } from '../models/OrderType';
 import { Restaurant } from '../models/Restaurant';
 import { AddressInfo } from '../models/Address';
 import { Dish } from '../models/Dish';
+import { ItemCategory } from '../models/ItemCategory';
 
 @Injectable({
     providedIn: "root"
@@ -32,6 +33,9 @@ export class WebServices {
     getCategoryByNameWithDishes(category: string) {
         return this.http.get<Category>(this.baseUrl + 'dishes/' + category)
     }
+    addCategory(category:Category){
+        return this.http.post<Category>(this.baseUrl + "categories/category", category);
+    }
     //#endregion
 
     //#region ITEMS 
@@ -41,11 +45,20 @@ export class WebServices {
     getItemsByDishName(dishName: string) {
         return this.http.get<Item[]>(this.baseUrl + 'items/' + dishName)
     }
-    setIngredients(dishId: number, items: Item[]) {
+    addItem(item: Item){
+        return this.http.post<Item>(this.baseUrl + 'items', item);
+    }
+    setItem(dishId: number, items: Item[]) {
         return this.http.post<Item[]>(this.baseUrl + 'items/' + dishId, items);
     }
-    deleteIngredients(dishId: number, itemId:number){
+    deleteItem(dishId: number, itemId:number){
         return this.http.delete<any>(this.baseUrl + 'items/dish/' + dishId +"/item/" + itemId)
+    }
+    //#endregion
+
+    //#region ITEM_CATEGORY
+    getAllItemCategories(){
+        return this.http.get<ItemCategory[]>(this.baseUrl + 'itemcategories');
     }
     //#endregion
 
@@ -56,7 +69,9 @@ export class WebServices {
     getSidesByCategoryId(categoryId: number) {
         return this.http.get<Side[]>(this.baseUrl + 'sides/' + categoryId)
     }
-
+    addSide(side:Side){
+        return this.http.post<Side>(this.baseUrl + "sides", side);
+    }
     //#endregion
 
     //#region SIZES 

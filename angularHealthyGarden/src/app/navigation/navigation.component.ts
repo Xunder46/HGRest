@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit, OnChanges } from '@angular/core';
 import { Dish } from '../models/Dish';
 import { CartService } from '../services/shopping-cart.service';
+import { Location } from '@angular/common';
 
 @Component({
     providers: [CartService],
@@ -16,7 +17,7 @@ export class NavigationComponent {
     token: string;
     dishesCount: number;
 
-    constructor(private _cart: CartService) {
+    constructor(private _cart: CartService, private _location: Location) {
         setInterval(() => {
             this.dishesCount = 0;
             if (this._cart.getItems()) {
@@ -37,5 +38,9 @@ export class NavigationComponent {
             this.token = user.token;
             return this.token ? true : false;
         }
+    }
+
+    goBack(){
+        return this._location.back();
     }
 }

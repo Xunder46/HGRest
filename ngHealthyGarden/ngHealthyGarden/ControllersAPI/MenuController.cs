@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ngHealthyGarden.ControllersAPI;
 using ngHealthyGarden.Data;
 using ngHealthyGarden.Models;
 using System;
@@ -13,7 +14,7 @@ namespace ngHealthyGarden
 {
     [RoutePrefix("api/menu")]
     [AllowAnonymous]
-    public class MenuController : ApiController
+    public class MenuController : BaseApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;

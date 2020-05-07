@@ -3,7 +3,7 @@
     <div class="flexContainer">
         <div *ngFor="let dish of dishes; let i = index">
             <a class="buttonContainer buttonImage">
-                <img class="btn button" src="../../assets/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}" />
+                <img class="btn button" src="../../assets/Dishes/{{dish.dishName}}.jpg" alt="{{dish.dishName}}"/>
 
                 <ul class="itemsContainer">
                     <li class="text-info">Ingredients:</li>
@@ -13,8 +13,8 @@
                     </li>
                 </ul>
 
-                <customize-modal [dish]="dish" [allIngredients]="allIngredients" [sides]="sides" [sizes]="sizes"
-                    [category]="category" [dishIngredients]="ingredients[i]" class="text-dark">
+                <customize-modal #customize [dish]="dish" [allIngredients]="allIngredients" [sides]="sides" [sizes]="sizes"
+                    [category]="category" [dishIngredients]="ingredients[i]" class="text-dark mainItem">
                 </customize-modal>
                 <!-- <div class="btn insideImageButton iWantThisButton" (click)="addToCart(dish)">I want this!</div> -->
             </a>

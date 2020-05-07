@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from '../services/shopping-cart.service';
 import { Dish } from '../models/Dish';
@@ -25,6 +25,7 @@ export class CustomizeModal implements OnInit {
   comments: string;
   additionalPrice: number = 0.0;
   quantity: number = 1;
+  
 
   //controls
   sideControl = new FormControl('', Validators.required);
@@ -39,6 +40,7 @@ export class CustomizeModal implements OnInit {
   @Input() dishIngredients: Item[];
   @Input() allIngredients: Item[];
   @Input() sizes: Size[];
+  @Input() showModal: boolean;
 
   //Properties to send to the shopping cart
   chosenSide: Side;
@@ -74,7 +76,6 @@ export class CustomizeModal implements OnInit {
       comments: this.comments,
       quantity: this.quantity
     }
-    debugger
     this.cart.addToCart(dish);
     this.modalService.dismissAll();
     this.toastr.success("You have successfully added dish to your cart!", "", {

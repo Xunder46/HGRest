@@ -9,7 +9,7 @@ import { Item } from 'src/app/models/Item';
 @Component({
   selector: 'dish-modal',
   templateUrl: './dish-modal.component.html',
-  styleUrls: ['./dish-modal.component.css', './../../global-layout.css']
+  styleUrls: ['./dish-modal.component.css', './../../../global-layout.css']
 })
 export class DishModalComponent implements OnInit, OnChanges {
 
@@ -36,6 +36,7 @@ export class DishModalComponent implements OnInit, OnChanges {
   }
 
   open(content, flag: boolean): void {
+    this.newDish = flag;
     this.services.getItemsByDishName(this.dish.dishName).subscribe(data=>{
       this.dishIngredients = data;
       this.services.getAllItems().subscribe(all=>{
@@ -67,12 +68,12 @@ export class DishModalComponent implements OnInit, OnChanges {
     dish.categoryId = this.category.categoryId;
     this.services.addDish(dish).subscribe(data=>{
       if(this.newIngredients.length>0){
-        this.services.setIngredients(data.dishId, this.newIngredients).subscribe(data=>{
+        this.services.setItem(data.dishId, this.newIngredients).subscribe(data=>{
         });
       }
       if(this.oldIngredients.length>0){
         this.oldIngredients.forEach(o=>{
-          this.services.deleteIngredients(dish.dishId, o.itemId).subscribe(data=>{
+          this.services.deleteItem(dish.dishId, o.itemId).subscribe(data=>{
           });
         })
       }

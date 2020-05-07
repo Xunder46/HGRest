@@ -39,7 +39,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let od of orders[i]?.orderDetails; let j = index">
-                                    <td>{{dishes[order.orderId][j]?.dishName}}</td>
+                                    <td>{{dishes[order?.orderId][j]?.dishName}}</td>
                                     <td>{{od?.price}}</td>
                                     <td>{{od?.quantity}}</td>
                                 </tr>

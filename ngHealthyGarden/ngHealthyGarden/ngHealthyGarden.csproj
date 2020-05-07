@@ -356,10 +356,12 @@
     </Compile>
     <Compile Include="ControllersAPI\AddressInfoController.cs" />
     <Compile Include="ControllersAPI\BaseApiController.cs" />
+    <Compile Include="ControllersAPI\CategoryController.cs" />
     <Compile Include="ControllersAPI\ClaimsController.cs" />
     <Compile Include="ControllersAPI\CommentsController.cs" />
     <Compile Include="ControllersAPI\CustomerInfoController.cs" />
     <Compile Include="ControllersAPI\DishesController.cs" />
+    <Compile Include="ControllersAPI\ItemCategoryController.cs" />
     <Compile Include="ControllersAPI\ItemsController.cs" />
     <Compile Include="ControllersAPI\OptionsController.cs" />
     <Compile Include="ControllersAPI\OrdersController.cs" />
@@ -438,6 +440,7 @@
     <Compile Include="Models\IdentityModels\AccountBindingModels.cs" />
     <Compile Include="Models\IdentityModels\ModelFactory.cs" />
     <Compile Include="Models\IdentityModels\RoleBindingModels.cs" />
+    <Compile Include="Models\ItemCategoryModel.cs" />
     <Compile Include="Models\OptionModel.cs" />
     <Compile Include="Models\CustomerInfoModel.cs" />
     <Compile Include="Models\DishModel.cs" />

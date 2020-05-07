@@ -12,7 +12,7 @@ using System.Web.Http;
 namespace ngHealthyGarden.ControllersAPI
 {
     [RoutePrefix("api/users")]
-    public class UsersController : ApiController
+    public class UsersController : BaseApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;

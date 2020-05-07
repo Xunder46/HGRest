@@ -23,6 +23,7 @@ namespace ngHealthyGarden.Data
         void AddCategory(Category category);
         void DeleteCategory(Category category);
         Task<Category[]> GetAllCategoriesAsync();
+        Task<Category> GetCategoryByIdAsync(int categoryId);
         Task<Category> GetCategoryWithDishesByCategoryNameAsync(string category);
         #endregion
 
@@ -34,13 +35,15 @@ namespace ngHealthyGarden.Data
         Task<Item[]> GetAllItemsAsync();
         Task<Item[]> GetItemsByItemCategoryIdAsync(int itemCategoryId);
         Item[] GetItemsByDishNameAsync(string dishName);
+        Task<Item> GetItemsByIdAsync(int itemId);
         #endregion
 
         #region =============SIDES======================
         void AddSide(Side side);
         void DeleteSide(Side side);
         Task<Side[]> GetAllSidesAsync();
-        Task<Side[]> GetAllSidesByCategoryIdAsync(int categoryId); 
+        Task<Side[]> GetAllSidesByCategoryIdAsync(int categoryId);
+        Task<Side> GetSideById(int sideId);
         #endregion
 
         #region =============SIZES=====================

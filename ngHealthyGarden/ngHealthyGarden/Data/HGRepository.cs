@@ -74,6 +74,10 @@ namespace ngHealthyGarden.Data
 
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<Category> GetCategoryByIdAsync(int categoryId)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(c => c.CategoryId == categoryId);
+        }
         public void AddCategory(Category category)
         {
             _context.Categories.Add(category);
@@ -90,6 +94,10 @@ namespace ngHealthyGarden.Data
             IQueryable<Item> query = _context.Items.OrderBy(i => i.Description);
 
             return await query.ToArrayAsync();
+        }
+        public async Task<Item> GetItemsByIdAsync(int itemId)
+        {
+            return await _context.Items.FirstOrDefaultAsync(i => i.ItemId == itemId);
         }
         public async Task<Item[]> GetItemsByItemCategoryIdAsync(int itemCategoryId)
         {
@@ -141,6 +149,9 @@ namespace ngHealthyGarden.Data
             IQueryable<Side> query = _context.Sides.Where(s => s.CategoryId == categoryId);
 
             return await query.ToArrayAsync();
+        }
+        public async Task<Side> GetSideById(int sideId){
+            return await _context.Sides.FirstOrDefaultAsync(s => s.SideId == sideId);
         }
         public void AddSide(Side side)
         {

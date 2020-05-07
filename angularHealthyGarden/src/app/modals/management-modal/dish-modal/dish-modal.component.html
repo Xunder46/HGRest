@@ -1,6 +1,6 @@
 <ng-template let-modal #content>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Edit dish</h4>
+        <h4 class="modal-title" id="modal-basic-title"><span *ngIf="newDish">Add</span><span *ngIf="!newDish">Edit</span> dish</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -22,7 +22,7 @@
             <mat-error *ngIf="dishName.hasError('required')">Please enter dish name</mat-error>
         </div>
         <div class="form-group">
-            <mat-label for="priceControl">Price</mat-label>&nbsp;
+            <mat-label for="priceControl">Price $</mat-label>&nbsp;
             <input type="text" matInput [formControl]="priceControl" class="form-control" [(ngModel)]="dish.price" required>
             <mat-error *ngIf="priceControl.hasError('required')">Please enter price</mat-error>
         </div>

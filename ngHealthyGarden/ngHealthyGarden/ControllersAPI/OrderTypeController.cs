@@ -11,7 +11,7 @@ using System.Web.Http;
 namespace ngHealthyGarden.ControllersAPI
 {
     [RoutePrefix("api/ordertypes")]
-    public class OrderTypeController : ApiController
+    public class OrderTypeController : BaseApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;

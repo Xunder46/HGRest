@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ngHealthyGarden.Data;
+using ngHealthyGarden.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Web.Http;
 namespace ngHealthyGarden.ControllersAPI
 {
     [RoutePrefix("api/restaurants")]
-    public class RestaurantController : ApiController
+    public class RestaurantController : BaseApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
@@ -48,14 +49,18 @@ namespace ngHealthyGarden.ControllersAPI
             try
             {
                 var result = await _repo.GetRestaurantByZipCodeAsync(zipCode);
+                var mapped = _mapper.Map<ZipCodeModel>(result);
 
-                return Ok(result);
+                if (mapped != null)
+                {
+                    return Ok(result);
+                }
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
+            return BadRequest();
         }
     }
 }

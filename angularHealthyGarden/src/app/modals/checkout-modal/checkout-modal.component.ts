@@ -78,27 +78,29 @@ export class CheckoutModalComponent implements OnInit {
     }
   }
 
-  calculateTime(){
-    debugger
+  calculateTime() {
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    if(this.chosenType.orderType1=="Delivery"){
-      if((minutes+45)>=60){
-        hours = hours+1;
-        minutes = minutes-60;
+    if (this.chosenType.orderType1 == "Delivery") {
+      if ((minutes + 45) >= 60) {
+        hours = hours + 1;
+        minutes = minutes - 60 + 45;
       }
-      this.requestedTime = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + 
-      ('0' + new Date().getDate()).slice(-2) + 'T' + 
-      hours + ":" + (minutes+45);
+      this.requestedTime = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' +
+        ('0' + new Date().getDate()).slice(-2) + 'T' +
+        (hours < 10 ? '0' + hours : hours) + ":" + (minutes < 10 ? '0' + minutes : minutes);
     }
-    else{
-      if((minutes+20)>=60){
-        hours = hours+1;
-        minutes = minutes-60;
+    else {
+      if ((minutes + 20) >= 60) {
+        hours = hours + 1;
+        minutes = minutes - 60 + 20;
       }
-      this.requestedTime = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + 
-      ('0' + new Date().getDate()).slice(-2) + 'T' + 
-      hours + ":" + (minutes+20);
+      else {
+        minutes = minutes + 20;
+      }
+      this.requestedTime = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' +
+        ('0' + new Date().getDate()).slice(-2) + 'T' +
+        (hours < 10 ? '0' + hours : hours) + ":" + (minutes < 10 ? '0' + minutes : minutes);
     }
   }
 
@@ -107,7 +109,7 @@ export class CheckoutModalComponent implements OnInit {
   }
 
   emptyCart() {
-    this.toastr.success("You have successfully placed your order!","",{
+    this.toastr.success("You have successfully placed your order!", "", {
       closeButton: true,
       progressBar: false,
       positionClass: "toast-top-full-width",
@@ -128,6 +130,7 @@ export class CheckoutModalComponent implements OnInit {
         dishComment.comments = this.dishesFromLocalStorage[i].comments;
         this.services.addComment(dishComment).subscribe(data => {
           orderDetail.commentId = data.commentId;
+          debugger
         });
       }
       else {
@@ -155,7 +158,7 @@ export class CheckoutModalComponent implements OnInit {
       orderDetail.requestedTime = this.requestedTime;
       orderDetails.push(orderDetail);
     }
-
+    debugger
     let utc = new Date().toJSON().slice(0, 10);
     order.orderDate = utc;
     this.services.setNewOrder(order).subscribe(data => {
@@ -244,6 +247,7 @@ export class CheckoutModalComponent implements OnInit {
 
   findCustomerInfo() {
     if (this.phoneNumber.value.length == 10) {
+      debugger
       this.services.getUserByPhoneNumber(this.customerPhoneNumber).subscribe(data => {
         if (data) {
           if (data.customerInfoId) {

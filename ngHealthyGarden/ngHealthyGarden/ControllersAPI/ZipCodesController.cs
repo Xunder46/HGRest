@@ -12,7 +12,7 @@ using System.Web.Http;
 namespace ngHealthyGarden.ControllersAPI
 {
     [RoutePrefix("api/zipcodes")]
-    public class ZipCodesController : ApiController
+    public class ZipCodesController : BaseApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;

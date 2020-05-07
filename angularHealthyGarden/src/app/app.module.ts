@@ -31,8 +31,11 @@ import { OnlynumberDirective } from './directives/only-numbers.directive';
 import { ToastrModule } from 'ngx-toastr';
 import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component';
 import { RoleGuard } from './services/roel-guard';
-import { DishModalComponent } from './modals/dish-modal/dish-modal.component';
-import { ItemModalComponent } from './modals/item-modal/item-modal.component';
+import { DishModalComponent } from './modals/management-modal/dish-modal/dish-modal.component';
+import { ItemModalComponent } from './modals/management-modal/item-modal/item-modal.component';
+import { SideModalComponent } from './modals/management-modal/side-modal/side-modal.component';
+import { CategoryModalComponent } from './modals/management-modal/category-modal/category-modal.component';
+import { CartService } from './services/shopping-cart.service';
 
 @NgModule({
     imports: [
@@ -53,6 +56,7 @@ import { ItemModalComponent } from './modals/item-modal/item-modal.component';
         WebServices,
         AuthGuard,
         RoleGuard,
+        CartService,
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     declarations: [
@@ -74,7 +78,9 @@ import { ItemModalComponent } from './modals/item-modal/item-modal.component';
         OnlynumberDirective,
         ChangePasswordModalComponent,
         DishModalComponent,
-        ItemModalComponent
+        ItemModalComponent,
+        SideModalComponent,
+        CategoryModalComponent,
     ],
     bootstrap: [
         AppComponent

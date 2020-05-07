@@ -25,7 +25,7 @@ namespace ngHealthyGarden
 
             var json = config.Formatters.JsonFormatter;
 
-            //json.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            json.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             config.EnableCors(enableCorsAttribute);

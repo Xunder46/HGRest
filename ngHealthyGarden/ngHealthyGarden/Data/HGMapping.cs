@@ -16,25 +16,36 @@ namespace ngHealthyGarden.Data
                 //.ForMember(c => c.SideDescription, opt => opt.MapFrom(m => m.Side.Description))
                 //.ForMember(c => c.TortillaTypeDescription, opt => opt.MapFrom(m => m.TortillaType.Description));
 
-            CreateMap<Category, CategoryModel>();
+            CreateMap<Category, CategoryModel>()
+                .ReverseMap();
             CreateMap<Item, ItemModel>()
                 .ReverseMap();
-            CreateMap<Side, SideModel>();
+            CreateMap<ItemCategory, ItemCategoryModel>()
+                .ReverseMap();
+            CreateMap<Side, SideModel>()
+                .ReverseMap();
             CreateMap<Order, OrderModel>()
                 .ReverseMap();
             CreateMap<AddressInfo, AddressInfoModel>()
                 .ReverseMap();
-            CreateMap<Comment, CommentModel>();
+            CreateMap<Comment, CommentModel>()
+                .ReverseMap();
             CreateMap<CustomerInfo, CustomerInfoModel>()
                 .ReverseMap();
-            CreateMap<Option, OptionModel>();
-            CreateMap<Order, OrderModel>();
+            CreateMap<Option, OptionModel>()
+                .ReverseMap();
+            CreateMap<Order, OrderModel>()
+                .ReverseMap();
             CreateMap<OrderDetail, OrderDetailModel>()
                 .ReverseMap();
-            CreateMap<OrderType, OrderTypeModel>();
-            CreateMap<RestaurantInfo, RestaurantInfoModel>();
-            CreateMap<Size, SizeModel>();
-            CreateMap<ZipCode, ZipCodeModel>();
+            CreateMap<OrderType, OrderTypeModel>()
+                .ReverseMap();
+            CreateMap<RestaurantInfo, RestaurantInfoModel>()
+                .ReverseMap();
+            CreateMap<Size, SizeModel>()
+                .ReverseMap();
+            CreateMap<ZipCode, ZipCodeModel>()
+                .ReverseMap();
         }
     }
 }

@@ -1,83 +1,179 @@
-<ng-template let-modal #items>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Manage items</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-            <span aria-hidden="true">&times;</span>
-        </button>
+<div class="mainContainer" style="margin-top: 8em;">
+    <div class="flexContainer">
+        <ng-template let-modal #items>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Manage ingredients</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let ingredient of allIngredients; let i = index">
+                                <td>{{ingredient.description|split}}</td>
+                                <td>{{ingredient.price|currency}}</td>
+                                <td>
+                                    <item-modal [item]="ingredient"></item-modal>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" (click)="saveItems()">Save</button>
+            </div>
+        </ng-template>
+        
+        <ng-template let-modal #dishes>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Manage dishes</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h4><b>NOTE:</b> Uncheck a dish if you don't want it to appear in the menu</h4><br>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Active</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let dish of allDishes; let i = index">
+                                <td>
+                                    <div class="checkbox-container">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="myCheckBox" (click)="toggleDish(dish)"
+                                                [(ngModel)]="dish.active">
+                                            <span class="checkbox-custom rectangular"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{dish.dishName|split}}</td>
+                                <td>{{dish.price|currency}}</td>
+                                <td>
+                                    <dish-modal [dish]="dish"></dish-modal>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" (click)="saveDishes()">Save</button>
+            </div>
+        </ng-template>
+        
+        <ng-template let-modal #sides>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Manage sides</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h4><b>NOTE:</b> Uncheck a side if you don't want it to appear in the menu</h4><br>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Active</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let side of allSides; let i = index">
+                                <td>
+                                    <div class="checkbox-container">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="myCheckBox" (click)="toggleSide(side)"
+                                                [(ngModel)]="side.active">
+                                            <span class="checkbox-custom rectangular"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{side.description|split}}</td>
+                                <td>{{side.price|currency}}</td>
+                                <td>
+                                    <side-modal [side]="side"></side-modal>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" (click)="saveSides()">Save</button>
+            </div>
+        </ng-template>
+        
+        <ng-template let-modal #categories>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Manage categories</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h4><b>NOTE:</b> Uncheck a category if you don't want it to appear in the menu</h4><br>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Active</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let category of allCategories; let i = index">
+                                <td>
+                                    <div class="checkbox-container">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="myCheckBox" (click)="toggleCategory(category)"
+                                                [(ngModel)]="category.active">
+                                            <span class="checkbox-custom rectangular"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{category.description|split}}</td>
+                                <td>
+                                    <category-modal [category]="category"></category-modal>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" (click)="saveCategories()">Save</button>
+            </div>
+        </ng-template>
+        
+        <div class="btn btn-info categoryButton" (click)="open(dishes, 'dishes')">Dishes</div>
+        
+        <div class="btn btn-info categoryButton" (click)="open(items, 'items')">Ingredients</div>
+        
+        <div class="btn btn-info categoryButton" (click)="open(sides, 'sides')">Sides</div>
+        
+        <div class="btn btn-info categoryButton" (click)="open(categories, 'categories')">Categories</div>
     </div>
-    <div class="modal-body">
-        <div class="form-group">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let ingredient of ingredients; let i = index">
-                        <td>{{ingredient.description|split}}</td>
-                        <td>{{ingredient.price}}</td>
-                        <td>
-                            <item-modal [item]="ingredient"></item-modal>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-success" (click)="save()">Save</button>
-    </div>
-    {{dishes}}
-</ng-template>
+</div>
 
-<ng-template let-modal #dishes>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Manage dishes</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="form-group">
-            <h4><b>NOTE:</b> Uncheck a dish if you don't want it to appear in the menu</h4><br>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Active</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let dish of allDishes; let i = index">
-                        <td>
-                            <div class="checkbox-container">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="myCheckBox" (click)="toggleDish(dish)"
-                                        [(ngModel)]="dish.active">
-                                    <span class="checkbox-custom rectangular"></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td>{{dish.dishName|split}}</td>
-                        <td>{{dish.price}}</td>
-                        <td>
-                            <dish-modal [dish]="dish"></dish-modal>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-success" (click)="save()">Save</button>
-    </div>
-</ng-template>
-
-<div class="btn btn-info categoryButton" (click)="open(dishes, 'dishes')">Dishes</div>
-
-<div class="btn btn-info categoryButton" (click)="open(items, 'items')">Ingredients</div>
-
-<div class="btn btn-info categoryButton" (click)="open(sides, 'sides')">Sides</div>
+<div class="managersNavigation">
+    <button class="btn btn-back managersNavigationButton" (click)="goToMain()"><img class="icon-back" src="">Go to main</button>
+    <button class="btn btn-back managersNavigationButton" (click)="logOut()"><img class="icon-back" src="">Log Out</button>
+</div>

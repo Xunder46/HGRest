@@ -34,12 +34,6 @@ h4{
     width: 100%;
 }
 
-.btn-back{
-    position: relative;
-    display: block;
-    margin: auto;
-    background-color: darkorange;
-}
 .icon-back{
     position: relative;
     float: left;

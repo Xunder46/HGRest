@@ -15,9 +15,10 @@ li, h5{
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
 .dishName{
     max-width: 10px;
+    top: -15em;
 }
 
-.insideImageButton {
+.insideImageButton{
     font-size: 14px;
     font-weight: bold;
     position: absolute;
@@ -30,6 +31,10 @@ li, h5{
     color: black;
     transition: 0.3s;
 }
+.insideImageButton:hover {
+    background-color: tomato;
+    border-color: tomato;
+}
 
     /* .customizeButton {
         bottom: 1em;
@@ -37,7 +42,7 @@ li, h5{
     } */
 
     .iWantThisButton {
-        bottom: 1em;
+        bottom: -6em;
         left: 8em;
     }
 
@@ -110,9 +115,18 @@ li, h5{
 /*#endregion*/
 
 /*#region -_-_-_-MEDIA QUERIES-_-_-_-_*/
-@media(min-width:1095px) {
+@media(min-width:1176px) {
     .buttonImage:hover > img {
         transform: scale(1.02) translateY(-200px);
+    }
+
+    .iWantThisButton {
+        bottom: 1em;
+        left: 8em;
+    }
+
+    .dishName{
+        top: 0px;
     }
 
     .insideImageButton:hover {

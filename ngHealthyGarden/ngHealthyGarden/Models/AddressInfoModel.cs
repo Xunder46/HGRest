@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace ngHealthyGarden.Models
@@ -11,6 +12,7 @@ namespace ngHealthyGarden.Models
         public string Street { get; set; }
         public string Apartment { get; set; }
         public int ZipCodeId { get; set; }
+        [IgnoreDataMember]
         public int? CustomerInfoId { get; set; }
     }
 }

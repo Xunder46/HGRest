@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, Output } from '@angular/core';
 import { WebServices } from '../services/web.services';
 import { Dish } from '../models/Dish';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +9,8 @@ import { Category } from '../models/Category';
 import { Side } from '../models/Side';
 import { Size } from '../models/Size';
 import { DishOption } from '../models/DishOption';
+import { CustomizeModal } from '../modals/customize-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     animations: [
@@ -47,7 +49,7 @@ export class DishesComponent implements OnInit {
     sizes: Size[];
     options: DishOption[];
 
-    constructor(private services: WebServices, private activatedRoute: ActivatedRoute, private cart: CartService) { }
+    constructor(private services: WebServices, private activatedRoute: ActivatedRoute, private cart: CartService, private modalService: NgbModal) { }
 
     ngOnInit(): void {
         this.categoryName = this.activatedRoute.snapshot.paramMap.get('category');
@@ -69,7 +71,7 @@ export class DishesComponent implements OnInit {
 
             //GETTING SIDE FOR DISHES BY CATEGORYID
             this.services.getSidesByCategoryId(this.category.categoryId).subscribe(data => {
-                this.sides = data;
+                this.sides = data.filter(s=>s.active==true);
             });
 
             //GETTING SIZES FOR DISHES BY CATEGORYID
@@ -83,5 +85,9 @@ export class DishesComponent implements OnInit {
             this.allIngredients = data;
         });
         
+    }
+
+    open(){
+        this.modalService.open(CustomizeModal);
     }
 }

@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace ngHealthyGarden.ControllersAPI
 {
     [Authorize]
-    public class ValuesController : ApiController
+    public class ValuesController : BaseApiController
     {
         // GET api/values
         public IEnumerable<string> Get()

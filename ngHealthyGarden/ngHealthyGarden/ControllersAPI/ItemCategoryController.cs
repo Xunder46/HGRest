@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ngHealthyGarden.Data;
+using ngHealthyGarden.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +11,29 @@ using System.Web.Http;
 
 namespace ngHealthyGarden.ControllersAPI
 {
-    [RoutePrefix("api/comments")]
-    public class CommentsController : BaseApiController
+    [RoutePrefix("api/itemcategories")]
+    public class ItemCategoryController : BaseApiController
     {
         private readonly IHGRepository _repo;
         private readonly IMapper _mapper;
 
-        public CommentsController()
+        public ItemCategoryController()
         {
 
         }
-        public CommentsController(IHGRepository repo, IMapper mapper)
+        public ItemCategoryController(IHGRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
         }
 
-
-        [Route(Name = "GetComments")]
+        [Route(Name = "GetItemCategories")]
         public async Task<IHttpActionResult> Get()
         {
             try
             {
-                var result = await _repo.GetAllCommentsAsync();
+                var result = await _repo.GetAllItemCategoriesAsync();
+                //var mapped = _mapper.Map<ItemCategoryModel>(result);
 
                 if (result == null)
                 {
@@ -48,17 +49,18 @@ namespace ngHealthyGarden.ControllersAPI
         }
 
         [Route()]
-        public async Task<IHttpActionResult> Post(Comment comment)
+        public async Task<IHttpActionResult> Post(ItemCategoryModel ic)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repo.AddComment(comment);
+                    var mapped = _mapper.Map<ItemCategory>(ic);
+                    _repo.AddItemCategory(mapped);
 
                     if (await _repo.SaveChangesAsync())
                     {
-                        return Created("GetComments", new { commentId = comment.CommentId });
+                        return Created("GetItemCategories", mapped.ItemCategoryId);
                     }
                 }
 
@@ -69,30 +71,5 @@ namespace ngHealthyGarden.ControllersAPI
             }
             return BadRequest();
         }
-
-        [Route("commentId")]
-        public async Task<IHttpActionResult> Delete(int commentId)
-        {
-            try
-            {
-                var comment = _repo.GetCommentById(commentId);
-                if (comment == null) return NotFound();
-
-                _repo.DeleteComment(commentId);
-                if (await _repo.SaveChangesAsync())
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return InternalServerError();
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
     }
 }
