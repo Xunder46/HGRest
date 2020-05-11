@@ -82,7 +82,6 @@ namespace ngHealthyGarden.ControllersAPI
                         return Created("GetCustomers", new { customerInfoId = customer.CustomerInfoId });
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -143,6 +142,5 @@ namespace ngHealthyGarden.ControllersAPI
                 return InternalServerError(ex);
             }
         }
-
     }
 }

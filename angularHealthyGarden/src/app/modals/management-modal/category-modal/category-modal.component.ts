@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Category } from 'src/app/models/Category';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'category-modal',
@@ -17,7 +18,7 @@ export class CategoryModalComponent implements OnInit {
 
   categoryNameControl = new FormControl('', Validators.required);
 
-  constructor(private services: WebServices, private modalService: NgbModal) { }
+  constructor(private services: WebServices, private modalService: NgbModal, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +33,7 @@ export class CategoryModalComponent implements OnInit {
 
   saveCategory(category: Category){
     category.active = true;
-    this.services.addCategory(category).subscribe(data=>data);
+    this.services.addCategory(category).subscribe(data=>data, (err)=>err, () => this.toastr.success("Success!"));
     this.modalService.dismissAll();
   }
 }

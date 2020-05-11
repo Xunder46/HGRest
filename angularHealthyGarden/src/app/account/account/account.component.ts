@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { OrderDetails } from 'src/app/models/OrderDetails';
 import { Dish } from 'src/app/models/Dish';
 import { Order } from 'src/app/models/Order';
@@ -32,15 +32,21 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.customer.addressInfoes = [];
     this.services.getUserInfo().subscribe(data => {
-      this.services.getAllCusttomerInfo(data.customerInfoId).subscribe(customer => {
-        this.customer = customer;
-      });
       this.user = data;
       this.username = data.userName;
       this.phonenumber = data.phoneNumber;
+
+      //getting user's details
+      if (data.customerInfoId) {
+        this.services.getAllCusttomerInfo(data.customerInfoId).subscribe(customer => {
+          this.customer = customer;
+        });
+      }
+
+      //getting user's orders details
       this.services.getOrderedDishesByCustomerId(data.customerInfoId).subscribe(details => {
         details.filter((thing, i, arr) => arr.findIndex(t => t.orderId === thing.orderId) === i)
-        details.forEach(detail=>{
+        details.forEach(detail => {
           if (this.orderIds.indexOf(detail.orderId) < 0) {
             this.services.getOrderDetailsByOrderId(detail.orderId).subscribe(o => {
               this.orders.push(o);
@@ -50,22 +56,23 @@ export class AccountComponent implements OnInit {
           }
           this.orderDetails.push(detail);
           this.dishes[detail.orderId].push(detail.dish);
-          
-          this.totalAmountSpent += detail.price * detail.quantity;
-          for (let j = 0; j < detail.items.length; j++) {
-            this.totalAmountSpent += detail.items[j].price;
-          }
+
+          //calculating money spent on each order
+          this.calculateTotal(detail);
         })
-        this.totalAmountSpent = this.totalAmountSpent * this.tax + this.totalAmountSpent;
       })
     })
   }
 
-  manageAccountInfo(){
-
+  calculateTotal(detail: OrderDetails) {
+    this.totalAmountSpent += detail.price * detail.quantity;
+    for (let j = 0; j < detail.items.length; j++) {
+      this.totalAmountSpent += detail.items[j].price;
+    }
+    this.totalAmountSpent = this.totalAmountSpent * this.tax + this.totalAmountSpent;
   }
 
-  goToMenu(){
+  goToMenu() {
     this.route.navigate(['menu']);
   }
 

@@ -12,7 +12,6 @@ namespace ngHealthyGarden.Data
     {
         private readonly HGDbContext _context;
         private readonly ApplicationDbContext _app;
-        private readonly Entities _entities;
         public HGRepository(HGDbContext context, ApplicationDbContext app)
         {
             _context = context;
@@ -186,7 +185,7 @@ namespace ngHealthyGarden.Data
         }
         #endregion
 
-        #region =============ZipCodes=====================
+        #region =============ZIP_CODES=====================
         public async Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId)
         {
             return await _context.ZipCodes.Where(z => z.RestaurantId == restaurantId).ToArrayAsync();
@@ -203,7 +202,6 @@ namespace ngHealthyGarden.Data
         {
             return await _context.ZipCodes.OrderBy(z => z.ZipCode1).ToArrayAsync();
         }
-
         public async Task<ZipCode> GetZipCodeById(int zipCodeId)
         {
             return await _context.ZipCodes.FirstOrDefaultAsync(z => z.ZipCodeId == zipCodeId);
@@ -393,7 +391,7 @@ namespace ngHealthyGarden.Data
         }
         #endregion
 
-        #region =============ORDER_Types=====================
+        #region =============ORDER_TYPES=====================
         public async Task<OrderType[]> GetOrderTypesAsync()
         {
             return await _context.OrderTypes.Select(o => o).ToArrayAsync();

@@ -42,7 +42,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [Route("{dishName}", Name ="GetItems")]
@@ -60,10 +59,9 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
-        [Route()]
+        [Route("item")]
         public async Task<IHttpActionResult> Post(ItemModel item)
         {
             try
@@ -91,7 +89,6 @@ namespace ngHealthyGarden.ControllersAPI
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {

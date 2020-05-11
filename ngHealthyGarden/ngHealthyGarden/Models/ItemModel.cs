@@ -7,12 +7,6 @@ namespace ngHealthyGarden.Models
 {
     public class ItemModel
     {
-        public ItemModel()
-        {
-            this.OrderDetails = new HashSet<OrderDetailModel>();
-            this.Dishes = new HashSet<Dish>();
-            this.OrderDetails1 = new HashSet<OrderDetailModel>();
-        }
         public int ItemId { get; set; }
         public string Description { get; set; }
         public int ItemCategoryId { get; set; }

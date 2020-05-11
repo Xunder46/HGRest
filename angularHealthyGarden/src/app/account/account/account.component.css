@@ -1,9 +1,11 @@
+/*#region -_-_-_-_ELEMENTS-_-_-_-_*/
 h1 {
     color: tomato;
     font-size: 35px;
     font-weight: bold;
     text-shadow: 2px 2px darkred;
 }
+/*#endregion*/
 
 /*#region -_-_-_-_CLASSES-_-_-_-_*/
 .basicInfoContainer{
@@ -11,7 +13,7 @@ h1 {
     overflow: hidden;
     float: right;
     margin-bottom: 10em;
-    position: fixed;
+    position: absolute;
     right: 1em;
     top: 1em;
 }
@@ -52,9 +54,9 @@ h1 {
 }
 
 table.orderTable {
-    border: 2px solid #A40920;
+    border: 2px solid orangered;
     background-color: #EE9075;
-    width: 60%;
+    width: 70%;
     height: 100%;
     text-align: center;
     border-collapse: collapse;
@@ -112,4 +114,25 @@ table.orderTable {
     padding: 2px 8px;
     border-radius: 5px;
   }
+/*#endregion*/
+
+/*#region -_-_-_-_MEDIA_QUERIES-_-_-_-_*/
+@media(min-width: 1035px){
+  th:nth-of-type(1){
+    width: 15em;
+  }
+}
+@media(max-width: 1035px){
+  th:nth-of-type(1){
+    width: 10em;
+  }
+  table.orderTable{
+    width: 90%;
+  }
+}
+@media(max-width: 560px){
+  table.orderTable{
+    width: 100%;
+  }
+}
 /*#endregion*/

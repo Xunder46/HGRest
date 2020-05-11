@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from '../services/shopping-cart.service';
 import { Dish } from '../models/Dish';
 import { Category } from '../models/Category';
-import { WebServices } from '../services/web.services';
+import { WebServices } from '../services/web.service';
 import { Side } from '../models/Side';
 import { FormControl, Validators, NgForm } from '@angular/forms';
 import { Item } from '../models/Item';

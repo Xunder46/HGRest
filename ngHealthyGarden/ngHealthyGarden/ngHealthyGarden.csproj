@@ -437,8 +437,6 @@
       <DependentUpon>202004080159375_CustomizedAddressTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountBindingModels.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddressInfoModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CommentModel.cs" />

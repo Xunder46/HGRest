@@ -56,11 +56,9 @@ namespace ngHealthyGarden
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
-        
         public virtual DbSet<OrderComment> OrderComments { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
         public virtual DbSet<RestaurantInfo> RestaurantInfo { get; set; }
-
 
         //stored procedure to find ingredients by a dish
         public virtual ObjectResult<Item> spGetItemsRelatedToADish(string dishName)
@@ -72,6 +70,7 @@ namespace ngHealthyGarden
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<Item>("spGetItemsRelatedToADish @DishName", dishNameParameter);
         }
 
+        //stored procedure to remove ingredient from a dish
         public virtual ObjectResult<bool> spDeleteItemDish(int dishId, int itemId)
         {
             var dishIdParameter = dishId>0 ?

@@ -27,7 +27,6 @@ namespace ngHealthyGarden.ControllersAPI
             }
 
             return NotFound();
-
         }
 
         [Route("", Name = "GetAllRoles")]
@@ -58,13 +57,11 @@ namespace ngHealthyGarden.ControllersAPI
             Uri locationHeader = new Uri(Url.Link("GetRoleById", new { id = role.Id }));
 
             return Created(locationHeader, TheModelFactory.Create(role));
-
         }
 
         [Route("{id:guid}")]
         public async Task<IHttpActionResult> DeleteRole(string Id)
         {
-
             var role = await this.AppRoleManager.FindByIdAsync(Id);
 
             if (role != null)
@@ -80,7 +77,6 @@ namespace ngHealthyGarden.ControllersAPI
             }
 
             return NotFound();
-
         }
 
         [Route("ManageUsersInRole")]

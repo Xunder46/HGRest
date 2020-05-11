@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';

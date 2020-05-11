@@ -40,7 +40,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [Route("{restaurantId}")]

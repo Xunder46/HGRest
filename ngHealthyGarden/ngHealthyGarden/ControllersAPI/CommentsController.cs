@@ -26,7 +26,6 @@ namespace ngHealthyGarden.ControllersAPI
             _repo = repo;
         }
 
-
         [Route(Name = "GetComments")]
         public async Task<IHttpActionResult> Get()
         {

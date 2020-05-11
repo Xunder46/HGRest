@@ -39,9 +39,7 @@ namespace ngHealthyGarden.ControllersAPI
                     {
                         return Created("", comment);
                     }
-
                 }
-
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/models/User';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 

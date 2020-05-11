@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { WebServices } from './services/web.services'
+import { WebServices } from './services/web.service'
 import { MenuComponent } from './menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,12 +25,12 @@ import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { LogInComponent } from './user/log-in/log-in.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AccountComponent } from './account/account/account.component';
-import { AuthGuard } from './services/auth-guard';
+import { AuthGuard } from './services/auth-guard.service';
 import { CheckoutModalComponent } from './modals/checkout-modal/checkout-modal.component';
 import { OnlynumberDirective } from './directives/only-numbers.directive';
 import { ToastrModule } from 'ngx-toastr';
 import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component';
-import { RoleGuard } from './services/roel-guard';
+import { RoleGuard } from './services/role-guard.service';
 import { DishModalComponent } from './modals/management-modal/dish-modal/dish-modal.component';
 import { ItemModalComponent } from './modals/management-modal/item-modal/item-modal.component';
 import { SideModalComponent } from './modals/management-modal/side-modal/side-modal.component';

@@ -53,7 +53,7 @@ namespace ngHealthyGarden.Data
         Task<Size[]> GetSizesByCategoryIdAsync(int categoryId);
         #endregion
 
-        #region =============ZipCodes=====================
+        #region =============ZIP_CODES=====================
         void AddZipCode(ZipCode zipCode);
         void DeleteZipCode(ZipCode zipCode);
         Task<ZipCode[]> GetZipCodesByRestaurantIdAsync(int restaurantId);
@@ -124,7 +124,7 @@ namespace ngHealthyGarden.Data
 
         #endregion
 
-        #region =============ORDER_Types=====================
+        #region =============ORDER_TYPES=====================
         Task<OrderType[]> GetOrderTypesAsync();
         #endregion
     }

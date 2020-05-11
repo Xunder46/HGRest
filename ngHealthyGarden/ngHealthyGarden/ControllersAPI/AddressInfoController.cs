@@ -41,7 +41,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [Route("{customerInfoId}", Name = "GetAddress")]
@@ -58,7 +57,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [Route()]

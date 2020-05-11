@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -36,10 +36,6 @@ export class ChangePasswordModalComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'change-password-modal' }).result;
-  }
-
-  onOptionChange(){
-
   }
 
   changePassword(){

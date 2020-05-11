@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Side } from 'src/app/models/Side';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category } from 'src/app/models/Category';
 import { FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'side-modal',
@@ -24,7 +25,7 @@ export class SideModalComponent implements OnInit {
   sideNameControl = new FormControl('', Validators.required);
 
 
-  constructor(private services: WebServices, private modalService: NgbModal) { }
+  constructor(private services: WebServices, private modalService: NgbModal, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +33,7 @@ export class SideModalComponent implements OnInit {
   saveSide(side: Side){
     side.categoryId = this.category.categoryId;
     side.active = true;
-    this.services.addSide(side).subscribe(data=>data);
+    this.services.addSide(side).subscribe(data=>data, (err)=>err, () => this.toastr.success("Success!"));
     this.modalService.dismissAll();
   }
 

@@ -40,7 +40,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         
@@ -59,7 +58,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
     }
 }

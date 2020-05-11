@@ -66,7 +66,6 @@ namespace ngHealthyGarden.ControllersAPI
                         return Created("GetOrder", new { orderId = newOrderModel.OrderId });
                     }
                 }
-
             }
             catch (Exception ex)
             {

@@ -1,7 +1,4 @@
 ﻿import { Injectable } from '@angular/core';
-import { Dish } from '../models/Dish';
-import { JsonPipe } from '@angular/common';
-import { Side } from '../models/Side';
 
 @Injectable()
 export class CartService {

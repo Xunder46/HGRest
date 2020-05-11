@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, Validators } from '@angular/forms';
 import { ZipCode } from 'src/app/models/ZipCode';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { Order } from 'src/app/models/Order';
 import { OrderDetails } from 'src/app/models/OrderDetails';
 import { Comment } from './../../models/Comment';

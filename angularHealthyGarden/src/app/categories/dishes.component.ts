@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, ViewChild, Output } from '@angular/core';
-import { WebServices } from '../services/web.services';
+import { WebServices } from '../services/web.service';
 import { Dish } from '../models/Dish';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../services/shopping-cart.service';
@@ -60,6 +60,7 @@ export class DishesComponent implements OnInit {
             this.dishes = data.dishes.filter(
                 (thing, i, arr) => arr.findIndex(t => t.dishName === thing.dishName) === i
             ).filter(d=>d.active==true);
+            
             //GETTING INGREDIENTS FOR EACH DISH
             for (let i = 0; i < this.dishes.length; i++) {
                 this.services.getItemsByDishName(this.dishes[i].dishName).subscribe(items => {

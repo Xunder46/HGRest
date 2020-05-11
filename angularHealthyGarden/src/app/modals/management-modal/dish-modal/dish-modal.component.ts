@@ -3,8 +3,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Dish } from 'src/app/models/Dish';
 import { FormControl, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/Category';
-import { WebServices } from 'src/app/services/web.services';
+import { WebServices } from 'src/app/services/web.service';
 import { Item } from 'src/app/models/Item';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'dish-modal',
@@ -27,7 +28,7 @@ export class DishModalComponent implements OnInit, OnChanges {
   categoryControl = new FormControl('', Validators.required);
   priceControl = new FormControl('', Validators.required);
 
-  constructor(private modalService: NgbModal, private services: WebServices) { }
+  constructor(private modalService: NgbModal, private services: WebServices, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -76,7 +77,7 @@ export class DishModalComponent implements OnInit, OnChanges {
           });
         })
       }
-    });
+    }, (err)=>err, () => this.toastr.success("Success!"));
     this.modalService.dismissAll();
   }
 

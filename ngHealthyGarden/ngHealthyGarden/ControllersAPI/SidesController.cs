@@ -41,7 +41,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [Route("{categoryId}", Name ="GetSides")]
@@ -59,7 +58,6 @@ namespace ngHealthyGarden.ControllersAPI
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [Route()]
@@ -91,7 +89,6 @@ namespace ngHealthyGarden.ControllersAPI
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {

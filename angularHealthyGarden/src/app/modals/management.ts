@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { WebServices } from '../services/web.services';
+import { WebServices } from '../services/web.service';
 import { Side } from '../models/Side';
 import { Dish } from '../models/Dish';
 import { Item } from '../models/Item';
 import { Category } from '../models/Category';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'management-modal',
@@ -25,7 +26,7 @@ export class ManagementModal implements OnInit {
     sidesToUpdate: Side[] = [];
     categoriesToUpdate: Category[] = [];
 
-    constructor(private services: WebServices, private modalService: NgbModal, private route: Router) { }
+    constructor(private services: WebServices, private modalService: NgbModal, private route: Router, private toastr: ToastrService) { }
 
 
     ngOnInit(): void {
@@ -110,23 +111,26 @@ export class ManagementModal implements OnInit {
 
     saveDishes() {
         this.dishesToUpdate.forEach(dish => {
-            this.services.addDish(dish).subscribe(data => data);
+            this.services.addDish(dish).subscribe(data => data, (err)=>err, () => this.toastr.success("Success!"));
         })
         this.modalService.dismissAll();
     }
 
-    saveItems() {}
+    saveItems() {
+        this.modalService.dismissAll();
+        this.toastr.success("Success!")
+    }
 
     saveSides() {
         this.sidesToUpdate.forEach(side => {
-            this.services.addSide(side).subscribe(data => data);
+            this.services.addSide(side).subscribe((data) => data, (err)=>err, () => this.toastr.success("Success!"));
         })
         this.modalService.dismissAll();
     }
 
     saveCategories() {
         this.categoriesToUpdate.forEach(category => {
-            this.services.addCategory(category).subscribe(data => data);
+            this.services.addCategory(category).subscribe(data => data, (err)=>err, () => this.toastr.success("Success!"));
         })
         this.modalService.dismissAll();
     }

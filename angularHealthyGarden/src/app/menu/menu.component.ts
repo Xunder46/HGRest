@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, HostListener } from '@angular/core';
-import { WebServices } from '../services/web.services'
+import { WebServices } from '../services/web.service'
 import { Category } from '../models/Category';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
@@ -19,7 +19,6 @@ export class MenuComponent implements OnInit {
     categoriesUrl: string;
     categories: Category[];
     image: any;
-    
 
     constructor(private services: WebServices, private sanitizor: DomSanitizer) {
     }

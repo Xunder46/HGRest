@@ -12,8 +12,8 @@ import { UserComponent } from './user/user.component';
 import { LogInComponent } from './user/log-in/log-in.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { AccountComponent } from './account/account/account.component';
-import { AuthGuard } from './services/auth-guard';
-import { RoleGuard } from './services/roel-guard';
+import { AuthGuard } from './services/auth-guard.service';
+import { RoleGuard } from './services/role-guard.service';
 
 const routes: Routes = [
     { path: '', component: WelcomeComponent },

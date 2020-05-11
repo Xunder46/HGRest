@@ -2,7 +2,7 @@
 import { Dish } from '../models/Dish';
 import { CartService } from '../services/shopping-cart.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { WebServices } from '../services/web.services';
+import { WebServices } from '../services/web.service';
 import { Order } from '../models/Order';
 import { OrderDetails } from '../models/OrderDetails';
 import { Comment } from '../models/Comment';

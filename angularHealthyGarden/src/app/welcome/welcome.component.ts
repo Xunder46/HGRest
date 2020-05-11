@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { WebServices } from './../services/web.services'
+import { WebServices } from '../services/web.service'
 import { Category } from '../models/Category';
 import { User } from '../models/User';
 
