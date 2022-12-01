@@ -1,2 +1,2 @@
 # HGRest
-WebApp for a restgaurant
+WebApp for a restaurant
